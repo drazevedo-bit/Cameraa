@@ -109,6 +109,7 @@
 
 <div class="controls-row">
   <button id="toggleBtn" class="action primary" disabled>Iniciar contagem</button>
+  <button id="switchCamBtn" class="action">Trocar camera</button>
   <button id="resetBtn" class="action danger">Zerar contagem</button>
 </div>
 
@@ -123,6 +124,7 @@ const counterEl = document.getElementById('counter');
 const dateLabel = document.getElementById('dateLabel');
 const toggleBtn = document.getElementById('toggleBtn');
 const resetBtn = document.getElementById('resetBtn');
+const switchCamBtn = document.getElementById('switchCamBtn');
 const statusEl = document.getElementById('status');
 const galleryEl = document.getElementById('gallery');
 
@@ -133,6 +135,8 @@ const STORAGE_KEY = 'peopleCounterData';
 let watching = false;
 let knownDescriptors = [];
 let wakeLock = null;
+let currentStream = null;
+let currentFacing = 'user';
 
 function todayStr() {
   const d = new Date();
@@ -172,19 +176,31 @@ async function loadModels() {
 
 async function startCamera() {
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode: 'user' }
+    if (currentStream) {
+      currentStream.getTracks().forEach(t => t.stop());
+    }
+    currentStream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: { ideal: currentFacing } }
     });
-    video.srcObject = stream;
+    video.srcObject = currentStream;
     await new Promise(res => video.onloadedmetadata = res);
     overlay.width = video.videoWidth;
     overlay.height = video.videoHeight;
-    statusEl.textContent = 'Camera pronta. Toque em Iniciar contagem.';
+
+    const track = currentStream.getVideoTracks()[0];
+    const settings = track.getSettings();
+    const facingReal = settings.facingMode || 'desconhecida';
+    statusEl.textContent = 'Camera ativa (' + (facingReal === 'user' ? 'frontal' : facingReal === 'environment' ? 'traseira' : facingReal) + '). Toque em Iniciar contagem.';
     toggleBtn.disabled = false;
   } catch (err) {
     statusEl.textContent = 'Erro ao acessar a camera: ' + err.message;
   }
 }
+
+switchCamBtn.addEventListener('click', () => {
+  currentFacing = currentFacing === 'user' ? 'environment' : 'user';
+  startCamera();
+});
 
 async function requestWakeLock() {
   try {
