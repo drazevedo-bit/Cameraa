@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Câmera do Celular</title>
+<title>Camera com Deteccao Facial</title>
+<script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -16,12 +17,7 @@
     min-height: 100vh;
     padding: 16px;
   }
-  h1 {
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin-bottom: 12px;
-    color: #e8e8e8;
-  }
+  h1 { font-size: 1.2rem; font-weight: 600; margin-bottom: 12px; }
   .video-wrap {
     position: relative;
     width: 100%;
@@ -32,298 +28,245 @@
     overflow: hidden;
     box-shadow: 0 4px 24px rgba(0,0,0,0.4);
   }
-  video, canvas, img.preview {
+  video, canvas.overlay, img.preview {
+    position: absolute;
+    top: 0; left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
   }
-  .rec-dot {
+  canvas.overlay { pointer-events: none; }
+  .badge {
     position: absolute;
     top: 12px;
     left: 12px;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: #ff3b30;
-    display: none;
-    animation: pulse 1s infinite;
-  }
-  .rec-dot.active { display: block; }
-  @keyframes pulse {
-    0%,100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
-  .controls {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 24px;
-    margin-top: 20px;
-    width: 100%;
-    max-width: 480px;
-  }
-  button {
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.15s ease;
-  }
-  button:active { transform: scale(0.92); }
-  #shotBtn {
-    width: 72px;
-    height: 72px;
-    background: #fff;
-    border: 4px solid #444;
-  }
-  #shotBtn.recording {
-    background: #ff3b30;
-    border-color: #7a0000;
-  }
-  #switchBtn, #modeToggle {
-    width: 48px;
-    height: 48px;
-    background: #26262b;
-    color: #f2f2f2;
-    font-size: 20px;
-  }
-  .mode-row {
-    display: flex;
-    gap: 8px;
-    margin-top: 16px;
-    background: #1a1a1e;
-    border-radius: 20px;
-    padding: 4px;
-  }
-  .mode-row button {
-    border-radius: 16px;
-    width: auto;
-    padding: 8px 18px;
-    font-size: 14px;
-    background: transparent;
-    color: #999;
-  }
-  .mode-row button.active {
-    background: #f2f2f2;
-    color: #0f0f12;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
     font-weight: 600;
+    display: none;
+    z-index: 5;
   }
-  .result-actions {
+  .badge.known { background: #34c759; color: #003d13; }
+  .badge.unknown { background: #ff3b30; color: #3d0000; }
+  .controls-row {
     display: flex;
-    gap: 12px;
+    gap: 10px;
     margin-top: 16px;
     width: 100%;
     max-width: 480px;
+    flex-wrap: wrap;
   }
-  .result-actions button {
+  button.action {
     flex: 1;
-    width: auto;
+    min-width: 140px;
+    border: none;
     border-radius: 10px;
     padding: 12px;
     font-size: 14px;
     font-weight: 600;
     background: #26262b;
     color: #f2f2f2;
+    cursor: pointer;
   }
-  .result-actions button.primary {
-    background: #0a84ff;
-  }
+  button.action.primary { background: #0a84ff; }
+  button.action.danger { background: #ff3b30; }
+  button.action:disabled { opacity: 0.4; }
   #status {
-    margin-top: 10px;
+    margin-top: 12px;
     font-size: 13px;
     color: #999;
     text-align: center;
     min-height: 18px;
   }
-  video.hidden-video { display: none; }
+  .shots {
+    margin-top: 16px;
+    width: 100%;
+    max-width: 480px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .shots img {
+    width: 72px;
+    height: 96px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid #ff3b30;
+  }
 </style>
 </head>
 <body>
 
-<h1>📷 Câmera</h1>
+<h1>Camera com deteccao facial</h1>
 
 <div class="video-wrap" id="videoWrap">
   <video id="video" autoplay playsinline muted></video>
-  <img id="preview" class="preview" style="display:none;">
-  <div class="rec-dot" id="recDot"></div>
+  <canvas id="overlay" class="overlay"></canvas>
+  <div id="badge" class="badge"></div>
 </div>
 
-<div class="mode-row">
-  <button id="photoMode" class="active">Foto</button>
-  <button id="videoMode">Vídeo</button>
+<div class="controls-row">
+  <button id="enrollBtn" class="action primary">Cadastrar meu rosto</button>
+  <button id="toggleBtn" class="action" disabled>Ativar vigilancia</button>
+  <button id="resetBtn" class="action danger">Apagar cadastro</button>
 </div>
 
-<div class="controls">
-  <button id="switchBtn" title="Trocar câmera">🔄</button>
-  <button id="shotBtn" title="Capturar"></button>
-  <div style="width:48px;"></div>
-</div>
+<div id="status">Carregando modelos de reconhecimento facial...</div>
 
-<div class="result-actions" id="resultActions" style="display:none;">
-  <button id="retakeBtn">Refazer</button>
-  <button id="downloadBtn" class="primary">Baixar</button>
-</div>
-
-<div id="status">Toque em permitir para ativar a câmera.</div>
-
-<canvas id="canvas" style="display:none;"></canvas>
+<div class="shots" id="shots"></div>
 
 <script>
 const video = document.getElementById('video');
-const preview = document.getElementById('preview');
-const canvas = document.getElementById('canvas');
-const shotBtn = document.getElementById('shotBtn');
-const switchBtn = document.getElementById('switchBtn');
-const photoMode = document.getElementById('photoMode');
-const videoMode = document.getElementById('videoMode');
-const resultActions = document.getElementById('resultActions');
-const retakeBtn = document.getElementById('retakeBtn');
-const downloadBtn = document.getElementById('downloadBtn');
+const overlay = document.getElementById('overlay');
+const badge = document.getElementById('badge');
+const enrollBtn = document.getElementById('enrollBtn');
+const toggleBtn = document.getElementById('toggleBtn');
+const resetBtn = document.getElementById('resetBtn');
 const statusEl = document.getElementById('status');
-const recDot = document.getElementById('recDot');
+const shotsEl = document.getElementById('shots');
 
-let currentStream = null;
-let facingMode = 'environment';
-let mode = 'photo';
-let mediaRecorder = null;
-let recordedChunks = [];
-let isRecording = false;
-let capturedBlobUrl = null;
-let capturedIsVideo = false;
+const MODEL_URL = 'https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.13/model';
+const MATCH_THRESHOLD = 0.5; // menor = mais rigoroso
+const CAPTURE_COOLDOWN_MS = 5000;
+
+let myDescriptor = null;
+let watching = false;
+let lastCaptureTime = 0;
+let stream = null;
+
+async function loadModels() {
+  await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
+  await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
+  await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
+  statusEl.textContent = 'Modelos carregados. Ativando camera...';
+}
 
 async function startCamera() {
-  stopCamera();
   try {
-    const constraints = {
-      video: { facingMode: { ideal: facingMode } },
-      audio: mode === 'video'
-    };
-    currentStream = await navigator.mediaDevices.getUserMedia(constraints);
-    video.srcObject = currentStream;
-    video.style.display = 'block';
-    preview.style.display = 'none';
-    statusEl.textContent = 'Câmera ativa.';
+    stream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: 'environment' }
+    });
+    video.srcObject = stream;
+    await new Promise(res => video.onloadedmetadata = res);
+    overlay.width = video.videoWidth;
+    overlay.height = video.videoHeight;
+    statusEl.textContent = 'Camera ativa. Cadastre seu rosto para comecar.';
+    enrollBtn.disabled = false;
   } catch (err) {
-    statusEl.textContent = 'Erro ao acessar a câmera: ' + err.message;
+    statusEl.textContent = 'Erro ao acessar a camera: ' + err.message;
   }
 }
 
-function stopCamera() {
-  if (currentStream) {
-    currentStream.getTracks().forEach(t => t.stop());
-    currentStream = null;
+function loadSavedDescriptor() {
+  const saved = localStorage.getItem('myFaceDescriptor');
+  if (saved) {
+    myDescriptor = new Float32Array(JSON.parse(saved));
+    toggleBtn.disabled = false;
+    statusEl.textContent = 'Rosto cadastrado encontrado. Pronto para vigiar.';
   }
 }
 
-switchBtn.addEventListener('click', () => {
-  facingMode = facingMode === 'environment' ? 'user' : 'environment';
-  startCamera();
-});
+enrollBtn.addEventListener('click', async () => {
+  statusEl.textContent = 'Detectando seu rosto, olhe para a camera...';
+  const detection = await faceapi
+    .detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
+    .withFaceLandmarks()
+    .withFaceDescriptor();
 
-photoMode.addEventListener('click', () => {
-  mode = 'photo';
-  photoMode.classList.add('active');
-  videoMode.classList.remove('active');
-  startCamera();
-});
-
-videoMode.addEventListener('click', () => {
-  mode = 'video';
-  videoMode.classList.add('active');
-  photoMode.classList.remove('active');
-  startCamera();
-});
-
-shotBtn.addEventListener('click', () => {
-  if (mode === 'photo') {
-    takePhoto();
-  } else {
-    toggleRecording();
+  if (!detection) {
+    statusEl.textContent = 'Nenhum rosto detectado. Tente novamente com boa luz.';
+    return;
   }
+  myDescriptor = detection.descriptor;
+  localStorage.setItem('myFaceDescriptor', JSON.stringify(Array.from(myDescriptor)));
+  toggleBtn.disabled = false;
+  statusEl.textContent = 'Rosto cadastrado com sucesso!';
 });
 
-function takePhoto() {
+resetBtn.addEventListener('click', () => {
+  localStorage.removeItem('myFaceDescriptor');
+  myDescriptor = null;
+  toggleBtn.disabled = true;
+  watching = false;
+  toggleBtn.textContent = 'Ativar vigilancia';
+  statusEl.textContent = 'Cadastro apagado.';
+});
+
+toggleBtn.addEventListener('click', () => {
+  watching = !watching;
+  toggleBtn.textContent = watching ? 'Parar vigilancia' : 'Ativar vigilancia';
+  statusEl.textContent = watching ? 'Vigiando...' : 'Vigilancia pausada.';
+  if (watching) detectLoop();
+});
+
+function takeAutoPhoto() {
+  const canvas = document.createElement('canvas');
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;
   canvas.getContext('2d').drawImage(video, 0, 0);
-  canvas.toBlob(blob => {
-    capturedBlobUrl = URL.createObjectURL(blob);
-    capturedIsVideo = false;
-    showResult();
-  }, 'image/jpeg', 0.92);
-}
+  const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
 
-function toggleRecording() {
-  if (!isRecording) {
-    recordedChunks = [];
-    mediaRecorder = new MediaRecorder(currentStream, { mimeType: 'video/webm' });
-    mediaRecorder.ondataavailable = e => { if (e.data.size > 0) recordedChunks.push(e.data); };
-    mediaRecorder.onstop = () => {
-      const blob = new Blob(recordedChunks, { type: 'video/webm' });
-      capturedBlobUrl = URL.createObjectURL(blob);
-      capturedIsVideo = true;
-      showResult();
-    };
-    mediaRecorder.start();
-    isRecording = true;
-    shotBtn.classList.add('recording');
-    recDot.classList.add('active');
-    statusEl.textContent = 'Gravando...';
-  } else {
-    mediaRecorder.stop();
-    isRecording = false;
-    shotBtn.classList.remove('recording');
-    recDot.classList.remove('active');
-    statusEl.textContent = 'Gravação finalizada.';
-  }
-}
+  const img = document.createElement('img');
+  img.src = dataUrl;
+  shotsEl.prepend(img);
 
-function showResult() {
-  video.style.display = 'none';
-  if (capturedIsVideo) {
-    preview.style.display = 'none';
-    let vidPreview = document.createElement('video');
-    vidPreview.id = 'videoPreview';
-    vidPreview.src = capturedBlobUrl;
-    vidPreview.controls = true;
-    vidPreview.autoplay = true;
-    vidPreview.loop = true;
-    vidPreview.style.width = '100%';
-    vidPreview.style.height = '100%';
-    vidPreview.style.objectFit = 'cover';
-    document.getElementById('videoWrap').appendChild(vidPreview);
-  } else {
-    preview.src = capturedBlobUrl;
-    preview.style.display = 'block';
-  }
-  resultActions.style.display = 'flex';
-  shotBtn.style.visibility = 'hidden';
-  switchBtn.style.visibility = 'hidden';
-}
-
-retakeBtn.addEventListener('click', () => {
-  const vp = document.getElementById('videoPreview');
-  if (vp) vp.remove();
-  preview.style.display = 'none';
-  video.style.display = 'block';
-  resultActions.style.display = 'none';
-  shotBtn.style.visibility = 'visible';
-  switchBtn.style.visibility = 'visible';
-  statusEl.textContent = 'Câmera ativa.';
-  startCamera();
-});
-
-downloadBtn.addEventListener('click', () => {
   const a = document.createElement('a');
-  a.href = capturedBlobUrl;
-  a.download = capturedIsVideo ? 'video.webm' : 'foto.jpg';
+  a.href = dataUrl;
+  a.download = 'rosto-desconhecido-' + Date.now() + '.jpg';
   a.click();
-});
+}
 
-startCamera();
+async function detectLoop() {
+  if (!watching) return;
+
+  const detections = await faceapi
+    .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
+    .withFaceLandmarks()
+    .withFaceDescriptors();
+
+  const ctx = overlay.getContext('2d');
+  ctx.clearRect(0, 0, overlay.width, overlay.height);
+
+  let sawUnknown = false;
+  let sawKnown = false;
+
+  detections.forEach(d => {
+    const distance = faceapi.euclideanDistance(d.descriptor, myDescriptor);
+    const isMe = distance < MATCH_THRESHOLD;
+    if (isMe) sawKnown = true; else sawUnknown = true;
+
+    const box = d.detection.box;
+    ctx.strokeStyle = isMe ? '#34c759' : '#ff3b30';
+    ctx.lineWidth = 3;
+    ctx.strokeRect(box.x, box.y, box.width, box.height);
+  });
+
+  if (sawUnknown) {
+    badge.textContent = 'Rosto desconhecido!';
+    badge.className = 'badge unknown';
+    badge.style.display = 'block';
+    const now = Date.now();
+    if (now - lastCaptureTime > CAPTURE_COOLDOWN_MS) {
+      takeAutoPhoto();
+      lastCaptureTime = now;
+    }
+  } else if (sawKnown) {
+    badge.textContent = 'Voce';
+    badge.className = 'badge known';
+    badge.style.display = 'block';
+  } else {
+    badge.style.display = 'none';
+  }
+
+  requestAnimationFrame(detectLoop);
+}
+
+(async () => {
+  await loadModels();
+  await startCamera();
+  loadSavedDescriptor();
+})();
 </script>
 
 </body>
