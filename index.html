@@ -112,10 +112,6 @@
   <button id="resetBtn" class="action danger">Zerar contagem</button>
 </div>
 
-<select id="camSelect" style="margin-top:10px; width:100%; max-width:480px; padding:10px; border-radius:8px; background:#26262b; color:#f2f2f2; border:none;">
-  <option>Carregando cameras...</option>
-</select>
-
 <div id="status">Carregando modelos...</div>
 
 <div class="gallery" id="gallery"></div>
@@ -127,7 +123,6 @@ const counterEl = document.getElementById('counter');
 const dateLabel = document.getElementById('dateLabel');
 const toggleBtn = document.getElementById('toggleBtn');
 const resetBtn = document.getElementById('resetBtn');
-const camSelect = document.getElementById('camSelect');
 const statusEl = document.getElementById('status');
 const galleryEl = document.getElementById('gallery');
 
@@ -177,21 +172,15 @@ async function loadModels() {
   statusEl.textContent = 'Modelos carregados. Ativando camera...';
 }
 
-async function listCameras() {
+async function pickFrontCamera() {
   const devices = await navigator.mediaDevices.enumerateDevices();
   const cams = devices.filter(d => d.kind === 'videoinput');
-  camSelect.innerHTML = '';
-  cams.forEach((cam, i) => {
-    const opt = document.createElement('option');
-    opt.value = cam.deviceId;
-    opt.textContent = cam.label || ('Camera ' + (i + 1));
-    camSelect.appendChild(opt);
-  });
-  if (!currentDeviceId && cams.length > 0) {
-    // tenta achar uma camera frontal pelo nome (front, user, frontal)
-    const front = cams.find(c => /front|user|frontal/i.test(c.label));
-    currentDeviceId = front ? front.deviceId : cams[0].deviceId;
-    camSelect.value = currentDeviceId;
+  const front = cams.find(c => /front|user|frontal/i.test(c.label));
+  if (front) {
+    currentDeviceId = front.deviceId;
+  } else if (cams.length > 0) {
+    // se nao achar pelo nome, assume a primeira da lista como fallback
+    currentDeviceId = cams[0].deviceId;
   }
 }
 
@@ -200,6 +189,14 @@ async function startCamera() {
     if (currentStream) {
       currentStream.getTracks().forEach(t => t.stop());
     }
+
+    // primeiro pede uma camera generica so pra liberar permissao e ver os nomes
+    if (!currentDeviceId) {
+      const temp = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'user' } } });
+      temp.getTracks().forEach(t => t.stop());
+      await pickFrontCamera();
+    }
+
     const constraints = currentDeviceId
       ? { video: { deviceId: { exact: currentDeviceId } } }
       : { video: { facingMode: { ideal: 'user' } } };
@@ -210,19 +207,12 @@ async function startCamera() {
     overlay.width = video.videoWidth;
     overlay.height = video.videoHeight;
 
-    await listCameras(); // atualiza labels agora que tem permissao
-
     statusEl.textContent = 'Camera ativa. Toque em Iniciar contagem.';
     toggleBtn.disabled = false;
   } catch (err) {
     statusEl.textContent = 'Erro ao acessar a camera: ' + err.message;
   }
 }
-
-camSelect.addEventListener('change', () => {
-  currentDeviceId = camSelect.value;
-  startCamera();
-});
 
 async function requestWakeLock() {
   try {
