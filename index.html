@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Camera com Deteccao Facial</title>
+<title>Contador de Pessoas</title>
 <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -17,7 +17,15 @@
     min-height: 100vh;
     padding: 16px;
   }
-  h1 { font-size: 1.2rem; font-weight: 600; margin-bottom: 12px; }
+  h1 { font-size: 1.1rem; font-weight: 600; margin-bottom: 4px; }
+  .counter {
+    font-size: 3.2rem;
+    font-weight: 800;
+    color: #0a84ff;
+    margin: 8px 0 2px 0;
+    line-height: 1;
+  }
+  .counter-label { font-size: 12px; color: #999; margin-bottom: 14px; }
   .video-wrap {
     position: relative;
     width: 100%;
@@ -28,7 +36,7 @@
     overflow: hidden;
     box-shadow: 0 4px 24px rgba(0,0,0,0.4);
   }
-  video, canvas.overlay, img.preview {
+  video, canvas.overlay {
     position: absolute;
     top: 0; left: 0;
     width: 100%;
@@ -36,30 +44,15 @@
     object-fit: cover;
   }
   canvas.overlay { pointer-events: none; }
-  .badge {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    padding: 4px 10px;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: 600;
-    display: none;
-    z-index: 5;
-  }
-  .badge.known { background: #34c759; color: #003d13; }
-  .badge.unknown { background: #ff3b30; color: #3d0000; }
   .controls-row {
     display: flex;
     gap: 10px;
     margin-top: 16px;
     width: 100%;
     max-width: 480px;
-    flex-wrap: wrap;
   }
   button.action {
     flex: 1;
-    min-width: 140px;
     border: none;
     border-radius: 10px;
     padding: 12px;
@@ -79,7 +72,7 @@
     text-align: center;
     min-height: 18px;
   }
-  .shots {
+  .gallery {
     margin-top: 16px;
     width: 100%;
     max-width: 480px;
@@ -87,53 +80,88 @@
     gap: 8px;
     flex-wrap: wrap;
   }
-  .shots img {
-    width: 72px;
-    height: 96px;
+  .gallery-item { text-align: center; }
+  .gallery-item img {
+    width: 70px;
+    height: 92px;
     object-fit: cover;
     border-radius: 8px;
-    border: 2px solid #ff3b30;
+    border: 2px solid #0a84ff;
+  }
+  .gallery-item span {
+    display: block;
+    font-size: 10px;
+    color: #777;
+    margin-top: 2px;
   }
 </style>
 </head>
 <body>
 
-<h1>Camera com deteccao facial</h1>
+<h1>Contador de pessoas no carro</h1>
+<div class="counter" id="counter">0</div>
+<div class="counter-label" id="dateLabel">carregando data...</div>
 
 <div class="video-wrap" id="videoWrap">
   <video id="video" autoplay playsinline muted></video>
   <canvas id="overlay" class="overlay"></canvas>
-  <div id="badge" class="badge"></div>
 </div>
 
 <div class="controls-row">
-  <button id="enrollBtn" class="action primary">Cadastrar meu rosto</button>
-  <button id="toggleBtn" class="action" disabled>Ativar vigilancia</button>
-  <button id="resetBtn" class="action danger">Apagar cadastro</button>
+  <button id="toggleBtn" class="action primary" disabled>Iniciar contagem</button>
+  <button id="resetBtn" class="action danger">Zerar contagem</button>
 </div>
 
-<div id="status">Carregando modelos de reconhecimento facial...</div>
+<div id="status">Carregando modelos...</div>
 
-<div class="shots" id="shots"></div>
+<div class="gallery" id="gallery"></div>
 
 <script>
 const video = document.getElementById('video');
 const overlay = document.getElementById('overlay');
-const badge = document.getElementById('badge');
-const enrollBtn = document.getElementById('enrollBtn');
+const counterEl = document.getElementById('counter');
+const dateLabel = document.getElementById('dateLabel');
 const toggleBtn = document.getElementById('toggleBtn');
 const resetBtn = document.getElementById('resetBtn');
 const statusEl = document.getElementById('status');
-const shotsEl = document.getElementById('shots');
+const galleryEl = document.getElementById('gallery');
 
 const MODEL_URL = 'https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.13/model';
-const MATCH_THRESHOLD = 0.5; // menor = mais rigoroso
-const CAPTURE_COOLDOWN_MS = 5000;
+const MATCH_THRESHOLD = 0.5;
+const STORAGE_KEY = 'peopleCounterData';
 
-let myDescriptor = null;
 let watching = false;
-let lastCaptureTime = 0;
-let stream = null;
+let knownDescriptors = [];
+let wakeLock = null;
+
+function todayStr() {
+  const d = new Date();
+  return d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
+}
+
+function loadData() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (raw) {
+    const data = JSON.parse(raw);
+    if (data.date === todayStr()) {
+      knownDescriptors = data.descriptors.map(d => new Float32Array(d));
+      counterEl.textContent = knownDescriptors.length;
+      dateLabel.textContent = 'Contagem do dia ' + todayStr();
+      return;
+    }
+  }
+  knownDescriptors = [];
+  counterEl.textContent = '0';
+  saveData();
+}
+
+function saveData() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify({
+    date: todayStr(),
+    descriptors: knownDescriptors.map(d => Array.from(d))
+  }));
+  dateLabel.textContent = 'Contagem do dia ' + todayStr();
+}
 
 async function loadModels() {
   await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
@@ -144,78 +172,66 @@ async function loadModels() {
 
 async function startCamera() {
   try {
-    stream = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode: 'environment' }
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: 'user' }
     });
     video.srcObject = stream;
     await new Promise(res => video.onloadedmetadata = res);
     overlay.width = video.videoWidth;
     overlay.height = video.videoHeight;
-    statusEl.textContent = 'Camera ativa. Cadastre seu rosto para comecar.';
-    enrollBtn.disabled = false;
+    statusEl.textContent = 'Camera pronta. Toque em Iniciar contagem.';
+    toggleBtn.disabled = false;
   } catch (err) {
     statusEl.textContent = 'Erro ao acessar a camera: ' + err.message;
   }
 }
 
-function loadSavedDescriptor() {
-  const saved = localStorage.getItem('myFaceDescriptor');
-  if (saved) {
-    myDescriptor = new Float32Array(JSON.parse(saved));
-    toggleBtn.disabled = false;
-    statusEl.textContent = 'Rosto cadastrado encontrado. Pronto para vigiar.';
-  }
+async function requestWakeLock() {
+  try {
+    if ('wakeLock' in navigator) {
+      wakeLock = await navigator.wakeLock.request('screen');
+    }
+  } catch (e) { }
 }
 
-enrollBtn.addEventListener('click', async () => {
-  statusEl.textContent = 'Detectando seu rosto, olhe para a camera...';
-  const detection = await faceapi
-    .detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
-    .withFaceLandmarks()
-    .withFaceDescriptor();
+function addPersonPhoto(dataUrl, count) {
+  const item = document.createElement('div');
+  item.className = 'gallery-item';
+  const img = document.createElement('img');
+  img.src = dataUrl;
+  const label = document.createElement('span');
+  const now = new Date();
+  label.textContent = '#' + count + ' - ' + now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+  item.appendChild(img);
+  item.appendChild(label);
+  galleryEl.prepend(item);
+}
 
-  if (!detection) {
-    statusEl.textContent = 'Nenhum rosto detectado. Tente novamente com boa luz.';
-    return;
-  }
-  myDescriptor = detection.descriptor;
-  localStorage.setItem('myFaceDescriptor', JSON.stringify(Array.from(myDescriptor)));
-  toggleBtn.disabled = false;
-  statusEl.textContent = 'Rosto cadastrado com sucesso!';
-});
-
-resetBtn.addEventListener('click', () => {
-  localStorage.removeItem('myFaceDescriptor');
-  myDescriptor = null;
-  toggleBtn.disabled = true;
-  watching = false;
-  toggleBtn.textContent = 'Ativar vigilancia';
-  statusEl.textContent = 'Cadastro apagado.';
-});
-
-toggleBtn.addEventListener('click', () => {
-  watching = !watching;
-  toggleBtn.textContent = watching ? 'Parar vigilancia' : 'Ativar vigilancia';
-  statusEl.textContent = watching ? 'Vigiando...' : 'Vigilancia pausada.';
-  if (watching) detectLoop();
-});
-
-function takeAutoPhoto() {
+function snapshot() {
   const canvas = document.createElement('canvas');
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;
   canvas.getContext('2d').drawImage(video, 0, 0);
-  const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
-
-  const img = document.createElement('img');
-  img.src = dataUrl;
-  shotsEl.prepend(img);
-
-  const a = document.createElement('a');
-  a.href = dataUrl;
-  a.download = 'rosto-desconhecido-' + Date.now() + '.jpg';
-  a.click();
+  return canvas.toDataURL('image/jpeg', 0.85);
 }
+
+toggleBtn.addEventListener('click', async () => {
+  watching = !watching;
+  toggleBtn.textContent = watching ? 'Pausar contagem' : 'Iniciar contagem';
+  statusEl.textContent = watching ? 'Contando pessoas...' : 'Pausado.';
+  if (watching) {
+    await requestWakeLock();
+    detectLoop();
+  }
+});
+
+resetBtn.addEventListener('click', () => {
+  knownDescriptors = [];
+  counterEl.textContent = '0';
+  galleryEl.innerHTML = '';
+  saveData();
+  statusEl.textContent = 'Contagem zerada.';
+});
 
 async function detectLoop() {
   if (!watching) return;
@@ -228,36 +244,25 @@ async function detectLoop() {
   const ctx = overlay.getContext('2d');
   ctx.clearRect(0, 0, overlay.width, overlay.height);
 
-  let sawUnknown = false;
-  let sawKnown = false;
-
   detections.forEach(d => {
-    const distance = faceapi.euclideanDistance(d.descriptor, myDescriptor);
-    const isMe = distance < MATCH_THRESHOLD;
-    if (isMe) sawKnown = true; else sawUnknown = true;
+    let isNew = true;
+    for (const known of knownDescriptors) {
+      const distance = faceapi.euclideanDistance(d.descriptor, known);
+      if (distance < MATCH_THRESHOLD) { isNew = false; break; }
+    }
 
     const box = d.detection.box;
-    ctx.strokeStyle = isMe ? '#34c759' : '#ff3b30';
+    ctx.strokeStyle = isNew ? '#ff9500' : '#34c759';
     ctx.lineWidth = 3;
     ctx.strokeRect(box.x, box.y, box.width, box.height);
-  });
 
-  if (sawUnknown) {
-    badge.textContent = 'Rosto desconhecido!';
-    badge.className = 'badge unknown';
-    badge.style.display = 'block';
-    const now = Date.now();
-    if (now - lastCaptureTime > CAPTURE_COOLDOWN_MS) {
-      takeAutoPhoto();
-      lastCaptureTime = now;
+    if (isNew) {
+      knownDescriptors.push(d.descriptor);
+      counterEl.textContent = knownDescriptors.length;
+      saveData();
+      addPersonPhoto(snapshot(), knownDescriptors.length);
     }
-  } else if (sawKnown) {
-    badge.textContent = 'Voce';
-    badge.className = 'badge known';
-    badge.style.display = 'block';
-  } else {
-    badge.style.display = 'none';
-  }
+  });
 
   requestAnimationFrame(detectLoop);
 }
@@ -265,7 +270,7 @@ async function detectLoop() {
 (async () => {
   await loadModels();
   await startCamera();
-  loadSavedDescriptor();
+  loadData();
 })();
 </script>
 
