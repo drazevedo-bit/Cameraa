@@ -1,306 +1,1179 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contador de Pessoas</title>
-<script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
-<style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: #0f0f12;
-    color: #f2f2f2;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    padding: 16px;
-  }
-  h1 { font-size: 1.1rem; font-weight: 600; margin-bottom: 4px; }
-  .counter {
-    font-size: 3.2rem;
-    font-weight: 800;
-    color: #0a84ff;
-    margin: 8px 0 2px 0;
-    line-height: 1;
-  }
-  .counter-label { font-size: 12px; color: #999; margin-bottom: 14px; }
-  .video-wrap {
-    position: relative;
-    width: 100%;
-    max-width: 480px;
-    aspect-ratio: 3 / 4;
-    background: #1a1a1e;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.4);
-  }
-  video, canvas.overlay {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  canvas.overlay { pointer-events: none; }
-  .controls-row {
-    display: flex;
-    gap: 10px;
-    margin-top: 16px;
-    width: 100%;
-    max-width: 480px;
-  }
-  button.action {
-    flex: 1;
-    border: none;
-    border-radius: 10px;
-    padding: 12px;
-    font-size: 14px;
-    font-weight: 600;
-    background: #26262b;
-    color: #f2f2f2;
-    cursor: pointer;
-  }
-  button.action.primary { background: #0a84ff; }
-  button.action.danger { background: #ff3b30; }
-  button.action:disabled { opacity: 0.4; }
-  #status {
-    margin-top: 12px;
-    font-size: 13px;
-    color: #999;
-    text-align: center;
-    min-height: 18px;
-  }
-  .gallery {
-    margin-top: 16px;
-    width: 100%;
-    max-width: 480px;
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-  .gallery-item { text-align: center; }
-  .gallery-item img {
-    width: 70px;
-    height: 92px;
-    object-fit: cover;
-    border-radius: 8px;
-    border: 2px solid #0a84ff;
-  }
-  .gallery-item span {
-    display: block;
-    font-size: 10px;
-    color: #777;
-    margin-top: 2px;
-  }
-</style>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Contador Anônimo de Passageiros</title>
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js">
+    </script>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            padding: 18px;
+
+            background: #0f0f12;
+
+            color: #f2f2f2;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Arial,
+                sans-serif;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+        }
+
+
+        /* ================================
+           CABEÇALHO
+        ================================= */
+
+        h1 {
+
+            margin-top: 4px;
+
+            font-size: 1.15rem;
+
+            font-weight: 650;
+
+            text-align: center;
+        }
+
+
+        .subtitulo {
+
+            margin-top: 5px;
+
+            color: #8e8e93;
+
+            font-size: 12px;
+
+            text-align: center;
+        }
+
+
+        /* ================================
+           CONTADOR PRINCIPAL
+        ================================= */
+
+        .painel-contador {
+
+            margin-top: 22px;
+
+            text-align: center;
+        }
+
+
+        .counter {
+
+            font-size: 4rem;
+
+            font-weight: 800;
+
+            line-height: 1;
+
+            color: #0a84ff;
+        }
+
+
+        .counter-label {
+
+            margin-top: 6px;
+
+            font-size: 12px;
+
+            color: #999;
+        }
+
+
+        /* ================================
+           MÉTRICAS
+        ================================= */
+
+        .metricas {
+
+            width: 100%;
+
+            max-width: 480px;
+
+            margin-top: 18px;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 10px;
+        }
+
+
+        .metrica {
+
+            padding: 13px;
+
+            border-radius: 12px;
+
+            background: #1c1c21;
+
+            text-align: center;
+        }
+
+
+        .metrica-numero {
+
+            font-size: 1.4rem;
+
+            font-weight: 700;
+        }
+
+
+        .metrica-label {
+
+            margin-top: 3px;
+
+            font-size: 11px;
+
+            color: #888;
+        }
+
+
+        /* ================================
+           CÂMERA
+        ================================= */
+
+        .video-wrap {
+
+            position: relative;
+
+            width: 100%;
+
+            max-width: 480px;
+
+            margin-top: 18px;
+
+            aspect-ratio: 3 / 4;
+
+            overflow: hidden;
+
+            border-radius: 16px;
+
+            background: #1a1a1e;
+
+            box-shadow:
+                0 4px 24px rgba(0,0,0,0.4);
+        }
+
+
+        video,
+        canvas {
+
+            position: absolute;
+
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+        }
+
+
+        canvas {
+
+            pointer-events: none;
+        }
+
+
+        /* ================================
+           INDICADOR DE ESTADO
+        ================================= */
+
+        .estado-camera {
+
+            position: absolute;
+
+            top: 12px;
+            left: 12px;
+
+            z-index: 10;
+
+            padding:
+                7px
+                11px;
+
+            border-radius: 999px;
+
+            background:
+                rgba(0,0,0,0.55);
+
+            backdrop-filter:
+                blur(5px);
+
+            font-size: 11px;
+
+            color: white;
+        }
+
+
+        /* ================================
+           BOTÕES
+        ================================= */
+
+        .controls-row {
+
+            width: 100%;
+
+            max-width: 480px;
+
+            margin-top: 16px;
+
+            display: flex;
+
+            gap: 10px;
+        }
+
+
+        button {
+
+            flex: 1;
+
+            padding: 13px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            font-size: 14px;
+
+            font-weight: 650;
+
+            cursor: pointer;
+
+            color: white;
+
+            background: #2c2c31;
+        }
+
+
+        button.primary {
+
+            background: #0a84ff;
+        }
+
+
+        button.danger {
+
+            background: #ff3b30;
+        }
+
+
+        button:disabled {
+
+            opacity: 0.4;
+
+            cursor: default;
+        }
+
+
+        /* ================================
+           STATUS
+        ================================= */
+
+        #status {
+
+            width: 100%;
+
+            max-width: 480px;
+
+            min-height: 20px;
+
+            margin-top: 13px;
+
+            color: #999;
+
+            font-size: 13px;
+
+            line-height: 1.4;
+
+            text-align: center;
+        }
+
+
+        /* ================================
+           HISTÓRICO
+        ================================= */
+
+        .historico {
+
+            width: 100%;
+
+            max-width: 480px;
+
+            margin-top: 20px;
+
+            padding: 15px;
+
+            border-radius: 14px;
+
+            background: #18181d;
+        }
+
+
+        .historico h2 {
+
+            margin-bottom: 12px;
+
+            font-size: 14px;
+        }
+
+
+        .lista {
+
+            max-height: 220px;
+
+            overflow-y: auto;
+        }
+
+
+        .evento {
+
+            padding: 9px 0;
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.06);
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 10px;
+
+            color: #bdbdc2;
+
+            font-size: 12px;
+        }
+
+
+        .evento:last-child {
+
+            border-bottom: none;
+        }
+
+
+        .privacidade {
+
+            width: 100%;
+
+            max-width: 480px;
+
+            margin-top: 15px;
+
+            padding: 12px;
+
+            border-radius: 10px;
+
+            background: rgba(52,199,89,0.08);
+
+            color: #9ccca8;
+
+            font-size: 11px;
+
+            line-height: 1.45;
+
+            text-align: center;
+        }
+
+
+    </style>
+
 </head>
+
+
 <body>
 
-<h1>Contador de pessoas no carro</h1>
-<div class="counter" id="counter">0</div>
-<div class="counter-label" id="dateLabel">carregando data...</div>
 
-<div class="video-wrap" id="videoWrap">
-  <video id="video" autoplay playsinline muted></video>
-  <canvas id="overlay" class="overlay"></canvas>
-</div>
+    <h1>
+        Contador anônimo de passageiros
+    </h1>
 
-<div class="controls-row">
-  <button id="toggleBtn" class="action primary" disabled>Iniciar contagem</button>
-  <button id="resetBtn" class="action danger">Zerar contagem</button>
-</div>
 
-<div id="status">Carregando modelos...</div>
+    <div class="subtitulo">
+        Detecção de presença sem reconhecimento facial
+    </div>
 
-<div class="gallery" id="gallery"></div>
 
-<script>
-const video = document.getElementById('video');
-const overlay = document.getElementById('overlay');
-const counterEl = document.getElementById('counter');
-const dateLabel = document.getElementById('dateLabel');
-const toggleBtn = document.getElementById('toggleBtn');
-const resetBtn = document.getElementById('resetBtn');
-const statusEl = document.getElementById('status');
-const galleryEl = document.getElementById('gallery');
 
-const MODEL_URL = 'https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.13/model';
-const MATCH_THRESHOLD = 0.5;
-const STORAGE_KEY = 'peopleCounterData';
+    <!-- ================================
+         CONTADOR
+    ================================= -->
 
-let watching = false;
-let knownDescriptors = [];
-let wakeLock = null;
-let currentStream = null;
-let currentDeviceId = null;
+    <div class="painel-contador">
 
-function todayStr() {
-  const d = new Date();
-  return d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
-}
+        <div
+            class="counter"
+            id="counter">
 
-function loadData() {
-  const raw = localStorage.getItem(STORAGE_KEY);
-  if (raw) {
-    const data = JSON.parse(raw);
-    if (data.date === todayStr()) {
-      knownDescriptors = data.descriptors.map(d => new Float32Array(d));
-      counterEl.textContent = knownDescriptors.length;
-      dateLabel.textContent = 'Contagem do dia ' + todayStr();
-      return;
-    }
-  }
-  knownDescriptors = [];
-  counterEl.textContent = '0';
-  saveData();
-}
+            0
 
-function saveData() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify({
-    date: todayStr(),
-    descriptors: knownDescriptors.map(d => Array.from(d))
-  }));
-  dateLabel.textContent = 'Contagem do dia ' + todayStr();
-}
+        </div>
 
-async function loadModels() {
-  await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
-  await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
-  await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
-  statusEl.textContent = 'Modelos carregados. Ativando camera...';
-}
 
-async function pickFrontCamera() {
-  const devices = await navigator.mediaDevices.enumerateDevices();
-  const cams = devices.filter(d => d.kind === 'videoinput');
-  const front = cams.find(c => /front|user|frontal/i.test(c.label));
-  if (front) {
-    currentDeviceId = front.deviceId;
-  } else if (cams.length > 0) {
-    // se nao achar pelo nome, assume a primeira da lista como fallback
-    currentDeviceId = cams[0].deviceId;
-  }
-}
+        <div
+            class="counter-label"
+            id="dateLabel">
 
-async function startCamera() {
-  try {
-    if (currentStream) {
-      currentStream.getTracks().forEach(t => t.stop());
-    }
+            carregando...
 
-    // primeiro pede uma camera generica so pra liberar permissao e ver os nomes
-    if (!currentDeviceId) {
-      const temp = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'user' } } });
-      temp.getTracks().forEach(t => t.stop());
-      await pickFrontCamera();
-    }
+        </div>
 
-    const constraints = currentDeviceId
-      ? { video: { deviceId: { exact: currentDeviceId } } }
-      : { video: { facingMode: { ideal: 'user' } } };
+    </div>
 
-    currentStream = await navigator.mediaDevices.getUserMedia(constraints);
-    video.srcObject = currentStream;
-    await new Promise(res => video.onloadedmetadata = res);
-    overlay.width = video.videoWidth;
-    overlay.height = video.videoHeight;
 
-    statusEl.textContent = 'Camera ativa. Toque em Iniciar contagem.';
-    toggleBtn.disabled = false;
-  } catch (err) {
-    statusEl.textContent = 'Erro ao acessar a camera: ' + err.message;
-  }
-}
 
-async function requestWakeLock() {
-  try {
-    if ('wakeLock' in navigator) {
-      wakeLock = await navigator.wakeLock.request('screen');
-    }
-  } catch (e) { }
-}
+    <!-- ================================
+         MÉTRICAS
+    ================================= -->
 
-function addPersonPhoto(dataUrl, count) {
-  const item = document.createElement('div');
-  item.className = 'gallery-item';
-  const img = document.createElement('img');
-  img.src = dataUrl;
-  const label = document.createElement('span');
-  const now = new Date();
-  label.textContent = '#' + count + ' - ' + now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
-  item.appendChild(img);
-  item.appendChild(label);
-  galleryEl.prepend(item);
-}
+    <div class="metricas">
 
-function snapshot() {
-  const canvas = document.createElement('canvas');
-  canvas.width = video.videoWidth;
-  canvas.height = video.videoHeight;
-  canvas.getContext('2d').drawImage(video, 0, 0);
-  return canvas.toDataURL('image/jpeg', 0.85);
-}
 
-toggleBtn.addEventListener('click', async () => {
-  watching = !watching;
-  toggleBtn.textContent = watching ? 'Pausar contagem' : 'Iniciar contagem';
-  statusEl.textContent = watching ? 'Contando pessoas...' : 'Pausado.';
-  if (watching) {
-    await requestWakeLock();
-    detectLoop();
-  }
-});
+        <div class="metrica">
 
-resetBtn.addEventListener('click', () => {
-  knownDescriptors = [];
-  counterEl.textContent = '0';
-  galleryEl.innerHTML = '';
-  saveData();
-  statusEl.textContent = 'Contagem zerada.';
-});
+            <div
+                class="metrica-numero"
+                id="facesAgora">
 
-async function detectLoop() {
-  if (!watching) return;
+                0
 
-  const detections = await faceapi
-    .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
-    .withFaceLandmarks()
-    .withFaceDescriptors();
+            </div>
 
-  const ctx = overlay.getContext('2d');
-  ctx.clearRect(0, 0, overlay.width, overlay.height);
+            <div class="metrica-label">
+                rostos detectados agora
+            </div>
 
-  detections.forEach(d => {
-    let isNew = true;
-    for (const known of knownDescriptors) {
-      const distance = faceapi.euclideanDistance(d.descriptor, known);
-      if (distance < MATCH_THRESHOLD) { isNew = false; break; }
-    }
+        </div>
 
-    const box = d.detection.box;
-    ctx.strokeStyle = isNew ? '#ff9500' : '#34c759';
-    ctx.lineWidth = 3;
-    ctx.strokeRect(box.x, box.y, box.width, box.height);
 
-    if (isNew) {
-      knownDescriptors.push(d.descriptor);
-      counterEl.textContent = knownDescriptors.length;
-      saveData();
-      addPersonPhoto(snapshot(), knownDescriptors.length);
-    }
-  });
+        <div class="metrica">
 
-  requestAnimationFrame(detectLoop);
-}
+            <div
+                class="metrica-numero"
+                id="sessoesHoje">
 
-(async () => {
-  await loadModels();
-  await startCamera();
-  loadData();
-})();
-</script>
+                0
 
-</body>
-</html>
+            </div>
+
+            <div class="metrica-label">
+                sessões hoje
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ================================
+         CÂMERA
+    ================================= -->
+
+    <div class="video-wrap">
+
+
+        <video
+            id="video"
+            autoplay
+            playsinline
+            muted>
+        </video>
+
+
+        <canvas
+            id="overlay">
+        </canvas>
+
+
+        <div
+            class="estado-camera"
+            id="estadoCamera">
+
+            inicializando...
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ================================
+         CONTROLES
+    ================================= -->
+
+    <div class="controls-row">
+
+
+        <button
+            id="toggleBtn"
+            class="primary"
+            disabled>
+
+            Iniciar contagem
+
+        </button>
+
+
+        <button
+            id="resetBtn"
+            class="danger">
+
+            Zerar dia
+
+        </button>
+
+
+    </div>
+
+
+
+    <div id="status">
+
+        Carregando modelo de detecção...
+
+    </div>
+
+
+
+    <!-- ================================
+         HISTÓRICO
+    ================================= -->
+
+    <div class="historico">
+
+        <h2>
+            Eventos registrados hoje
+        </h2>
+
+        <div
+            class="lista"
+            id="listaEventos">
+        </div>
+
+    </div>
+
+
+
+    <div class="privacidade">
+
+        Nenhuma fotografia é salva.
+        Nenhum rosto é identificado.
+        Nenhum descritor facial é armazenado.
+        O sistema registra apenas contagens e horários.
+
+    </div>
+
+
+
+    <script>
+
+
+        /* =====================================
+           ELEMENTOS
+        ====================================== */
+
+        const video =
+            document.getElementById("video");
+
+        const overlay =
+            document.getElementById("overlay");
+
+        const counterEl =
+            document.getElementById("counter");
+
+        const dateLabel =
+            document.getElementById("dateLabel");
+
+        const toggleBtn =
+            document.getElementById("toggleBtn");
+
+        const resetBtn =
+            document.getElementById("resetBtn");
+
+        const statusEl =
+            document.getElementById("status");
+
+        const facesAgoraEl =
+            document.getElementById("facesAgora");
+
+        const sessoesHojeEl =
+            document.getElementById("sessoesHoje");
+
+        const listaEventos =
+            document.getElementById("listaEventos");
+
+        const estadoCamera =
+            document.getElementById("estadoCamera");
+
+
+
+        /* =====================================
+           CONFIGURAÇÕES
+        ====================================== */
+
+        const MODEL_URL =
+            "https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.13/model";
+
+
+        const STORAGE_KEY =
+            "contadorPassageirosAnonimo";
+
+
+        /*
+            A pessoa precisa aparecer durante
+            pelo menos 2 segundos antes
+            de a presença ser confirmada.
+        */
+
+        const TEMPO_CONFIRMACAO =
+            2000;
+
+
+        /*
+            Depois que todas as pessoas saem,
+            esperamos 15 segundos antes
+            de liberar uma nova sessão.
+
+            Isso ajuda a evitar contar novamente
+            a mesma pessoa caso ela apenas
+            se movimente ou saia do enquadramento
+            por alguns segundos.
+        */
+
+        const TEMPO_AUSENCIA_RESET =
+            15000;
+
+
+        /*
+            Intervalo entre análises.
+
+            Não precisamos analisar 30 vezes
+            por segundo.
+
+            400 ms reduz bastante o uso
+            do processador do tablet.
+        */
+
+        const INTERVALO_DETECCAO =
+            400;
+
+
+
+        /* =====================================
+           VARIÁVEIS
+        ====================================== */
+
+        let contando =
+            false;
+
+
+        let streamAtual =
+            null;
+
+
+        let wakeLock =
+            null;
+
+
+        let temporizadorDeteccao =
+            null;
+
+
+        let inicioPresenca =
+            null;
+
+
+        let inicioAusencia =
+            null;
+
+
+        let sessaoAtiva =
+            false;
+
+
+        let maxPessoasSessao =
+            0;
+
+
+        let dados = {
+
+            data: "",
+
+            totalEstimado: 0,
+
+            sessoes: []
+
+        };
+
+
+
+        /* =====================================
+           DATA
+        ====================================== */
+
+        function hoje() {
+
+            const agora =
+                new Date();
+
+
+            return (
+                agora.getFullYear()
+                + "-"
+                + String(
+                    agora.getMonth() + 1
+                ).padStart(2, "0")
+                + "-"
+                + String(
+                    agora.getDate()
+                ).padStart(2, "0")
+            );
+
+        }
+
+
+
+        function horaAtual() {
+
+            return new Date()
+                .toLocaleTimeString(
+                    "pt-BR",
+                    {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        second: "2-digit"
+                    }
+                );
+
+        }
+
+
+
+        /* =====================================
+           ARMAZENAMENTO
+        ====================================== */
+
+        function carregarDados() {
+
+            const salvo =
+                localStorage.getItem(
+                    STORAGE_KEY
+                );
+
+
+            if (salvo) {
+
+                try {
+
+                    const lido =
+                        JSON.parse(salvo);
+
+
+                    if (
+                        lido.data === hoje()
+                    ) {
+
+                        dados = lido;
+
+                    }
+
+                }
+
+                catch (erro) {
+
+                    console.error(
+                        "Erro ao carregar dados:",
+                        erro
+                    );
+
+                }
+
+            }
+
+
+            if (
+                dados.data !== hoje()
+            ) {
+
+                dados = {
+
+                    data: hoje(),
+
+                    totalEstimado: 0,
+
+                    sessoes: []
+
+                };
+
+
+                salvarDados();
+
+            }
+
+
+            atualizarInterface();
+
+        }
+
+
+
+        function salvarDados() {
+
+            localStorage.setItem(
+
+                STORAGE_KEY,
+
+                JSON.stringify(
+                    dados
+                )
+
+            );
+
+        }
+
+
+
+        /* =====================================
+           INTERFACE
+        ====================================== */
+
+        function atualizarInterface() {
+
+
+            counterEl.textContent =
+                dados.totalEstimado;
+
+
+            sessoesHojeEl.textContent =
+                dados.sessoes.length;
+
+
+            dateLabel.textContent =
+                "Estimativa do dia "
+                + dados.data;
+
+
+            listaEventos.innerHTML =
+                "";
+
+
+            const eventos =
+                [...dados.sessoes]
+                    .reverse();
+
+
+            eventos.forEach(
+                function(evento) {
+
+
+                    const linha =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    linha.className =
+                        "evento";
+
+
+                    const esquerda =
+                        document.createElement(
+                            "span"
+                        );
+
+
+                    esquerda.textContent =
+                        evento.quantidade
+                        + (
+                            evento.quantidade === 1
+                            ? " passageiro"
+                            : " passageiros"
+                        );
+
+
+                    const direita =
+                        document.createElement(
+                            "span"
+                        );
+
+
+                    direita.textContent =
+                        evento.horario;
+
+
+                    linha.appendChild(
+                        esquerda
+                    );
+
+
+                    linha.appendChild(
+                        direita
+                    );
+
+
+                    listaEventos.appendChild(
+                        linha
+                    );
+
+                }
+            );
+
+        }
+
+
+
+        /* =====================================
+           MODELO DE DETECÇÃO
+
+           Observe que carregamos SOMENTE
+           TinyFaceDetector.
+
+           Não carregamos:
+           - reconhecimento facial
+           - landmarks
+           - descritores
+        ====================================== */
+
+        async function carregarModelo() {
+
+
+            statusEl.textContent =
+                "Carregando detector...";
+
+
+            await faceapi.nets
+                .tinyFaceDetector
+                .loadFromUri(
+                    MODEL_URL
+                );
+
+
+            statusEl.textContent =
+                "Detector carregado. Ativando câmera...";
+
+        }
+
+
+
+        /* =====================================
+           CÂMERA
+        ====================================== */
+
+        async function iniciarCamera() {
+
+
+            try {
+
+
+                if (
+                    streamAtual
+                ) {
+
+                    streamAtual
+                        .getTracks()
+                        .forEach(
+                            function(track) {
+
+                                track.stop();
+
+                            }
+                        );
+
+                }
+
+
+                streamAtual =
+                    await navigator.mediaDevices
+                        .getUserMedia({
+
+                            video: {
+
+                                facingMode: {
+                                    ideal: "user"
+                                },
+
+                                width: {
+                                    ideal: 640
+                                },
+
+                                height: {
+                                    ideal: 480
+                                }
+
+                            },
+
+                            audio: false
+
+                        });
+
+
+                video.srcObject =
+                    streamAtual;
+
+
+                await new Promise(
+                    function(resolve) {
+
+                        video.onloadedmetadata =
+                            resolve;
+
+                    }
+                );
+
+
+                overlay.width =
+                    video.videoWidth;
+
+
+                overlay.height =
+                    video.videoHeight;
+
+
+                estadoCamera.textContent =
+                    "câmera ativa";
+
+
+                statusEl.textContent =
+                    "Câmera pronta. Toque em Iniciar contagem.";
+
+
+                toggleBtn.disabled =
+                    false;
+
+
+            }
+
+            catch (erro) {
+
+
+                console.error(
+                    erro
+                );
+
+
+                estadoCamera.textContent =
+                    "erro";
+
+
+                statusEl.textContent =
+                    "Não foi possível acessar a câmera: "
+                    + erro.message;
+
+            }
+
+        }
+
+
+
+        /* =====================================
+           WAKE LOCK
+        ====================================== */
+
+        async function manterTelaLigada() {
+
+
+            try {
+
+
+                if (
+                    "wakeLock" in navigator
+                ) {
+
+                    wakeLock =
+                        await navigator
+                            .wakeLock
+                            .request(
+                                "screen"
+                            );
+
+                }
+
+
+            }
+
+            catch (erro) {
+
+                console.log(
+                    "Wake lock indisponível"
+                );
+
+            }
+
+        }
+
+
+
+        /* =====================================
+           REGISTRAR NOVA SESSÃO
+        ====================================== */
+
+        function registrarSessao(
+            quantidade
+        ) {
+
+
+            dados.totalEstimado +=
+                quantidade;
+
+
+            dados.sessoes.push({
+
+                horario:
+                    horaAtual(),
+
+                quantidade:
+                    quantidade
+
+            });
+
+
+            salvarDados();
+
+
+            atualizarInterface();
+
+
+            statusEl.textContent =
+                quantidade
+                + (
+                    quantidade === 1
+                    ? " passageiro registrado."
