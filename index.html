@@ -12,6 +12,9 @@
 
     <title>Contador Anônimo de Passageiros</title>
 
+
+    <!-- FACE API -->
+
     <script
         src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js">
     </script>
@@ -21,27 +24,22 @@
 
         * {
             box-sizing: border-box;
-            margin: 0;
-            padding: 0;
         }
 
 
         body {
 
+            margin: 0;
+
             min-height: 100vh;
 
-            padding: 18px;
+            background: #101014;
 
-            background: #0f0f12;
-
-            color: #f2f2f2;
+            color: white;
 
             font-family:
-                -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                Roboto,
                 Arial,
+                Helvetica,
                 sans-serif;
 
             display: flex;
@@ -49,20 +47,16 @@
             flex-direction: column;
 
             align-items: center;
+
+            padding: 20px;
         }
 
 
-        /* ================================
-           CABEÇALHO
-        ================================= */
-
         h1 {
 
-            margin-top: 4px;
+            margin: 0;
 
-            font-size: 1.15rem;
-
-            font-weight: 650;
+            font-size: 22px;
 
             text-align: center;
         }
@@ -70,125 +64,115 @@
 
         .subtitulo {
 
-            margin-top: 5px;
+            margin-top: 6px;
 
-            color: #8e8e93;
+            color: #929299;
 
-            font-size: 12px;
-
-            text-align: center;
-        }
-
-
-        /* ================================
-           CONTADOR PRINCIPAL
-        ================================= */
-
-        .painel-contador {
-
-            margin-top: 22px;
+            font-size: 13px;
 
             text-align: center;
         }
 
 
-        .counter {
+        /* =========================
+           CONTADOR
+        ========================== */
 
-            font-size: 4rem;
+        .contador {
 
-            font-weight: 800;
+            margin-top: 25px;
 
-            line-height: 1;
+            font-size: 64px;
+
+            font-weight: bold;
 
             color: #0a84ff;
         }
 
 
-        .counter-label {
+        .data {
 
-            margin-top: 6px;
+            margin-top: 5px;
 
             font-size: 12px;
 
-            color: #999;
+            color: #aaa;
         }
 
 
-        /* ================================
+        /* =========================
            MÉTRICAS
-        ================================= */
+        ========================== */
 
         .metricas {
 
             width: 100%;
 
-            max-width: 480px;
-
-            margin-top: 18px;
+            max-width: 500px;
 
             display: grid;
 
             grid-template-columns:
-                repeat(2, 1fr);
+                1fr
+                1fr;
 
-            gap: 10px;
+            gap: 12px;
+
+            margin-top: 20px;
         }
 
 
-        .metrica {
+        .card {
 
-            padding: 13px;
+            background: #202026;
 
             border-radius: 12px;
 
-            background: #1c1c21;
+            padding: 15px;
 
             text-align: center;
         }
 
 
-        .metrica-numero {
+        .numero {
 
-            font-size: 1.4rem;
+            font-size: 28px;
 
-            font-weight: 700;
+            font-weight: bold;
         }
 
 
-        .metrica-label {
+        .label {
 
-            margin-top: 3px;
+            margin-top: 4px;
 
             font-size: 11px;
 
-            color: #888;
+            color: #929299;
         }
 
 
-        /* ================================
+        /* =========================
            CÂMERA
-        ================================= */
+        ========================== */
 
-        .video-wrap {
+        .camera {
 
             position: relative;
 
             width: 100%;
 
-            max-width: 480px;
+            max-width: 500px;
+
+            aspect-ratio: 4 / 3;
 
             margin-top: 18px;
 
-            aspect-ratio: 3 / 4;
-
-            overflow: hidden;
+            background: #1a1a20;
 
             border-radius: 16px;
 
-            background: #1a1a1e;
-
-            box-shadow:
-                0 4px 24px rgba(0,0,0,0.4);
+            overflow: hidden;
         }
 
 
@@ -200,6 +184,7 @@
             inset: 0;
 
             width: 100%;
+
             height: 100%;
 
             object-fit: cover;
@@ -212,52 +197,42 @@
         }
 
 
-        /* ================================
-           INDICADOR DE ESTADO
-        ================================= */
-
-        .estado-camera {
+        .camera-status {
 
             position: absolute;
 
-            top: 12px;
-            left: 12px;
+            top: 10px;
 
-            z-index: 10;
+            left: 10px;
 
-            padding:
-                7px
-                11px;
+            padding: 7px 12px;
 
-            border-radius: 999px;
+            border-radius: 20px;
 
             background:
-                rgba(0,0,0,0.55);
-
-            backdrop-filter:
-                blur(5px);
+                rgba(0,0,0,0.6);
 
             font-size: 11px;
 
-            color: white;
+            z-index: 10;
         }
 
 
-        /* ================================
+        /* =========================
            BOTÕES
-        ================================= */
+        ========================== */
 
-        .controls-row {
+        .botoes {
 
             width: 100%;
 
-            max-width: 480px;
-
-            margin-top: 16px;
+            max-width: 500px;
 
             display: flex;
 
             gap: 10px;
+
+            margin-top: 16px;
         }
 
 
@@ -265,7 +240,7 @@
 
             flex: 1;
 
-            padding: 13px;
+            padding: 14px;
 
             border: none;
 
@@ -273,25 +248,23 @@
 
             font-size: 14px;
 
-            font-weight: 650;
-
-            cursor: pointer;
+            font-weight: bold;
 
             color: white;
 
-            background: #2c2c31;
+            cursor: pointer;
         }
 
 
-        button.primary {
+        #iniciar {
 
             background: #0a84ff;
         }
 
 
-        button.danger {
+        #zerar {
 
-            background: #ff3b30;
+            background: #ff453a;
         }
 
 
@@ -303,39 +276,41 @@
         }
 
 
-        /* ================================
+        /* =========================
            STATUS
-        ================================= */
+        ========================== */
 
         #status {
 
             width: 100%;
 
-            max-width: 480px;
+            max-width: 500px;
 
-            min-height: 20px;
+            margin-top: 14px;
 
-            margin-top: 13px;
+            padding: 12px;
 
-            color: #999;
+            border-radius: 10px;
+
+            background: #18181d;
 
             font-size: 13px;
 
-            line-height: 1.4;
-
             text-align: center;
+
+            color: #bbb;
         }
 
 
-        /* ================================
+        /* =========================
            HISTÓRICO
-        ================================= */
+        ========================== */
 
         .historico {
 
             width: 100%;
 
-            max-width: 480px;
+            max-width: 500px;
 
             margin-top: 20px;
 
@@ -349,42 +324,29 @@
 
         .historico h2 {
 
-            margin-bottom: 12px;
+            margin:
+                0
+                0
+                12px;
 
-            font-size: 14px;
-        }
-
-
-        .lista {
-
-            max-height: 220px;
-
-            overflow-y: auto;
+            font-size: 15px;
         }
 
 
         .evento {
 
-            padding: 9px 0;
-
-            border-bottom:
-                1px solid rgba(255,255,255,0.06);
-
             display: flex;
 
             justify-content: space-between;
 
-            gap: 10px;
+            padding: 9px 0;
 
-            color: #bdbdc2;
+            border-bottom:
+                1px solid rgba(255,255,255,0.07);
 
             font-size: 12px;
-        }
 
-
-        .evento:last-child {
-
-            border-bottom: none;
+            color: #bbb;
         }
 
 
@@ -392,25 +354,25 @@
 
             width: 100%;
 
-            max-width: 480px;
+            max-width: 500px;
 
-            margin-top: 15px;
+            margin-top: 16px;
 
             padding: 12px;
 
             border-radius: 10px;
 
-            background: rgba(52,199,89,0.08);
+            background:
+                rgba(52,199,89,0.08);
 
-            color: #9ccca8;
+            color: #9bc9a5;
 
             font-size: 11px;
 
-            line-height: 1.45;
-
             text-align: center;
-        }
 
+            line-height: 1.4;
+        }
 
     </style>
 
@@ -426,74 +388,72 @@
 
 
     <div class="subtitulo">
+
         Detecção de presença sem reconhecimento facial
-    </div>
-
-
-
-    <!-- ================================
-         CONTADOR
-    ================================= -->
-
-    <div class="painel-contador">
-
-        <div
-            class="counter"
-            id="counter">
-
-            0
-
-        </div>
-
-
-        <div
-            class="counter-label"
-            id="dateLabel">
-
-            carregando...
-
-        </div>
 
     </div>
 
 
 
-    <!-- ================================
-         MÉTRICAS
-    ================================= -->
+    <!-- CONTADOR -->
+
+    <div
+        class="contador"
+        id="contador">
+
+        0
+
+    </div>
+
+
+    <div
+        class="data"
+        id="data">
+
+        carregando...
+
+    </div>
+
+
+
+    <!-- MÉTRICAS -->
 
     <div class="metricas">
 
 
-        <div class="metrica">
+        <div class="card">
 
             <div
-                class="metrica-numero"
-                id="facesAgora">
+                class="numero"
+                id="rostos">
 
                 0
 
             </div>
 
-            <div class="metrica-label">
-                rostos detectados agora
+            <div class="label">
+
+                pessoas visíveis agora
+
             </div>
 
         </div>
 
 
-        <div class="metrica">
+        <div class="card">
 
             <div
-                class="metrica-numero"
-                id="sessoesHoje">
+                class="numero"
+                id="sessoes">
 
                 0
 
             </div>
 
-            <div class="metrica-label">
-                sessões hoje
+            <div class="label">
+
+                sessões registradas hoje
+
             </div>
 
         </div>
@@ -503,29 +463,27 @@
 
 
 
-    <!-- ================================
-         CÂMERA
-    ================================= -->
+    <!-- CÂMERA -->
 
-    <div class="video-wrap">
+    <div class="camera">
 
 
         <video
             id="video"
             autoplay
-            playsinline
-            muted>
+            muted
+            playsinline>
         </video>
 
 
         <canvas
-            id="overlay">
+            id="canvas">
         </canvas>
 
 
         <div
-            class="estado-camera"
-            id="estadoCamera">
+            class="camera-status"
+            id="cameraStatus">
 
             inicializando...
 
@@ -536,16 +494,13 @@
 
 
 
-    <!-- ================================
-         CONTROLES
-    ================================= -->
+    <!-- BOTÕES -->
 
-    <div class="controls-row">
+    <div class="botoes">
 
 
         <button
-            id="toggleBtn"
-            class="primary"
+            id="iniciar"
             disabled>
 
             Iniciar contagem
@@ -554,8 +509,7 @@
 
 
         <button
-            id="resetBtn"
-            class="danger">
+            id="zerar">
 
             Zerar dia
 
@@ -566,27 +520,26 @@
 
 
 
+    <!-- STATUS -->
+
     <div id="status">
 
-        Carregando modelo de detecção...
+        Iniciando sistema...
 
     </div>
 
 
 
-    <!-- ================================
-         HISTÓRICO
-    ================================= -->
+    <!-- HISTÓRICO -->
 
     <div class="historico">
 
         <h2>
-            Eventos registrados hoje
+            Histórico de hoje
         </h2>
 
         <div
-            class="lista"
-            id="listaEventos">
+            id="historico">
         </div>
 
     </div>
@@ -596,9 +549,9 @@
     <div class="privacidade">
 
         Nenhuma fotografia é salva.
-        Nenhum rosto é identificado.
-        Nenhum descritor facial é armazenado.
-        O sistema registra apenas contagens e horários.
+        Nenhum rosto é reconhecido.
+        O sistema registra apenas presença,
+        quantidade e horário.
 
     </div>
 
@@ -607,61 +560,75 @@
     <script>
 
 
-        /* =====================================
+        /* =========================================
            ELEMENTOS
-        ====================================== */
+        ========================================= */
 
         const video =
             document.getElementById("video");
 
-        const overlay =
-            document.getElementById("overlay");
 
-        const counterEl =
-            document.getElementById("counter");
+        const canvas =
+            document.getElementById("canvas");
 
-        const dateLabel =
-            document.getElementById("dateLabel");
 
-        const toggleBtn =
-            document.getElementById("toggleBtn");
+        const contador =
+            document.getElementById("contador");
 
-        const resetBtn =
-            document.getElementById("resetBtn");
 
-        const statusEl =
+        const rostos =
+            document.getElementById("rostos");
+
+
+        const sessoes =
+            document.getElementById("sessoes");
+
+
+        const dataEl =
+            document.getElementById("data");
+
+
+        const status =
             document.getElementById("status");
 
-        const facesAgoraEl =
-            document.getElementById("facesAgora");
 
-        const sessoesHojeEl =
-            document.getElementById("sessoesHoje");
-
-        const listaEventos =
-            document.getElementById("listaEventos");
-
-        const estadoCamera =
-            document.getElementById("estadoCamera");
+        const cameraStatus =
+            document.getElementById("cameraStatus");
 
 
-
-        /* =====================================
-           CONFIGURAÇÕES
-        ====================================== */
-
-        const MODEL_URL =
-            "https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.13/model";
+        const iniciarBtn =
+            document.getElementById("iniciar");
 
 
-        const STORAGE_KEY =
-            "contadorPassageirosAnonimo";
+        const zerarBtn =
+            document.getElementById("zerar");
+
+
+        const historico =
+            document.getElementById("historico");
+
+
+
+        /* =========================================
+           CONFIGURAÇÃO
+        ========================================= */
 
 
         /*
-            A pessoa precisa aparecer durante
-            pelo menos 2 segundos antes
-            de a presença ser confirmada.
+            Modelos compatíveis com face-api.js
+        */
+
+        const MODEL_URL =
+            "https://justadudewhohacks.github.io/face-api.js/models";
+
+
+        const STORAGE_KEY =
+            "contador_passageiros_v2";
+
+
+        /*
+            Pessoa precisa aparecer durante
+            2 segundos antes de ser registrada.
         */
 
         const TEMPO_CONFIRMACAO =
@@ -669,53 +636,36 @@
 
 
         /*
-            Depois que todas as pessoas saem,
-            esperamos 15 segundos antes
-            de liberar uma nova sessão.
-
-            Isso ajuda a evitar contar novamente
-            a mesma pessoa caso ela apenas
-            se movimente ou saia do enquadramento
-            por alguns segundos.
+            Para iniciar uma nova sessão,
+            a câmera precisa ficar 10 segundos
+            sem detectar ninguém.
         */
 
-        const TEMPO_AUSENCIA_RESET =
-            15000;
+        const TEMPO_SEM_PESSOA =
+            10000;
 
 
         /*
-            Intervalo entre análises.
+            Uma análise a cada 500ms.
 
-            Não precisamos analisar 30 vezes
-            por segundo.
-
-            400 ms reduz bastante o uso
-            do processador do tablet.
+            Isso economiza CPU.
         */
 
-        const INTERVALO_DETECCAO =
-            400;
+        const INTERVALO =
+            500;
 
 
 
-        /* =====================================
-           VARIÁVEIS
-        ====================================== */
+        /* =========================================
+           ESTADO
+        ========================================= */
 
-        let contando =
+        let rodando =
             false;
 
 
-        let streamAtual =
-            null;
-
-
-        let wakeLock =
-            null;
-
-
-        let temporizadorDeteccao =
-            null;
+        let sessaoAtiva =
+            false;
 
 
         let inicioPresenca =
@@ -726,19 +676,23 @@
             null;
 
 
-        let sessaoAtiva =
-            false;
-
-
-        let maxPessoasSessao =
+        let maiorQuantidade =
             0;
+
+
+        let timer =
+            null;
+
+
+        let stream =
+            null;
 
 
         let dados = {
 
             data: "",
 
-            totalEstimado: 0,
+            total: 0,
 
             sessoes: []
 
@@ -746,25 +700,26 @@
 
 
 
-        /* =====================================
+        /* =========================================
            DATA
-        ====================================== */
+        ========================================= */
 
         function hoje() {
 
-            const agora =
+
+            const d =
                 new Date();
 
 
             return (
-                agora.getFullYear()
+                d.getFullYear()
                 + "-"
                 + String(
-                    agora.getMonth() + 1
+                    d.getMonth() + 1
                 ).padStart(2, "0")
                 + "-"
                 + String(
-                    agora.getDate()
+                    d.getDate()
                 ).padStart(2, "0")
             );
 
@@ -772,7 +727,8 @@
 
 
 
-        function horaAtual() {
+        function hora() {
+
 
             return new Date()
                 .toLocaleTimeString(
@@ -788,44 +744,51 @@
 
 
 
-        /* =====================================
-           ARMAZENAMENTO
-        ====================================== */
+        /* =========================================
+           DADOS
+        ========================================= */
 
         function carregarDados() {
 
-            const salvo =
-                localStorage.getItem(
-                    STORAGE_KEY
-                );
+
+            try {
 
 
-            if (salvo) {
+                const salvo =
+                    localStorage.getItem(
+                        STORAGE_KEY
+                    );
 
-                try {
 
-                    const lido =
+                if (salvo) {
+
+
+                    const objeto =
                         JSON.parse(salvo);
 
 
                     if (
-                        lido.data === hoje()
+                        objeto.data === hoje()
                     ) {
 
-                        dados = lido;
+
+                        dados =
+                            objeto;
 
                     }
 
                 }
 
-                catch (erro) {
 
-                    console.error(
-                        "Erro ao carregar dados:",
-                        erro
-                    );
+            }
 
-                }
+            catch (erro) {
+
+
+                console.log(
+                    "Erro ao carregar dados:",
+                    erro
+                );
 
             }
 
@@ -834,11 +797,12 @@
                 dados.data !== hoje()
             ) {
 
+
                 dados = {
 
                     data: hoje(),
 
-                    totalEstimado: 0,
+                    total: 0,
 
                     sessoes: []
 
@@ -850,13 +814,14 @@
             }
 
 
-            atualizarInterface();
+            atualizarTela();
 
         }
 
 
 
         function salvarDados() {
+
 
             localStorage.setItem(
 
@@ -872,157 +837,231 @@
 
 
 
-        /* =====================================
+        /* =========================================
            INTERFACE
-        ====================================== */
+        ========================================= */
 
-        function atualizarInterface() {
-
-
-            counterEl.textContent =
-                dados.totalEstimado;
+        function atualizarTela() {
 
 
-            sessoesHojeEl.textContent =
+            contador.textContent =
+                dados.total;
+
+
+            sessoes.textContent =
                 dados.sessoes.length;
 
 
-            dateLabel.textContent =
-                "Estimativa do dia "
+            dataEl.textContent =
+                "Estimativa de audiência • "
                 + dados.data;
 
 
-            listaEventos.innerHTML =
+            historico.innerHTML =
                 "";
 
 
-            const eventos =
-                [...dados.sessoes]
-                    .reverse();
+            [...dados.sessoes]
+                .reverse()
+                .forEach(
+
+                    function(item) {
 
 
-            eventos.forEach(
-                function(evento) {
+                        const linha =
+                            document.createElement(
+                                "div"
+                            );
 
 
-                    const linha =
-                        document.createElement(
-                            "div"
+                        linha.className =
+                            "evento";
+
+
+                        const texto =
+                            document.createElement(
+                                "span"
+                            );
+
+
+                        texto.textContent =
+                            item.quantidade
+                            + (
+                                item.quantidade === 1
+                                ? " passageiro"
+                                : " passageiros"
+                            );
+
+
+                        const horario =
+                            document.createElement(
+                                "span"
+                            );
+
+
+                        horario.textContent =
+                            item.horario;
+
+
+                        linha.appendChild(
+                            texto
                         );
 
 
-                    linha.className =
-                        "evento";
-
-
-                    const esquerda =
-                        document.createElement(
-                            "span"
+                        linha.appendChild(
+                            horario
                         );
 
 
-                    esquerda.textContent =
-                        evento.quantidade
-                        + (
-                            evento.quantidade === 1
-                            ? " passageiro"
-                            : " passageiros"
+                        historico.appendChild(
+                            linha
                         );
 
+                    }
 
-                    const direita =
-                        document.createElement(
-                            "span"
-                        );
-
-
-                    direita.textContent =
-                        evento.horario;
-
-
-                    linha.appendChild(
-                        esquerda
-                    );
-
-
-                    linha.appendChild(
-                        direita
-                    );
-
-
-                    listaEventos.appendChild(
-                        linha
-                    );
-
-                }
-            );
+                );
 
         }
 
 
 
-        /* =====================================
-           MODELO DE DETECÇÃO
-
-           Observe que carregamos SOMENTE
-           TinyFaceDetector.
-
-           Não carregamos:
-           - reconhecimento facial
-           - landmarks
-           - descritores
-        ====================================== */
+        /* =========================================
+           CARREGAR MODELO
+        ========================================= */
 
         async function carregarModelo() {
 
 
-            statusEl.textContent =
-                "Carregando detector...";
+            status.textContent =
+                "1/3 - Carregando detector de presença...";
 
 
-            await faceapi.nets
-                .tinyFaceDetector
-                .loadFromUri(
-                    MODEL_URL
-                );
-
-
-            statusEl.textContent =
-                "Detector carregado. Ativando câmera...";
-
-        }
-
-
-
-        /* =====================================
-           CÂMERA
-        ====================================== */
-
-        async function iniciarCamera() {
+            cameraStatus.textContent =
+                "carregando modelo";
 
 
             try {
 
 
+                /*
+                    Timeout de 20 segundos.
+
+                    Assim o sistema não fica
+                    eternamente em "inicializando".
+                */
+
+                const carregar =
+                    faceapi.nets
+                        .tinyFaceDetector
+                        .loadFromUri(
+                            MODEL_URL
+                        );
+
+
+                const timeout =
+                    new Promise(
+
+                        function(_, rejeitar) {
+
+
+                            setTimeout(
+
+                                function() {
+
+
+                                    rejeitar(
+                                        new Error(
+                                            "Tempo limite ao carregar o detector."
+                                        )
+                                    );
+
+                                },
+
+                                20000
+
+                            );
+
+                        }
+
+                    );
+
+
+                await Promise.race([
+                    carregar,
+                    timeout
+                ]);
+
+
+                status.textContent =
+                    "2/3 - Detector carregado. Abrindo câmera...";
+
+
+                return true;
+
+
+            }
+
+            catch (erro) {
+
+
+                console.error(
+                    erro
+                );
+
+
+                status.textContent =
+                    "ERRO AO CARREGAR DETECTOR: "
+                    + erro.message;
+
+
+                cameraStatus.textContent =
+                    "erro no modelo";
+
+
+                return false;
+
+            }
+
+        }
+
+
+
+        /* =========================================
+           CÂMERA
+        ========================================= */
+
+        async function abrirCamera() {
+
+
+            cameraStatus.textContent =
+                "solicitando câmera";
+
+
+            try {
+
+
+                /*
+                    Verifica suporte do navegador
+                */
+
                 if (
-                    streamAtual
+                    !navigator.mediaDevices
+                    ||
+                    !navigator.mediaDevices.getUserMedia
                 ) {
 
-                    streamAtual
-                        .getTracks()
-                        .forEach(
-                            function(track) {
 
-                                track.stop();
-
-                            }
-                        );
+                    throw new Error(
+                        "Este navegador não permite acesso à câmera."
+                    );
 
                 }
 
 
-                streamAtual =
-                    await navigator.mediaDevices
+
+                stream =
+                    await navigator
+                        .mediaDevices
                         .getUserMedia({
 
                             video: {
@@ -1047,37 +1086,74 @@
 
 
                 video.srcObject =
-                    streamAtual;
+                    stream;
 
+
+                await video.play();
+
+
+                /*
+                    Aguarda dimensões reais
+                */
 
                 await new Promise(
+
                     function(resolve) {
 
-                        video.onloadedmetadata =
-                            resolve;
+
+                        if (
+                            video.videoWidth > 0
+                        ) {
+
+
+                            resolve();
+
+
+                        }
+
+                        else {
+
+
+                            video.addEventListener(
+
+                                "loadedmetadata",
+
+                                resolve,
+
+                                {
+                                    once: true
+                                }
+
+                            );
+
+                        }
 
                     }
+
                 );
 
 
-                overlay.width =
+                canvas.width =
                     video.videoWidth;
 
 
-                overlay.height =
+                canvas.height =
                     video.videoHeight;
 
 
-                estadoCamera.textContent =
-                    "câmera ativa";
+                cameraStatus.textContent =
+                    "câmera pronta";
 
 
-                statusEl.textContent =
-                    "Câmera pronta. Toque em Iniciar contagem.";
+                status.textContent =
+                    "3/3 - Sistema pronto. Clique em Iniciar contagem.";
 
 
-                toggleBtn.disabled =
+                iniciarBtn.disabled =
                     false;
+
+
+                return true;
 
 
             }
@@ -1090,51 +1166,35 @@
                 );
 
 
-                estadoCamera.textContent =
-                    "erro";
-
-
-                statusEl.textContent =
-                    "Não foi possível acessar a câmera: "
-                    + erro.message;
-
-            }
-
-        }
-
-
-
-        /* =====================================
-           WAKE LOCK
-        ====================================== */
-
-        async function manterTelaLigada() {
-
-
-            try {
+                cameraStatus.textContent =
+                    "erro na câmera";
 
 
                 if (
-                    "wakeLock" in navigator
+                    erro.name ===
+                    "NotAllowedError"
                 ) {
 
-                    wakeLock =
-                        await navigator
-                            .wakeLock
-                            .request(
-                                "screen"
-                            );
+
+                    status.textContent =
+                        "Permissão da câmera negada. "
+                        + "Clique no cadeado ao lado do endereço "
+                        + "e permita o uso da câmera.";
+
+
+                }
+
+                else {
+
+
+                    status.textContent =
+                        "ERRO NA CÂMERA: "
+                        + erro.message;
 
                 }
 
 
-            }
-
-            catch (erro) {
-
-                console.log(
-                    "Wake lock indisponível"
-                );
+                return false;
 
             }
 
@@ -1142,23 +1202,23 @@
 
 
 
-        /* =====================================
-           REGISTRAR NOVA SESSÃO
-        ====================================== */
+        /* =========================================
+           REGISTRAR PASSAGEIROS
+        ========================================= */
 
-        function registrarSessao(
+        function registrar(
             quantidade
         ) {
 
 
-            dados.totalEstimado +=
+            dados.total +=
                 quantidade;
 
 
             dados.sessoes.push({
 
                 horario:
-                    horaAtual(),
+                    hora(),
 
                 quantidade:
                     quantidade
@@ -1169,11 +1229,12 @@
             salvarDados();
 
 
-            atualizarInterface();
+            atualizarTela();
 
 
-            statusEl.textContent =
+            status.textContent =
                 quantidade
                 + (
                     quantidade === 1
                     ? " passageiro registrado."
+                    : " passageiros registr
