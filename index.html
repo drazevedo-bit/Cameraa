@@ -1,1240 +1,267 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Contador Anônimo de Passageiros</title>
-
-
-    <!-- FACE API -->
-
-    <script
-        src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js">
-    </script>
-
-
-    <style>
-
-        * {
-            box-sizing: border-box;
-        }
-
-
-        body {
-
-            margin: 0;
-
-            min-height: 100vh;
-
-            background: #101014;
-
-            color: white;
-
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
-
-            display: flex;
-
-            flex-direction: column;
-
-            align-items: center;
-
-            padding: 20px;
-        }
-
-
-        h1 {
-
-            margin: 0;
-
-            font-size: 22px;
-
-            text-align: center;
-        }
-
-
-        .subtitulo {
-
-            margin-top: 6px;
-
-            color: #929299;
-
-            font-size: 13px;
-
-            text-align: center;
-        }
-
-
-        /* =========================
-           CONTADOR
-        ========================== */
-
-        .contador {
-
-            margin-top: 25px;
-
-            font-size: 64px;
-
-            font-weight: bold;
-
-            color: #0a84ff;
-        }
-
-
-        .data {
-
-            margin-top: 5px;
-
-            font-size: 12px;
-
-            color: #aaa;
-        }
-
-
-        /* =========================
-           MÉTRICAS
-        ========================== */
-
-        .metricas {
-
-            width: 100%;
-
-            max-width: 500px;
-
-            display: grid;
-
-            grid-template-columns:
-                1fr
-                1fr;
-
-            gap: 12px;
-
-            margin-top: 20px;
-        }
-
-
-        .card {
-
-            background: #202026;
-
-            border-radius: 12px;
-
-            padding: 15px;
-
-            text-align: center;
-        }
-
-
-        .numero {
-
-            font-size: 28px;
-
-            font-weight: bold;
-        }
-
-
-        .label {
-
-            margin-top: 4px;
-
-            font-size: 11px;
-
-            color: #929299;
-        }
-
-
-        /* =========================
-           CÂMERA
-        ========================== */
-
-        .camera {
-
-            position: relative;
-
-            width: 100%;
-
-            max-width: 500px;
-
-            aspect-ratio: 4 / 3;
-
-            margin-top: 18px;
-
-            background: #1a1a20;
-
-            border-radius: 16px;
-
-            overflow: hidden;
-        }
-
-
-        video,
-        canvas {
-
-            position: absolute;
-
-            inset: 0;
-
-            width: 100%;
-
-            height: 100%;
-
-            object-fit: cover;
-        }
-
-
-        canvas {
-
-            pointer-events: none;
-        }
-
-
-        .camera-status {
-
-            position: absolute;
-
-            top: 10px;
-
-            left: 10px;
-
-            padding: 7px 12px;
-
-            border-radius: 20px;
-
-            background:
-                rgba(0,0,0,0.6);
-
-            font-size: 11px;
-
-            z-index: 10;
-        }
-
-
-        /* =========================
-           BOTÕES
-        ========================== */
-
-        .botoes {
-
-            width: 100%;
-
-            max-width: 500px;
-
-            display: flex;
-
-            gap: 10px;
-
-            margin-top: 16px;
-        }
-
-
-        button {
-
-            flex: 1;
-
-            padding: 14px;
-
-            border: none;
-
-            border-radius: 10px;
-
-            font-size: 14px;
-
-            font-weight: bold;
-
-            color: white;
-
-            cursor: pointer;
-        }
-
-
-        #iniciar {
-
-            background: #0a84ff;
-        }
-
-
-        #zerar {
-
-            background: #ff453a;
-        }
-
-
-        button:disabled {
-
-            opacity: 0.4;
-
-            cursor: default;
-        }
-
-
-        /* =========================
-           STATUS
-        ========================== */
-
-        #status {
-
-            width: 100%;
-
-            max-width: 500px;
-
-            margin-top: 14px;
-
-            padding: 12px;
-
-            border-radius: 10px;
-
-            background: #18181d;
-
-            font-size: 13px;
-
-            text-align: center;
-
-            color: #bbb;
-        }
-
-
-        /* =========================
-           HISTÓRICO
-        ========================== */
-
-        .historico {
-
-            width: 100%;
-
-            max-width: 500px;
-
-            margin-top: 20px;
-
-            padding: 15px;
-
-            border-radius: 14px;
-
-            background: #18181d;
-        }
-
-
-        .historico h2 {
-
-            margin:
-                0
-                0
-                12px;
-
-            font-size: 15px;
-        }
-
-
-        .evento {
-
-            display: flex;
-
-            justify-content: space-between;
-
-            padding: 9px 0;
-
-            border-bottom:
-                1px solid rgba(255,255,255,0.07);
-
-            font-size: 12px;
-
-            color: #bbb;
-        }
-
-
-        .privacidade {
-
-            width: 100%;
-
-            max-width: 500px;
-
-            margin-top: 16px;
-
-            padding: 12px;
-
-            border-radius: 10px;
-
-            background:
-                rgba(52,199,89,0.08);
-
-            color: #9bc9a5;
-
-            font-size: 11px;
-
-            text-align: center;
-
-            line-height: 1.4;
-        }
-
-    </style>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contador de Pessoas</title>
+<script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0f0f12;
+    color: #f2f2f2;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 16px;
+  }
+  h1 { font-size: 1.1rem; font-weight: 600; margin-bottom: 4px; }
+  .counter {
+    font-size: 3.2rem;
+    font-weight: 800;
+    color: #0a84ff;
+    margin: 8px 0 2px 0;
+    line-height: 1;
+  }
+  .counter-label { font-size: 12px; color: #999; margin-bottom: 14px; }
+  .video-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    aspect-ratio: 3 / 4;
+    background: #1a1a1e;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+  }
+  video, canvas.overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  canvas.overlay { pointer-events: none; }
+  .controls-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+    width: 100%;
+    max-width: 480px;
+  }
+  button.action {
+    flex: 1;
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    background: #26262b;
+    color: #f2f2f2;
+    cursor: pointer;
+  }
+  button.action.primary { background: #0a84ff; }
+  button.action.danger { background: #ff3b30; }
+  button.action:disabled { opacity: 0.4; }
+  #status {
+    margin-top: 12px;
+    font-size: 13px;
+    color: #999;
+    text-align: center;
+    min-height: 18px;
+  }
+  .privacy-note {
+    margin-top: 14px;
+    font-size: 11px;
+    color: #666;
+    text-align: center;
+    max-width: 480px;
+  }
+</style>
 </head>
-
-
 <body>
 
-
-    <h1>
-        Contador anônimo de passageiros
-    </h1>
-
-
-    <div class="subtitulo">
-
-        Detecção de presença sem reconhecimento facial
-
-    </div>
-
-
-
-    <!-- CONTADOR -->
-
-    <div
-        class="contador"
-        id="contador">
-
-        0
-
-    </div>
-
-
-    <div
-        class="data"
-        id="data">
-
-        carregando...
-
-    </div>
-
-
-
-    <!-- MÉTRICAS -->
-
-    <div class="metricas">
-
-
-        <div class="card">
-
-            <div
-                class="numero"
-                id="rostos">
-
-                0
-
-            </div>
-
-            <div class="label">
-
-                pessoas visíveis agora
-
-            </div>
-
-        </div>
-
-
-        <div class="card">
-
-            <div
-                class="numero"
-                id="sessoes">
-
-                0
-
-            </div>
-
-            <div class="label">
-
-                sessões registradas hoje
-
-            </div>
-
-        </div>
-
-
-    </div>
-
-
-
-    <!-- CÂMERA -->
-
-    <div class="camera">
-
-
-        <video
-            id="video"
-            autoplay
-            muted
-            playsinline>
-        </video>
-
-
-        <canvas
-            id="canvas">
-        </canvas>
-
-
-        <div
-            class="camera-status"
-            id="cameraStatus">
-
-            inicializando...
-
-        </div>
-
-
-    </div>
-
-
-
-    <!-- BOTÕES -->
-
-    <div class="botoes">
-
-
-        <button
-            id="iniciar"
-            disabled>
-
-            Iniciar contagem
-
-        </button>
-
-
-        <button
-            id="zerar">
-
-            Zerar dia
-
-        </button>
-
-
-    </div>
-
-
-
-    <!-- STATUS -->
-
-    <div id="status">
-
-        Iniciando sistema...
-
-    </div>
-
-
-
-    <!-- HISTÓRICO -->
-
-    <div class="historico">
-
-        <h2>
-            Histórico de hoje
-        </h2>
-
-        <div
-            id="historico">
-        </div>
-
-    </div>
-
-
-
-    <div class="privacidade">
-
-        Nenhuma fotografia é salva.
-        Nenhum rosto é reconhecido.
-        O sistema registra apenas presença,
-        quantidade e horário.
-
-    </div>
-
-
-
-    <script>
-
-
-        /* =========================================
-           ELEMENTOS
-        ========================================= */
-
-        const video =
-            document.getElementById("video");
-
-
-        const canvas =
-            document.getElementById("canvas");
-
-
-        const contador =
-            document.getElementById("contador");
-
-
-        const rostos =
-            document.getElementById("rostos");
-
-
-        const sessoes =
-            document.getElementById("sessoes");
-
-
-        const dataEl =
-            document.getElementById("data");
-
-
-        const status =
-            document.getElementById("status");
-
-
-        const cameraStatus =
-            document.getElementById("cameraStatus");
-
-
-        const iniciarBtn =
-            document.getElementById("iniciar");
-
-
-        const zerarBtn =
-            document.getElementById("zerar");
-
-
-        const historico =
-            document.getElementById("historico");
-
-
-
-        /* =========================================
-           CONFIGURAÇÃO
-        ========================================= */
-
-
-        /*
-            Modelos compatíveis com face-api.js
-        */
-
-        const MODEL_URL =
-            "https://justadudewhohacks.github.io/face-api.js/models";
-
-
-        const STORAGE_KEY =
-            "contador_passageiros_v2";
-
-
-        /*
-            Pessoa precisa aparecer durante
-            2 segundos antes de ser registrada.
-        */
-
-        const TEMPO_CONFIRMACAO =
-            2000;
-
-
-        /*
-            Para iniciar uma nova sessão,
-            a câmera precisa ficar 10 segundos
-            sem detectar ninguém.
-        */
-
-        const TEMPO_SEM_PESSOA =
-            10000;
-
-
-        /*
-            Uma análise a cada 500ms.
-
-            Isso economiza CPU.
-        */
-
-        const INTERVALO =
-            500;
-
-
-
-        /* =========================================
-           ESTADO
-        ========================================= */
-
-        let rodando =
-            false;
-
-
-        let sessaoAtiva =
-            false;
-
-
-        let inicioPresenca =
-            null;
-
-
-        let inicioAusencia =
-            null;
-
-
-        let maiorQuantidade =
-            0;
-
-
-        let timer =
-            null;
-
-
-        let stream =
-            null;
-
-
-        let dados = {
-
-            data: "",
-
-            total: 0,
-
-            sessoes: []
-
-        };
-
-
-
-        /* =========================================
-           DATA
-        ========================================= */
-
-        function hoje() {
-
-
-            const d =
-                new Date();
-
-
-            return (
-                d.getFullYear()
-                + "-"
-                + String(
-                    d.getMonth() + 1
-                ).padStart(2, "0")
-                + "-"
-                + String(
-                    d.getDate()
-                ).padStart(2, "0")
-            );
-
-        }
-
-
-
-        function hora() {
-
-
-            return new Date()
-                .toLocaleTimeString(
-                    "pt-BR",
-                    {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                        second: "2-digit"
-                    }
-                );
-
-        }
-
-
-
-        /* =========================================
-           DADOS
-        ========================================= */
-
-        function carregarDados() {
-
-
-            try {
-
-
-                const salvo =
-                    localStorage.getItem(
-                        STORAGE_KEY
-                    );
-
-
-                if (salvo) {
-
-
-                    const objeto =
-                        JSON.parse(salvo);
-
-
-                    if (
-                        objeto.data === hoje()
-                    ) {
-
-
-                        dados =
-                            objeto;
-
-                    }
-
-                }
-
-
-            }
-
-            catch (erro) {
-
-
-                console.log(
-                    "Erro ao carregar dados:",
-                    erro
-                );
-
-            }
-
-
-            if (
-                dados.data !== hoje()
-            ) {
-
-
-                dados = {
-
-                    data: hoje(),
-
-                    total: 0,
-
-                    sessoes: []
-
-                };
-
-
-                salvarDados();
-
-            }
-
-
-            atualizarTela();
-
-        }
-
-
-
-        function salvarDados() {
-
-
-            localStorage.setItem(
-
-                STORAGE_KEY,
-
-                JSON.stringify(
-                    dados
-                )
-
-            );
-
-        }
-
-
-
-        /* =========================================
-           INTERFACE
-        ========================================= */
-
-        function atualizarTela() {
-
-
-            contador.textContent =
-                dados.total;
-
-
-            sessoes.textContent =
-                dados.sessoes.length;
-
-
-            dataEl.textContent =
-                "Estimativa de audiência • "
-                + dados.data;
-
-
-            historico.innerHTML =
-                "";
-
-
-            [...dados.sessoes]
-                .reverse()
-                .forEach(
-
-                    function(item) {
-
-
-                        const linha =
-                            document.createElement(
-                                "div"
-                            );
-
-
-                        linha.className =
-                            "evento";
-
-
-                        const texto =
-                            document.createElement(
-                                "span"
-                            );
-
-
-                        texto.textContent =
-                            item.quantidade
-                            + (
-                                item.quantidade === 1
-                                ? " passageiro"
-                                : " passageiros"
-                            );
-
-
-                        const horario =
-                            document.createElement(
-                                "span"
-                            );
-
-
-                        horario.textContent =
-                            item.horario;
-
-
-                        linha.appendChild(
-                            texto
-                        );
-
-
-                        linha.appendChild(
-                            horario
-                        );
-
-
-                        historico.appendChild(
-                            linha
-                        );
-
-                    }
-
-                );
-
-        }
-
-
-
-        /* =========================================
-           CARREGAR MODELO
-        ========================================= */
-
-        async function carregarModelo() {
-
-
-            status.textContent =
-                "1/3 - Carregando detector de presença...";
-
-
-            cameraStatus.textContent =
-                "carregando modelo";
-
-
-            try {
-
-
-                /*
-                    Timeout de 20 segundos.
-
-                    Assim o sistema não fica
-                    eternamente em "inicializando".
-                */
-
-                const carregar =
-                    faceapi.nets
-                        .tinyFaceDetector
-                        .loadFromUri(
-                            MODEL_URL
-                        );
-
-
-                const timeout =
-                    new Promise(
-
-                        function(_, rejeitar) {
-
-
-                            setTimeout(
-
-                                function() {
-
-
-                                    rejeitar(
-                                        new Error(
-                                            "Tempo limite ao carregar o detector."
-                                        )
-                                    );
-
-                                },
-
-                                20000
-
-                            );
-
-                        }
-
-                    );
-
-
-                await Promise.race([
-                    carregar,
-                    timeout
-                ]);
-
-
-                status.textContent =
-                    "2/3 - Detector carregado. Abrindo câmera...";
-
-
-                return true;
-
-
-            }
-
-            catch (erro) {
-
-
-                console.error(
-                    erro
-                );
-
-
-                status.textContent =
-                    "ERRO AO CARREGAR DETECTOR: "
-                    + erro.message;
-
-
-                cameraStatus.textContent =
-                    "erro no modelo";
-
-
-                return false;
-
-            }
-
-        }
-
-
-
-        /* =========================================
-           CÂMERA
-        ========================================= */
-
-        async function abrirCamera() {
-
-
-            cameraStatus.textContent =
-                "solicitando câmera";
-
-
-            try {
-
-
-                /*
-                    Verifica suporte do navegador
-                */
-
-                if (
-                    !navigator.mediaDevices
-                    ||
-                    !navigator.mediaDevices.getUserMedia
-                ) {
-
-
-                    throw new Error(
-                        "Este navegador não permite acesso à câmera."
-                    );
-
-                }
-
-
-
-                stream =
-                    await navigator
-                        .mediaDevices
-                        .getUserMedia({
-
-                            video: {
-
-                                facingMode: {
-                                    ideal: "user"
-                                },
-
-                                width: {
-                                    ideal: 640
-                                },
-
-                                height: {
-                                    ideal: 480
-                                }
-
-                            },
-
-                            audio: false
-
-                        });
-
-
-                video.srcObject =
-                    stream;
-
-
-                await video.play();
-
-
-                /*
-                    Aguarda dimensões reais
-                */
-
-                await new Promise(
-
-                    function(resolve) {
-
-
-                        if (
-                            video.videoWidth > 0
-                        ) {
-
-
-                            resolve();
-
-
-                        }
-
-                        else {
-
-
-                            video.addEventListener(
-
-                                "loadedmetadata",
-
-                                resolve,
-
-                                {
-                                    once: true
-                                }
-
-                            );
-
-                        }
-
-                    }
-
-                );
-
-
-                canvas.width =
-                    video.videoWidth;
-
-
-                canvas.height =
-                    video.videoHeight;
-
-
-                cameraStatus.textContent =
-                    "câmera pronta";
-
-
-                status.textContent =
-                    "3/3 - Sistema pronto. Clique em Iniciar contagem.";
-
-
-                iniciarBtn.disabled =
-                    false;
-
-
-                return true;
-
-
-            }
-
-            catch (erro) {
-
-
-                console.error(
-                    erro
-                );
-
-
-                cameraStatus.textContent =
-                    "erro na câmera";
-
-
-                if (
-                    erro.name ===
-                    "NotAllowedError"
-                ) {
-
-
-                    status.textContent =
-                        "Permissão da câmera negada. "
-                        + "Clique no cadeado ao lado do endereço "
-                        + "e permita o uso da câmera.";
-
-
-                }
-
-                else {
-
-
-                    status.textContent =
-                        "ERRO NA CÂMERA: "
-                        + erro.message;
-
-                }
-
-
-                return false;
-
-            }
-
-        }
-
-
-
-        /* =========================================
-           REGISTRAR PASSAGEIROS
-        ========================================= */
-
-        function registrar(
-            quantidade
-        ) {
-
-
-            dados.total +=
-                quantidade;
-
-
-            dados.sessoes.push({
-
-                horario:
-                    hora(),
-
-                quantidade:
-                    quantidade
-
-            });
-
-
-            salvarDados();
-
-
-            atualizarTela();
-
-
-            status.textContent =
-                quantidade
-                + (
-                    quantidade === 1
-                    ? " passageiro registrado."
-                    : " passageiros registr
+<h1>Contador de pessoas no carro</h1>
+<div class="counter" id="counter">0</div>
+<div class="counter-label" id="dateLabel">carregando data...</div>
+
+<div class="video-wrap" id="videoWrap">
+  <video id="video" autoplay playsinline muted></video>
+  <canvas id="overlay" class="overlay"></canvas>
+</div>
+
+<div class="controls-row">
+  <button id="toggleBtn" class="action primary" disabled>Iniciar contagem</button>
+  <button id="resetBtn" class="action danger">Zerar contagem</button>
+</div>
+
+<div id="status">Carregando modelos...</div>
+
+<div class="privacy-note">Este app conta pessoas sem salvar fotos. Os dados ficam apenas neste aparelho e sao apagados automaticamente todo dia.</div>
+
+<script>
+const video = document.getElementById('video');
+const overlay = document.getElementById('overlay');
+const counterEl = document.getElementById('counter');
+const dateLabel = document.getElementById('dateLabel');
+const toggleBtn = document.getElementById('toggleBtn');
+const resetBtn = document.getElementById('resetBtn');
+const statusEl = document.getElementById('status');
+
+const MODEL_URL = 'https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.13/model';
+const MATCH_THRESHOLD = 0.5;
+const STORAGE_KEY = 'peopleCounterData';
+
+let watching = false;
+let knownDescriptors = [];
+let wakeLock = null;
+let currentStream = null;
+let currentDeviceId = null;
+
+function todayStr() {
+  const d = new Date();
+  return d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
+}
+
+function loadData() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (raw) {
+    const data = JSON.parse(raw);
+    if (data.date === todayStr()) {
+      knownDescriptors = data.descriptors.map(d => new Float32Array(d));
+      counterEl.textContent = knownDescriptors.length;
+      dateLabel.textContent = 'Contagem do dia ' + todayStr();
+      return;
+    }
+  }
+  knownDescriptors = [];
+  counterEl.textContent = '0';
+  saveData();
+}
+
+function saveData() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify({
+    date: todayStr(),
+    descriptors: knownDescriptors.map(d => Array.from(d))
+  }));
+  dateLabel.textContent = 'Contagem do dia ' + todayStr();
+}
+
+async function loadModels() {
+  await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
+  await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
+  await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
+  statusEl.textContent = 'Modelos carregados. Ativando camera...';
+}
+
+async function pickFrontCamera() {
+  const devices = await navigator.mediaDevices.enumerateDevices();
+  const cams = devices.filter(d => d.kind === 'videoinput');
+  const front = cams.find(c => /front|user|frontal/i.test(c.label));
+  if (front) {
+    currentDeviceId = front.deviceId;
+  } else if (cams.length > 0) {
+    // se nao achar pelo nome, assume a primeira da lista como fallback
+    currentDeviceId = cams[0].deviceId;
+  }
+}
+
+async function startCamera() {
+  try {
+    if (currentStream) {
+      currentStream.getTracks().forEach(t => t.stop());
+    }
+
+    // primeiro pede uma camera generica so pra liberar permissao e ver os nomes
+    if (!currentDeviceId) {
+      const temp = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'user' } } });
+      temp.getTracks().forEach(t => t.stop());
+      await pickFrontCamera();
+    }
+
+    const constraints = currentDeviceId
+      ? { video: { deviceId: { exact: currentDeviceId } } }
+      : { video: { facingMode: { ideal: 'user' } } };
+
+    currentStream = await navigator.mediaDevices.getUserMedia(constraints);
+    video.srcObject = currentStream;
+    await new Promise(res => video.onloadedmetadata = res);
+    overlay.width = video.videoWidth;
+    overlay.height = video.videoHeight;
+
+    statusEl.textContent = 'Camera ativa. Toque em Iniciar contagem.';
+    toggleBtn.disabled = false;
+  } catch (err) {
+    statusEl.textContent = 'Erro ao acessar a camera: ' + err.message;
+  }
+}
+
+async function requestWakeLock() {
+  try {
+    if ('wakeLock' in navigator) {
+      wakeLock = await navigator.wakeLock.request('screen');
+    }
+  } catch (e) { }
+}
+
+toggleBtn.addEventListener('click', async () => {
+  watching = !watching;
+  toggleBtn.textContent = watching ? 'Pausar contagem' : 'Iniciar contagem';
+  statusEl.textContent = watching ? 'Contando pessoas...' : 'Pausado.';
+  if (watching) {
+    await requestWakeLock();
+    detectLoop();
+  }
+});
+
+resetBtn.addEventListener('click', () => {
+  knownDescriptors = [];
+  counterEl.textContent = '0';
+  saveData();
+  statusEl.textContent = 'Contagem zerada.';
+});
+
+async function detectLoop() {
+  if (!watching) return;
+
+  const detections = await faceapi
+    .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
+    .withFaceLandmarks()
+    .withFaceDescriptors();
+
+  const ctx = overlay.getContext('2d');
+  ctx.clearRect(0, 0, overlay.width, overlay.height);
+
+  detections.forEach(d => {
+    let isNew = true;
+    for (const known of knownDescriptors) {
+      const distance = faceapi.euclideanDistance(d.descriptor, known);
+      if (distance < MATCH_THRESHOLD) { isNew = false; break; }
+    }
+
+    const box = d.detection.box;
+    ctx.strokeStyle = isNew ? '#ff9500' : '#34c759';
+    ctx.lineWidth = 3;
+    ctx.strokeRect(box.x, box.y, box.width, box.height);
+
+    if (isNew) {
+      knownDescriptors.push(d.descriptor);
+      counterEl.textContent = knownDescriptors.length;
+      saveData();
+    }
+  });
+
+  requestAnimationFrame(detectLoop);
+}
+
+(async () => {
+  await loadModels();
+  await startCamera();
+  loadData();
+})();
+</script>
+
+</body>
+</html>
