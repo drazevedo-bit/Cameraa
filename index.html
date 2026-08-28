@@ -111,11 +111,16 @@ const resetBtn = document.getElementById('resetBtn');
 const statusEl = document.getElementById('status');
 
 const MODEL_URL = 'https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.13/model';
-const MATCH_THRESHOLD = 0.5;
+const MATCH_THRESHOLD = 0.6; // mais tolerante a variacoes de angulo/luz
+const CANDIDATE_MATCH_THRESHOLD = 0.65; // tolerancia para agrupar o mesmo rosto entre frames
+const CONFIRM_FRAMES = 4; // precisa aparecer nao-reconhecido por N deteccoes seguidas pra contar
+const DETECT_INTERVAL_MS = 400; // intervalo entre analises (evita ruido de excesso de frames)
+const CANDIDATE_TIMEOUT_MS = 2000; // descarta candidato se sumir da camera
 const STORAGE_KEY = 'peopleCounterData';
 
 let watching = false;
 let knownDescriptors = [];
+let pendingCandidates = []; // rostos ainda nao confirmados como "pessoa nova"
 let wakeLock = null;
 let currentStream = null;
 let currentDeviceId = null;
@@ -212,18 +217,28 @@ toggleBtn.addEventListener('click', async () => {
   statusEl.textContent = watching ? 'Contando pessoas...' : 'Pausado.';
   if (watching) {
     await requestWakeLock();
-    detectLoop();
+    detectTick();
   }
 });
 
 resetBtn.addEventListener('click', () => {
   knownDescriptors = [];
+  pendingCandidates = [];
   counterEl.textContent = '0';
   saveData();
   statusEl.textContent = 'Contagem zerada.';
 });
 
-async function detectLoop() {
+function bestDistance(descriptor, list) {
+  let min = Infinity;
+  for (const item of list) {
+    const d = faceapi.euclideanDistance(descriptor, item.descriptor || item);
+    if (d < min) min = d;
+  }
+  return min;
+}
+
+async function detectTick() {
   if (!watching) return;
 
   const detections = await faceapi
@@ -233,27 +248,57 @@ async function detectLoop() {
 
   const ctx = overlay.getContext('2d');
   ctx.clearRect(0, 0, overlay.width, overlay.height);
+  const now = Date.now();
+  const matchedCandidateIndexes = new Set();
 
   detections.forEach(d => {
-    let isNew = true;
-    for (const known of knownDescriptors) {
-      const distance = faceapi.euclideanDistance(d.descriptor, known);
-      if (distance < MATCH_THRESHOLD) { isNew = false; break; }
+    const box = d.detection.box;
+
+    // 1. ja e uma pessoa confirmada?
+    const knownDist = bestDistance(d.descriptor, knownDescriptors);
+    if (knownDist < MATCH_THRESHOLD) {
+      ctx.strokeStyle = '#34c759';
+      ctx.lineWidth = 3;
+      ctx.strokeRect(box.x, box.y, box.width, box.height);
+      return;
     }
 
-    const box = d.detection.box;
-    ctx.strokeStyle = isNew ? '#ff9500' : '#34c759';
+    // 2. bate com algum candidato ja em observacao?
+    let matchIdx = -1;
+    let matchDist = Infinity;
+    pendingCandidates.forEach((cand, i) => {
+      const dist = faceapi.euclideanDistance(d.descriptor, cand.descriptor);
+      if (dist < CANDIDATE_MATCH_THRESHOLD && dist < matchDist) {
+        matchDist = dist;
+        matchIdx = i;
+      }
+    });
+
+    if (matchIdx >= 0) {
+      pendingCandidates[matchIdx].descriptor = d.descriptor; // atualiza com leitura mais recente
+      pendingCandidates[matchIdx].frames += 1;
+      pendingCandidates[matchIdx].lastSeen = now;
+      matchedCandidateIndexes.add(matchIdx);
+
+      if (pendingCandidates[matchIdx].frames >= CONFIRM_FRAMES) {
+        knownDescriptors.push(pendingCandidates[matchIdx].descriptor);
+        pendingCandidates.splice(matchIdx, 1);
+        counterEl.textContent = knownDescriptors.length;
+        saveData();
+      }
+    } else {
+      pendingCandidates.push({ descriptor: d.descriptor, frames: 1, lastSeen: now });
+    }
+
+    ctx.strokeStyle = '#ff9500';
     ctx.lineWidth = 3;
     ctx.strokeRect(box.x, box.y, box.width, box.height);
-
-    if (isNew) {
-      knownDescriptors.push(d.descriptor);
-      counterEl.textContent = knownDescriptors.length;
-      saveData();
-    }
   });
 
-  requestAnimationFrame(detectLoop);
+  // remove candidatos que sumiram da camera ha muito tempo
+  pendingCandidates = pendingCandidates.filter(c => now - c.lastSeen < CANDIDATE_TIMEOUT_MS);
+
+  setTimeout(detectTick, DETECT_INTERVAL_MS);
 }
 
 (async () => {
