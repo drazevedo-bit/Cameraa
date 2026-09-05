@@ -1,974 +1,1977 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Controle do Motorista</title>
+<meta charset="UTF-8">
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: white;
-      height: 100vh;
-      overflow: hidden;
-    }
+<title>Controle do Motorista</title>
 
-    .topo {
-      height: 70px;
-      background: #111827;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 25px;
-      border-bottom: 1px solid #334155;
-    }
+<style>
 
-    .topo h1 {
-      margin: 0;
-      font-size: 24px;
-    }
+* {
+  box-sizing: border-box;
+}
 
-    .data {
-      color: #94a3b8;
-      font-size: 15px;
-    }
+body {
 
-    .painel {
-      height: calc(100vh - 70px);
-      padding: 15px;
+  margin: 0;
 
-      display: grid;
+  background: #0f172a;
 
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
+  color: white;
 
-      gap: 15px;
-    }
+  font-family:
+    Arial,
+    sans-serif;
 
-    .quadrante {
-      background: #1e293b;
-      border-radius: 16px;
-      padding: 18px;
-      overflow: auto;
-    }
+  min-height: 100vh;
 
-    .quadrante h2 {
-      margin-top: 0;
-      margin-bottom: 15px;
-      font-size: 20px;
-    }
+}
 
-    .cards {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
 
-    .card {
-      background: #334155;
-      padding: 14px;
-      border-radius: 12px;
-    }
+/* =========================
+   TOPO
+========================= */
 
-    .card span {
-      display: block;
-      color: #cbd5e1;
-      font-size: 13px;
-      margin-bottom: 5px;
-    }
+.topo {
 
-    .card strong {
-      font-size: 23px;
-    }
+  height: 65px;
 
-    label {
-      display: block;
-      margin-top: 8px;
-      margin-bottom: 4px;
-      color: #cbd5e1;
-      font-size: 13px;
-    }
+  display: flex;
 
-    input {
-      width: 100%;
-      padding: 9px;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      background: #334155;
-      color: white;
-    }
+  align-items: center;
 
-    button {
-      width: 100%;
-      border: none;
-      border-radius: 10px;
-      padding: 12px;
-      margin-top: 12px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      background: #22c55e;
-    }
+  justify-content: space-between;
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-    }
+  padding: 0 22px;
 
-    th,
-    td {
-      padding: 8px;
-      border-bottom: 1px solid #475569;
-      text-align: right;
-    }
+  background: #111827;
 
-    th:first-child,
-    td:first-child {
-      text-align: left;
-    }
+  border-bottom:
+    1px solid #334155;
 
-    .indicador {
-      margin-bottom: 12px;
-      background: #334155;
-      border-radius: 10px;
-      padding: 12px;
-    }
+}
 
-    .indicador span {
-      color: #cbd5e1;
-      font-size: 13px;
-    }
+.topo h1 {
 
-    .indicador strong {
-      display: block;
-      font-size: 24px;
-      margin-top: 5px;
-    }
+  margin: 0;
 
-    .positivo {
-      color: #86efac;
-    }
+  font-size: 22px;
 
-    .negativo {
-      color: #fca5a5;
-    }
+}
 
-    @media (max-width: 800px) {
-      body {
-        overflow: auto;
-      }
+.data {
 
-      .painel {
-        height: auto;
-        grid-template-columns: 1fr;
-        grid-template-rows: auto;
-      }
-    }
-  </style>
+  color: #94a3b8;
+
+  font-size: 14px;
+
+}
+
+
+/* =========================
+   PAINEL
+========================= */
+
+.painel {
+
+  height:
+    calc(100vh - 65px);
+
+  padding: 12px;
+
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  grid-template-rows:
+    1fr 1fr;
+
+  gap: 12px;
+
+}
+
+
+/* =========================
+   QUADRANTES
+========================= */
+
+.quadrante {
+
+  background: #1e293b;
+
+  border-radius: 15px;
+
+  padding: 16px;
+
+  overflow: auto;
+
+}
+
+.quadrante h2 {
+
+  margin-top: 0;
+
+  margin-bottom: 14px;
+
+  font-size: 19px;
+
+}
+
+.subtitulo {
+
+  color: #94a3b8;
+
+  font-size: 12px;
+
+  margin-top: 14px;
+
+  margin-bottom: 6px;
+
+  text-transform: uppercase;
+
+  font-weight: bold;
+
+}
+
+
+/* =========================
+   CARDS
+========================= */
+
+.cards {
+
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 9px;
+
+}
+
+.card {
+
+  background: #334155;
+
+  border-radius: 11px;
+
+  padding: 12px;
+
+}
+
+.card span {
+
+  display: block;
+
+  color: #cbd5e1;
+
+  font-size: 12px;
+
+  margin-bottom: 4px;
+
+}
+
+.card strong {
+
+  font-size: 21px;
+
+}
+
+
+/* =========================
+   FORMULÁRIO
+========================= */
+
+label {
+
+  display: block;
+
+  margin-top: 7px;
+
+  margin-bottom: 3px;
+
+  font-size: 12px;
+
+  color: #cbd5e1;
+
+}
+
+input,
+select {
+
+  width: 100%;
+
+  padding: 8px;
+
+  border: none;
+
+  border-radius: 7px;
+
+  background: #334155;
+
+  color: white;
+
+  font-size: 15px;
+
+}
+
+input::placeholder {
+
+  color: #94a3b8;
+
+}
+
+button {
+
+  border: none;
+
+  border-radius: 9px;
+
+  padding: 10px;
+
+  font-size: 14px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+}
+
+.btn-principal {
+
+  width: 100%;
+
+  margin-top: 12px;
+
+  background: #22c55e;
+
+}
+
+.btn-adicionar {
+
+  width: 100%;
+
+  margin-top: 9px;
+
+  background: #3b82f6;
+
+  color: white;
+
+}
+
+.btn-remover {
+
+  background: #ef4444;
+
+  color: white;
+
+  padding: 5px 8px;
+
+  font-size: 11px;
+
+}
+
+.litros {
+
+  margin-top: 7px;
+
+  background: #0f172a;
+
+  padding: 8px;
+
+  border-radius: 8px;
+
+  text-align: center;
+
+}
+
+.litros strong {
+
+  color: #86efac;
+
+}
+
+
+/* =========================
+   GASTOS
+========================= */
+
+.gasto-item {
+
+  display: grid;
+
+  grid-template-columns:
+    1fr auto;
+
+  gap: 8px;
+
+  align-items: center;
+
+  background: #334155;
+
+  padding: 8px;
+
+  border-radius: 8px;
+
+  margin-top: 6px;
+
+}
+
+.gasto-info {
+
+  font-size: 12px;
+
+}
+
+.gasto-info strong {
+
+  display: block;
+
+  font-size: 14px;
+
+}
+
+.total-outros {
+
+  margin-top: 8px;
+
+  text-align: right;
+
+  font-size: 13px;
+
+}
+
+
+/* =========================
+   INDICADORES
+========================= */
+
+.indicador {
+
+  background: #334155;
+
+  border-radius: 10px;
+
+  padding: 11px;
+
+  margin-bottom: 9px;
+
+}
+
+.indicador span {
+
+  color: #cbd5e1;
+
+  font-size: 12px;
+
+}
+
+.indicador strong {
+
+  display: block;
+
+  font-size: 20px;
+
+  margin-top: 4px;
+
+}
+
+.positivo {
+  color: #86efac;
+}
+
+.negativo {
+  color: #fca5a5;
+}
+
+
+/* =========================
+   TABELA
+========================= */
+
+table {
+
+  width: 100%;
+
+  border-collapse: collapse;
+
+  font-size: 12px;
+
+}
+
+th,
+td {
+
+  padding: 7px 4px;
+
+  border-bottom:
+    1px solid #475569;
+
+  text-align: right;
+
+  white-space: nowrap;
+
+}
+
+th:first-child,
+td:first-child {
+
+  text-align: left;
+
+}
+
+
+/* =========================
+   CELULAR
+========================= */
+
+@media (max-width: 800px) {
+
+  .painel {
+
+    height: auto;
+
+    grid-template-columns: 1fr;
+
+    grid-template-rows: auto;
+
+  }
+
+}
+
+</style>
+
 </head>
 
 <body>
 
-  <div class="topo">
 
-    <h1>🚗 Controle do Motorista</h1>
+<!-- =========================
+     TOPO
+========================= -->
 
-    <div class="data" id="dataHoje"></div>
+<div class="topo">
 
+  <h1>
+    🚗 Controle do Motorista
+  </h1>
+
+  <div
+    class="data"
+    id="dataHoje">
   </div>
 
-
-  <div class="painel">
-
-
-    <!-- 1 - RESUMO -->
-
-    <section class="quadrante">
-
-      <h2>📊 Resumo</h2>
-
-      <div class="cards">
-
-        <div class="card">
-          <span>Líquido da semana</span>
-          <strong id="liquidoSemana">R$ 0,00</strong>
-        </div>
-
-        <div class="card">
-          <span>Líquido do mês</span>
-          <strong id="liquidoMes">R$ 0,00</strong>
-        </div>
-
-        <div class="card">
-          <span>Km da semana</span>
-          <strong id="kmSemana">0 km</strong>
-        </div>
-
-        <div class="card">
-          <span>Km restantes</span>
-          <strong id="kmRestantes">1500 km</strong>
-        </div>
-
-      </div>
-
-    </section>
+</div>
 
 
-    <!-- 2 - LANÇAMENTO -->
-
-    <section class="quadrante">
-
-      <h2>✍️ Lançamento do dia</h2>
-
-      <label>Uber</label>
-      <input type="number" id="uber" step="0.01">
-
-      <label>99</label>
-      <input type="number" id="noventaNove" step="0.01">
-
-      <label>Particular</label>
-      <input type="number" id="particular" step="0.01">
-
-      <label>Combustível</label>
-      <input type="number" id="combustivel" step="0.01">
-
-      <label>Outros gastos</label>
-      <input type="number" id="outrosGastos" step="0.01">
-
-      <label>Km rodados</label>
-      <input type="number" id="kmHoje" step="0.1">
-
-      <button onclick="salvarDia()">
-        Salvar dia
-      </button>
-
-    </section>
+<div class="painel">
 
 
-    <!-- 3 - HISTÓRICO -->
+<!-- =========================
+     1 - RESUMO
+========================= -->
 
-    <section class="quadrante">
+<section class="quadrante">
 
-      <h2>📅 Histórico do mês</h2>
+<h2>
+📊 Resumo
+</h2>
 
-      <table>
+<div class="cards">
 
-        <thead>
-          <tr>
-            <th>Data</th>
-            <th>Receita</th>
-            <th>Gastos</th>
-            <th>Líquido</th>
-            <th>Km</th>
-          </tr>
-        </thead>
+<div class="card">
 
-        <tbody id="historico">
-        </tbody>
+<span>
+Líquido da semana
+</span>
 
-      </table>
+<strong id="liquidoSemana">
+R$ 0,00
+</strong>
 
-    </section>
-
-
-    <!-- 4 - INDICADORES -->
-
-    <section class="quadrante">
-
-      <h2>📈 Indicadores</h2>
-
-      <div class="indicador">
-
-        <span>Líquido por km</span>
-
-        <strong id="liquidoPorKm">
-          R$ 0,00
-        </strong>
-
-      </div>
+</div>
 
 
-      <div class="indicador">
+<div class="card">
 
-        <span>Receita por km</span>
+<span>
+Líquido do mês
+</span>
 
-        <strong id="receitaPorKm">
-          R$ 0,00
-        </strong>
+<strong id="liquidoMes">
+R$ 0,00
+</strong>
 
-      </div>
-
-
-      <div class="indicador">
-
-        <span>Melhor dia do mês</span>
-
-        <strong id="melhorDia">
-          -
-        </strong>
-
-      </div>
+</div>
 
 
-      <div class="indicador">
+<div class="card">
 
-        <span>Média líquida por dia</span>
+<span>
+Receita do mês
+</span>
 
-        <strong id="mediaDia">
-          R$ 0,00
-        </strong>
+<strong id="receitaMes">
+R$ 0,00
+</strong>
 
-      </div>
-
-    </section>
+</div>
 
 
-  </div>
+<div class="card">
+
+<span>
+Gastos do mês
+</span>
+
+<strong id="gastosMes">
+R$ 0,00
+</strong>
+
+</div>
+
+
+<div class="card">
+
+<span>
+Km da semana
+</span>
+
+<strong id="kmSemana">
+0 km
+</strong>
+
+</div>
+
+
+<div class="card">
+
+<span>
+Km disponíveis
+</span>
+
+<strong id="kmRestantes">
+1500 km
+</strong>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     2 - LANÇAMENTO
+========================= -->
+
+<section class="quadrante">
+
+<h2>
+✍️ Lançamento do dia
+</h2>
+
+
+<div class="subtitulo">
+Ganhos
+</div>
+
+
+<label>
+Uber
+</label>
+
+<input
+  type="number"
+  id="uber"
+  step="0.01"
+  placeholder="0,00"
+>
+
+
+<label>
+99
+</label>
+
+<input
+  type="number"
+  id="noventaNove"
+  step="0.01"
+  placeholder="0,00"
+>
+
+
+<label>
+Particular
+</label>
+
+<input
+  type="number"
+  id="particular"
+  step="0.01"
+  placeholder="0,00"
+>
+
+
+<div class="subtitulo">
+Combustível
+</div>
+
+
+<label>
+Tipo
+</label>
+
+<select id="tipoCombustivel">
+
+<option value="">
+Não abasteci hoje
+</option>
+
+<option value="Gasolina">
+Gasolina
+</option>
+
+<option value="Etanol">
+Etanol
+</option>
+
+</select>
+
+
+<label>
+Preço por litro
+</label>
+
+<input
+  type="number"
+  id="precoLitro"
+  step="0.001"
+  placeholder="Ex.: 4.19"
+>
+
+
+<label>
+Valor abastecido
+</label>
+
+<input
+  type="number"
+  id="combustivel"
+  step="0.01"
+  placeholder="Ex.: 120.00"
+>
+
+
+<div class="litros">
+
+Litros abastecidos:
+
+<strong id="litrosAbastecidos">
+0,00 L
+</strong>
+
+</div>
+
+
+
+<div class="subtitulo">
+Outros gastos
+</div>
+
+
+<label>
+Categoria
+</label>
+
+<select id="categoriaGasto">
+
+<option value="Alimentação">
+Alimentação
+</option>
+
+<option value="Pedágio">
+Pedágio
+</option>
+
+<option value="Estacionamento">
+Estacionamento
+</option>
+
+<option value="Lavagem">
+Lavagem
+</option>
+
+<option value="Manutenção">
+Manutenção
+</option>
+
+<option value="Outros">
+Outros
+</option>
+
+</select>
+
+
+<label>
+Descrição
+</label>
+
+<input
+  type="text"
+  id="descricaoGasto"
+  placeholder="Ex.: almoço"
+>
+
+
+<label>
+Valor
+</label>
+
+<input
+  type="number"
+  id="valorOutroGasto"
+  step="0.01"
+  placeholder="0,00"
+>
+
+
+<button
+  class="btn-adicionar"
+  onclick="adicionarGasto()"
+>
+
+➕ Adicionar gasto
+
+</button>
+
+
+<div id="listaGastos">
+</div>
+
+
+<div class="total-outros">
+
+Outros gastos:
+
+<strong id="totalOutrosGastos">
+R$ 0,00
+</strong>
+
+</div>
+
+
+
+<div class="subtitulo">
+Quilometragem
+</div>
+
+
+<label>
+Km rodados no dia
+</label>
+
+<input
+  type="number"
+  id="kmHoje"
+  step="0.1"
+  placeholder="Ex.: 185.4"
+>
+
+
+<button
+  class="btn-principal"
+  onclick="salvarDia()"
+>
+
+💾 Salvar dia
+
+</button>
+
+
+</section>
+
+
+
+<!-- =========================
+     3 - HISTÓRICO
+========================= -->
+
+<section class="quadrante">
+
+<h2>
+📅 Histórico do mês
+</h2>
+
+
+<div style="overflow-x:auto">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Data</th>
+
+<th>Receita</th>
+
+<th>Comb.</th>
+
+<th>Outros</th>
+
+<th>Líquido</th>
+
+<th>Km</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="historico">
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     4 - INDICADORES
+========================= -->
+
+<section class="quadrante">
+
+<h2>
+📈 Indicadores
+</h2>
+
+
+<div class="indicador">
+
+<span>
+Líquido por km no mês
+</span>
+
+<strong id="liquidoPorKm">
+R$ 0,00
+</strong>
+
+</div>
+
+
+<div class="indicador">
+
+<span>
+Receita por km
+</span>
+
+<strong id="receitaPorKm">
+R$ 0,00
+</strong>
+
+</div>
+
+
+<div class="indicador">
+
+<span>
+Combustível no mês
+</span>
+
+<strong id="combustivelMes">
+R$ 0,00
+</strong>
+
+</div>
+
+
+<div class="indicador">
+
+<span>
+Litros abastecidos no mês
+</span>
+
+<strong id="litrosMes">
+0,00 L
+</strong>
+
+</div>
+
+
+<div class="indicador">
+
+<span>
+% da receita gasto com combustível
+</span>
+
+<strong id="percentualCombustivel">
+0%
+</strong>
+
+</div>
+
+
+<div class="indicador">
+
+<span>
+Melhor dia do mês
+</span>
+
+<strong id="melhorDia">
+-
+</strong>
+
+</div>
+
+
+<div class="indicador">
+
+<span>
+Média líquida por dia trabalhado
+</span>
+
+<strong id="mediaDia">
+R$ 0,00
+</strong>
+
+</div>
+
+</section>
+
+
+</div>
 
 
 <script>
 
-  const FRANQUIA_SEMANAL = 1500;
+
+/* =========================
+   CONFIGURAÇÕES
+========================= */
+
+const FRANQUIA_SEMANAL = 1500;
+
+let gastosTemporarios = [];
 
 
-  // =================================
-  // DATA
-  // =================================
 
-  document.getElementById("dataHoje")
-    .textContent =
-    new Date().toLocaleDateString(
-      "pt-BR",
-      {
-        weekday: "long",
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric"
-      }
-    );
+/* =========================
+   DATA
+========================= */
 
-
-  // =================================
-  // FORMATAR DINHEIRO
-  // =================================
-
-  function dinheiro(valor) {
-
-    return valor.toLocaleString(
-      "pt-BR",
-      {
-        style: "currency",
-        currency: "BRL"
-      }
-    );
-
+document
+.getElementById("dataHoje")
+.textContent =
+new Date()
+.toLocaleDateString(
+  "pt-BR",
+  {
+    weekday: "long",
+    day: "2-digit",
+    month: "long",
+    year: "numeric"
   }
+);
 
 
-  function numero(id) {
 
-    return Number(
-      document.getElementById(id).value
-    ) || 0;
+/* =========================
+   FUNÇÕES BÁSICAS
+========================= */
 
-  }
+function numero(id) {
 
+  return Number(
+    document
+      .getElementById(id)
+      .value
+  ) || 0;
 
-  // =================================
-  // INÍCIO DA SEMANA
-  // =================================
-
-  function inicioSemana(data) {
-
-    const d = new Date(data);
-
-    const dia = d.getDay();
-
-    const diferenca =
-      dia === 0
-        ? -6
-        : 1 - dia;
-
-    d.setDate(
-      d.getDate() + diferenca
-    );
-
-    d.setHours(0,0,0,0);
-
-    return d;
-
-  }
+}
 
 
-  // =================================
-  // SALVAR DIA
-  // =================================
+function dinheiro(valor) {
 
-  function salvarDia() {
-
-    const uber =
-      numero("uber");
-
-    const noventaNove =
-      numero("noventaNove");
-
-    const particular =
-      numero("particular");
-
-    const combustivel =
-      numero("combustivel");
-
-    const outrosGastos =
-      numero("outrosGastos");
-
-    const km =
-      numero("kmHoje");
-
-
-    const receita =
-      uber +
-      noventaNove +
-      particular;
-
-
-    const gastos =
-      combustivel +
-      outrosGastos;
-
-
-    const liquido =
-      receita - gastos;
-
-
-    const hoje =
-      new Date();
-
-
-    const registro = {
-
-      dataISO:
-        hoje.toISOString(),
-
-      data:
-        hoje.toLocaleDateString(
-          "pt-BR"
-        ),
-
-      uber,
-
-      noventaNove,
-
-      particular,
-
-      combustivel,
-
-      outrosGastos,
-
-      receita,
-
-      gastos,
-
-      liquido,
-
-      km
-
-    };
-
-
-    let registros =
-      JSON.parse(
-        localStorage.getItem(
-          "motoristaRegistros"
-        )
-      ) || [];
-
-
-    const indice =
-      registros.findIndex(
-        item =>
-          item.data === registro.data
-      );
-
-
-    if (indice >= 0) {
-
-      registros[indice] =
-        registro;
-
-    } else {
-
-      registros.push(
-        registro
-      );
-
+  return Number(valor)
+  .toLocaleString(
+    "pt-BR",
+    {
+      style: "currency",
+      currency: "BRL"
     }
+  );
+
+}
 
 
-    localStorage.setItem(
-      "motoristaRegistros",
-      JSON.stringify(registros)
+
+/* =========================
+   SEMANA
+========================= */
+
+function inicioSemana(data = new Date()) {
+
+  const d =
+    new Date(data);
+
+  const dia =
+    d.getDay();
+
+  const diferenca =
+    dia === 0
+      ? -6
+      : 1 - dia;
+
+  d.setDate(
+    d.getDate() +
+    diferenca
+  );
+
+  d.setHours(
+    0,
+    0,
+    0,
+    0
+  );
+
+  return d;
+
+}
+
+
+function fimSemana(data = new Date()) {
+
+  const inicio =
+    inicioSemana(data);
+
+  const fim =
+    new Date(inicio);
+
+  fim.setDate(
+    inicio.getDate() + 6
+  );
+
+  fim.setHours(
+    23,
+    59,
+    59,
+    999
+  );
+
+  return fim;
+
+}
+
+
+
+/* =========================
+   LITROS
+========================= */
+
+function atualizarLitros() {
+
+  const valor =
+    numero("combustivel");
+
+  const preco =
+    numero("precoLitro");
+
+  const litros =
+    preco > 0
+      ? valor / preco
+      : 0;
+
+
+  document
+  .getElementById(
+    "litrosAbastecidos"
+  )
+  .textContent =
+  litros.toLocaleString(
+    "pt-BR",
+    {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }
+  ) +
+  " L";
+
+}
+
+
+document
+.getElementById(
+  "combustivel"
+)
+.addEventListener(
+  "input",
+  atualizarLitros
+);
+
+
+document
+.getElementById(
+  "precoLitro"
+)
+.addEventListener(
+  "input",
+  atualizarLitros
+);
+
+
+
+/* =========================
+   OUTROS GASTOS
+========================= */
+
+function adicionarGasto() {
+
+  const categoria =
+    document
+    .getElementById(
+      "categoriaGasto"
+    )
+    .value;
+
+
+  const descricao =
+    document
+    .getElementById(
+      "descricaoGasto"
+    )
+    .value
+    .trim();
+
+
+  const valor =
+    numero(
+      "valorOutroGasto"
     );
 
 
-    limparCampos();
+  if (valor <= 0) {
 
-    atualizarPainel();
+    alert(
+      "Informe o valor do gasto."
+    );
+
+    return;
 
   }
 
 
-  // =================================
-  // LIMPAR CAMPOS
-  // =================================
+  const gasto = {
 
-  function limparCampos() {
+    id: Date.now(),
 
-    [
-      "uber",
-      "noventaNove",
-      "particular",
-      "combustivel",
-      "outrosGastos",
-      "kmHoje"
-    ]
-    .forEach(
-      id =>
+    categoria,
+
+    descricao,
+
+    valor
+
+  };
+
+
+  gastosTemporarios.push(
+    gasto
+  );
+
+
+  document
+  .getElementById(
+    "descricaoGasto"
+  )
+  .value = "";
+
+
+  document
+  .getElementById(
+    "valorOutroGasto"
+  )
+  .value = "";
+
+
+  mostrarGastosTemporarios();
+
+}
+
+
+
+function removerGasto(id) {
+
+  gastosTemporarios =
+    gastosTemporarios.filter(
+      gasto =>
+        gasto.id !== id
+    );
+
+
+  mostrarGastosTemporarios();
+
+}
+
+
+
+function mostrarGastosTemporarios() {
+
+  const lista =
+    document
+    .getElementById(
+      "listaGastos"
+    );
+
+
+  lista.innerHTML = "";
+
+
+  let total = 0;
+
+
+  gastosTemporarios
+  .forEach(
+    gasto => {
+
+      total +=
+        gasto.valor;
+
+
+      const item =
         document
-          .getElementById(id)
-          .value = ""
-    );
-
-  }
+        .createElement(
+          "div"
+        );
 
 
-  // =================================
-  // ATUALIZAR PAINEL
-  // =================================
-
-  function atualizarPainel() {
-
-    const registros =
-      JSON.parse(
-        localStorage.getItem(
-          "motoristaRegistros"
-        )
-      ) || [];
+      item.className =
+        "gasto-item";
 
 
-    const hoje =
-      new Date();
+      item.innerHTML = `
+
+        <div class="gasto-info">
+
+          <strong>
+            ${gasto.categoria}
+          </strong>
+
+          ${gasto.descricao || "Sem descrição"}
+
+          <br>
+
+          ${dinheiro(gasto.valor)}
+
+        </div>
+
+        <button
+          class="btn-remover"
+          onclick="removerGasto(${gasto.id})"
+        >
+          Excluir
+        </button>
+
+      `;
 
 
-    const inicio =
-      inicioSemana(hoje);
-
-
-    let liquidoSemana = 0;
-
-    let liquidoMes = 0;
-
-    let kmSemana = 0;
-
-    let receitaMes = 0;
-
-    let kmMes = 0;
-
-
-    registros.forEach(
-      item => {
-
-        const data =
-          new Date(
-            item.dataISO
-          );
-
-
-        // SEMANA
-
-        if (
-          data >= inicio &&
-          data <= hoje
-        ) {
-
-          liquidoSemana +=
-            item.liquido;
-
-          kmSemana +=
-            item.km;
-
-        }
-
-
-        // MÊS
-
-        if (
-          data.getMonth() ===
-          hoje.getMonth() &&
-
-          data.getFullYear() ===
-          hoje.getFullYear()
-        ) {
-
-          liquidoMes +=
-            item.liquido;
-
-          receitaMes +=
-            item.receita;
-
-          kmMes +=
-            item.km;
-
-        }
-
-      }
-    );
-
-
-    document
-      .getElementById(
-        "liquidoSemana"
-      )
-      .textContent =
-      dinheiro(
-        liquidoSemana
+      lista.appendChild(
+        item
       );
-
-
-    document
-      .getElementById(
-        "liquidoMes"
-      )
-      .textContent =
-      dinheiro(
-        liquidoMes
-      );
-
-
-    document
-      .getElementById(
-        "kmSemana"
-      )
-      .textContent =
-      kmSemana.toFixed(1) +
-      " km";
-
-
-    document
-      .getElementById(
-        "kmRestantes"
-      )
-      .textContent =
-      Math.max(
-        FRANQUIA_SEMANAL -
-        kmSemana,
-        0
-      ).toFixed(1) +
-      " km";
-
-
-    const liquidoKm =
-      kmMes > 0
-        ? liquidoMes / kmMes
-        : 0;
-
-
-    const receitaKm =
-      kmMes > 0
-        ? receitaMes / kmMes
-        : 0;
-
-
-    document
-      .getElementById(
-        "liquidoPorKm"
-      )
-      .textContent =
-      dinheiro(
-        liquidoKm
-      );
-
-
-    document
-      .getElementById(
-        "receitaPorKm"
-      )
-      .textContent =
-      dinheiro(
-        receitaKm
-      );
-
-
-    mostrarHistorico(
-      registros
-    );
-
-
-    calcularMelhorDia(
-      registros
-    );
-
-
-    calcularMediaDia(
-      registros
-    );
-
-  }
-
-
-  // =================================
-  // HISTÓRICO
-  // =================================
-
-  function mostrarHistorico(
-    registros
-  ) {
-
-    const corpo =
-      document.getElementById(
-        "historico"
-      );
-
-
-    corpo.innerHTML = "";
-
-
-    const hoje =
-      new Date();
-
-
-    const registrosMes =
-      registros.filter(
-        item => {
-
-          const data =
-            new Date(
-              item.dataISO
-            );
-
-
-          return (
-            data.getMonth() ===
-            hoje.getMonth() &&
-
-            data.getFullYear() ===
-            hoje.getFullYear()
-          );
-
-        }
-      );
-
-
-    registrosMes
-      .sort(
-        (a,b) =>
-          new Date(b.dataISO) -
-          new Date(a.dataISO)
-      )
-      .forEach(
-        item => {
-
-          const linha =
-            document.createElement(
-              "tr"
-            );
-
-
-          linha.innerHTML = `
-
-            <td>
-              ${item.data}
-            </td>
-
-            <td>
-              ${dinheiro(item.receita)}
-            </td>
-
-            <td>
-              ${dinheiro(item.gastos)}
-            </td>
-
-            <td>
-              ${dinheiro(item.liquido)}
-            </td>
-
-            <td>
-              ${item.km.toFixed(1)}
-            </td>
-
-          `;
-
-
-          corpo.appendChild(
-            linha
-          );
-
-        }
-      );
-
-  }
-
-
-  // =================================
-  // MELHOR DIA
-  // =================================
-
-  function calcularMelhorDia(
-    registros
-  ) {
-
-    const hoje =
-      new Date();
-
-
-    const registrosMes =
-      registros.filter(
-        item => {
-
-          const data =
-            new Date(
-              item.dataISO
-            );
-
-
-          return (
-            data.getMonth() ===
-            hoje.getMonth() &&
-
-            data.getFullYear() ===
-            hoje.getFullYear()
-          );
-
-        }
-      );
-
-
-    if (
-      registrosMes.length === 0
-    ) {
-
-      document
-        .getElementById(
-          "melhorDia"
-        )
-        .textContent = "-";
-
-      return;
 
     }
+  );
 
 
-    const melhor =
-      registrosMes.reduce(
-        (a,b) =>
-          a.liquido >
-          b.liquido
-            ? a
-            : b
-      );
+  document
+  .getElementById(
+    "totalOutrosGastos"
+  )
+  .textContent =
+  dinheiro(total);
+
+}
 
 
+
+/* =========================
+   SALVAR DIA
+========================= */
+
+function salvarDia() {
+
+  const uber =
+    numero("uber");
+
+  const noventaNove =
+    numero("noventaNove");
+
+  const particular =
+    numero("particular");
+
+
+  const receita =
+    uber +
+    noventaNove +
+    particular;
+
+
+  const tipoCombustivel =
     document
-      .getElementById(
-        "melhorDia"
-      )
-      .textContent =
-      melhor.data +
-      " • " +
-      dinheiro(
-        melhor.liquido
-      );
-
-  }
+    .getElementById(
+      "tipoCombustivel"
+    )
+    .value;
 
 
-  // =================================
-  // MÉDIA POR DIA
-  // =================================
+  const precoLitro =
+    numero(
+      "precoLitro"
+    );
 
-  function calcularMediaDia(
-    registros
+
+  const combustivel =
+    numero(
+      "combustivel"
+    );
+
+
+  const litros =
+    precoLitro > 0
+      ? combustivel /
+        precoLitro
+      : 0;
+
+
+  const outrosGastos =
+    gastosTemporarios
+    .reduce(
+      (soma, gasto) =>
+        soma +
+        gasto.valor,
+      0
+    );
+
+
+  const gastosTotais =
+    combustivel +
+    outrosGastos;
+
+
+  const liquido =
+    receita -
+    gastosTotais;
+
+
+  const km =
+    numero(
+      "kmHoje"
+    );
+
+
+  if (
+    receita === 0 &&
+    gastosTotais === 0 &&
+    km === 0
   ) {
 
-    const hoje =
-      new Date();
+    alert(
+      "Preencha os dados do dia antes de salvar."
+    );
 
-
-    const registrosMes =
-      registros.filter(
-        item => {
-
-          const data =
-            new Date(
-              item.dataISO
-            );
-
-
-          return (
-            data.getMonth() ===
-            hoje.getMonth() &&
-
-            data.getFullYear() ===
-            hoje.getFullYear()
-          );
-
-        }
-      );
-
-
-    if (
-      registrosMes.length === 0
-    ) {
-
-      document
-        .getElementById(
-          "mediaDia"
-        )
-        .textContent =
-        dinheiro(0);
-
-      return;
-
-    }
-
-
-    const total =
-      registrosMes.reduce(
-        (soma,item) =>
-          soma +
-          item.liquido,
-        0
-      );
-
-
-    const media =
-      total /
-      registrosMes.length;
-
-
-    document
-      .getElementById(
-        "mediaDia"
-      )
-      .textContent =
-      dinheiro(
-        media
-      );
+    return;
 
   }
+
+
+  if (
+    combustivel > 0 &&
+    tipoCombustivel === ""
+  ) {
+
+    alert(
+      "Escolha gasolina ou etanol."
+    );
+
+    return;
+
+  }
+
+
+  if (
+    combustivel > 0 &&
+    precoLitro <= 0
+  ) {
+
+    alert(
+      "Informe o preço por litro."
+    );
+
+    return;
+
+  }
+
+
+  const hoje =
+    new Date();
+
+
+  const dataChave =
+    hoje
+    .toLocaleDateString(
+      "en-CA"
+    );
+
+
+  const registro = {
+
+    dataChave,
+
+    data:
+      hoje
+      .toLocaleDateString(
+        "pt-BR"
+      ),
+
+    uber,
+
+    noventaNove,
+
+    particular,
+
+    receita,
+
+    tipoCombustivel,
+
+    precoLitro,
+
+    combustivel,
+
+    litros,
+
+    outrosGastos,
+
+    listaOutrosGastos:
+      [...gastosTemporarios],
+
+    gastosTotais,
+
+    liquido,
+
+    km
+
+  };
+
+
+  let registros =
+    JSON.parse(
+      localStorage
+      .getItem(
+        "motoristaRegistros"
+      )
+    ) || [];
+
+
+  const indice =
+    registros
+    .findIndex(
+      item =>
+        item.dataChave ===
+        dataChave
+    );
+
+
+  if (indice >= 0) {
+
+    const confirmar =
+      confirm(
+        "Já existe um lançamento para hoje. Deseja substituir?"
+      );
+
+
+    if (!confirmar)
+      return;
+
+
+    registros[indice] =
+      registro;
+
+  } else {
+
+    registros.push(
+      registro
+    );
+
+  }
+
+
+  localStorage
+  .setItem(
+    "motoristaRegistros",
+    JSON.stringify(
+      registros
+    )
+  );
+
+
+  limparFormulario();
 
 
   atualizarPainel();
 
-</script>
 
-</body>
-</html>
+  alert(
+    "Dia salvo com sucesso!"
+  );
+
+}
+
+
+
+/* =========================
+   LIMPAR FORMULÁRIO
+========================= */
+
+function limparFormulario() {
+
+  [
+    "uber",
+    "noventaNove",
+    "particular",
+    "precoLitro",
+    "combustivel",
+    "kmHoje"
+  ]
+  .forEach(
+    id => {
+
+      document
+      .getElementById(id)
+      .value = "";
+
+    }
+  );
+
+
+  document
+  .getElementById(
+    "tipoCombustivel"
+  )
+  .value = "";
+
+
+  gastosTemporarios = [];
+
+
+  mostrarGastosTemporarios();
+
+
+  atualizarLitros();
+
+}
+
+
+
+/* =========================
+   PAINEL
+========================= */
+
+function atualizarPainel() {
+
+  const registros =
+    JSON.parse(
+      localStorage
+      .getItem(
+        "motoristaRegistros"
+      )
+    ) || [];
+
+
+  const hoje =
+    new Date();
+
+
+  const inicio =
+    inicioSemana(
+      hoje
+    );
+
+
+  const fim =
+    fimSemana(
+      hoje
+    );
+
+
+  let liquidoSemana = 0;
+
+  let kmSemana = 0;
+
+
+  let receitaMes = 0;
+
+  let gastosMes = 0;
+
+  let liquidoMes = 0;
+
+  let kmMes = 0;
+
+  let combustivelMes = 0;
+
+  let litrosMes = 0;
+
+
+  const registrosMes = [];
+
+
+  registros
+  .forEach(
+    item => {
+
+      const data =
+        new Date(
+          item.dataChave +
+          "T12:00:00"
+        );
+
+
+      if (
+        data >= inicio &&
+        data <= fim
+      ) {
+
+        liquidoSemana +=
+          Number(
+            item.liquido
+          ) || 0;
+
+
+        kmSemana +=
+          Number(
+            item.km
+          ) || 0;
+
+      }
+
+
+      if (
+        data.getMonth() ===
+        hoje.getMonth() &&
+
+        data.getFullYear() ===
+        hoje.getFullYear()
+      ) {
+
+        registrosMes.push(
+          item
+        );
+
+
+        receitaMes +=
+          Number(
+            item.receita
+          ) || 0;
+
+
+        gastosMes +=
+          Number(
+            item.gastosTotais
+          ) || 0;
+
+
+        liquidoMes +=
+          Number(
+            item.liquido
+          ) || 0;
+
+
+        kmMes +=
+          Number(
+            item.km
+          ) || 0;
+
+
+        combustivelMes +=
+          Number(
+            item.combustivel
+          ) || 0;
+
+
+        litrosMes +=
+          Number(
+            item.litros
+          ) || 0;
+
+      }
+
+    }
+  );
+
+
+  document
+  .getElementById(
+    "liquidoSemana"
+  )
+  .textContent =
+  dinheiro(
+    liquidoSemana
+  );
+
+
+  document
+  .getElementById(
+    "liquidoMes"
+  )
+  .textContent =
+  dinheiro(
+    liquidoMes
+  );
+
+
+  document
+  .getElementById(
+    "receitaMes"
+  )
+  .textContent =
+  dinheiro(
+    receitaMes
+  );
+
+
+  document
+  .getElementById(
+    "gastosMes"
+  )
+  .textContent =
+  dinheiro(
+    gastosMes
+  );
+
+
+  document
+  .getElementById(
+    "kmSemana"
+  )
+  .textContent =
+  kmSemana
+  .toFixed(1) +
+  " km";
+
+
+  const kmRestantes =
+    Math.max(
+      FRANQUIA_SEMANAL -
+      kmSemana,
+      0
+    );
+
+
+  document
+  .getElementById(
+    "kmRestantes"
+  )
+  .textContent =
+  kmRestantes
+  .toFixed(1) +
+  " km";
+
+
+  const liquidoKm =
+    kmMes > 0
+      ? liquidoMes /
+        kmMes
+      : 0;
+
+
+  const receitaKm =
+    kmMes > 0
+      ? receitaMes /
+        kmMes
+      : 0;
+
+
+  document
+  .getElementById(
+    "liquidoPorKm"
+  )
+  .textContent =
+  dinheiro(
+    liquidoKm
+  );
+
+
+  document
+  .getElementById(
+    "receitaPorKm"
+  )
+  .textContent =
+  dinheiro(
+    receitaKm
+  );
+
+
+  document
+  .getElementById(
+    "combustivelMes"
+  )
+  .textContent =
+  dinheiro(
+    combustivelMes
+  );
+
+
+  document
+  .getElementById(
+    "litrosMes"
+  )
+  .textContent =
+  litrosMes
+  .toLocaleString(
+    "pt-BR",
+    {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }
+  ) +
+  " L";
+
+
+  const percentual =
+    receitaMes > 0
+      ? (
+          combustivelMes /
+          receitaMes
+        ) * 100
+      : 0;
+
+
+  document
+  .getElementById(
+    "percentualCombustivel"
+  )
+  .textContent =
+  percentual
+  .toFixed(1)
+  .replace(
+    ".",
+    ","
+  ) +
+  "%";
+
+
+  calcularMelhorDia(
+    registrosMes
+  );
+
+
+  calcularMedia(
+    registrosMes
+  );
+
+
+  mostrarHistorico(
+    registrosMes
+  );
+
+}
+
+
+
+/* =========================
+   MELHOR DIA
+========================= */
+
+function calcularMelhorDia(
+  registros
+) {
+
+  if (
+    registros.length === 0
+  ) {
+
+    document
+    .getElementById(
+      "melhorDia"
+    )
+    .textContent =
+    "-";
+
+    return;
+
+  }
+
+
+  const melhor =
+    registros
+    .reduce(
+      (melhorAtual, item) =>
+
+        item.liquido >
+        melhorAtual.liquido
+
+          ? item
+
+          : melhorAtual
+
+    );
+
+
+  document
+  .getElementById(
+    "melhorDia"
+  )
+  .textContent =
+
+  melhor.data +
+  " • " +
+  dinheiro(
+    melhor.liquido
+  );
+
+}
+
+
+
+/* =========================
+   MÉDIA DIÁRIA
+========================= */
+
+function calcularMedia(
+  registros
+) {
+
+  if (
+    registros.length === 0
+  ) {
+
+    document
+    .getElementById(
+      "mediaDia"
+    )
+    .textContent =
+    dinheiro(0);
+
+    return;
+
+  }
+
+
+  const total =
+    registros
+    .reduce(
+      (soma, item) =>
+        soma +
+        Number(
+         
