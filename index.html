@@ -19,430 +19,221 @@
 }
 
 body {
-
   margin: 0;
-
   background: #0f172a;
-
   color: white;
-
-  font-family:
-    Arial,
-    sans-serif;
-
+  font-family: Arial, sans-serif;
   min-height: 100vh;
-
 }
 
-
-/* =========================
-   TOPO
-========================= */
-
 .topo {
-
   height: 65px;
-
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
-
   padding: 0 22px;
-
   background: #111827;
-
-  border-bottom:
-    1px solid #334155;
-
+  border-bottom: 1px solid #334155;
 }
 
 .topo h1 {
-
   margin: 0;
-
   font-size: 22px;
-
 }
 
 .data {
-
   color: #94a3b8;
-
   font-size: 14px;
-
 }
-
-
-/* =========================
-   PAINEL
-========================= */
 
 .painel {
-
-  height:
-    calc(100vh - 65px);
-
+  height: calc(100vh - 65px);
   padding: 12px;
-
   display: grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
-  grid-template-rows:
-    1fr 1fr;
-
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
   gap: 12px;
-
 }
 
-
-/* =========================
-   QUADRANTES
-========================= */
-
 .quadrante {
-
   background: #1e293b;
-
   border-radius: 15px;
-
   padding: 16px;
-
   overflow: auto;
-
 }
 
 .quadrante h2 {
-
   margin-top: 0;
-
   margin-bottom: 14px;
-
   font-size: 19px;
-
 }
 
 .subtitulo {
-
   color: #94a3b8;
-
   font-size: 12px;
-
   margin-top: 14px;
-
   margin-bottom: 6px;
-
   text-transform: uppercase;
-
   font-weight: bold;
-
 }
 
-
-/* =========================
-   CARDS
-========================= */
-
 .cards {
-
   display: grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
+  grid-template-columns: 1fr 1fr;
   gap: 9px;
-
 }
 
 .card {
-
   background: #334155;
-
   border-radius: 11px;
-
   padding: 12px;
-
 }
 
 .card span {
-
   display: block;
-
   color: #cbd5e1;
-
   font-size: 12px;
-
   margin-bottom: 4px;
-
 }
 
 .card strong {
-
   font-size: 21px;
-
 }
 
-
-/* =========================
-   FORMULÁRIO
-========================= */
-
 label {
-
   display: block;
-
   margin-top: 7px;
-
   margin-bottom: 3px;
-
   font-size: 12px;
-
   color: #cbd5e1;
-
 }
 
 input,
 select {
-
   width: 100%;
-
   padding: 8px;
-
   border: none;
-
   border-radius: 7px;
-
   background: #334155;
-
   color: white;
-
   font-size: 15px;
-
 }
 
 input::placeholder {
-
   color: #94a3b8;
-
 }
 
 button {
-
   border: none;
-
   border-radius: 9px;
-
   padding: 10px;
-
   font-size: 14px;
-
   font-weight: bold;
-
   cursor: pointer;
-
 }
 
 .btn-principal {
-
   width: 100%;
-
   margin-top: 12px;
-
   background: #22c55e;
-
+  color: #052e16;
 }
 
 .btn-adicionar {
-
   width: 100%;
-
   margin-top: 9px;
-
   background: #3b82f6;
-
   color: white;
-
 }
 
 .btn-remover {
-
   background: #ef4444;
-
   color: white;
-
   padding: 5px 8px;
-
   font-size: 11px;
-
 }
 
 .litros {
-
   margin-top: 7px;
-
   background: #0f172a;
-
   padding: 8px;
-
   border-radius: 8px;
-
   text-align: center;
-
 }
 
 .litros strong {
-
   color: #86efac;
-
 }
 
-
-/* =========================
-   GASTOS
-========================= */
-
 .gasto-item {
-
   display: grid;
-
-  grid-template-columns:
-    1fr auto;
-
+  grid-template-columns: 1fr auto;
   gap: 8px;
-
   align-items: center;
-
   background: #334155;
-
   padding: 8px;
-
   border-radius: 8px;
-
   margin-top: 6px;
-
 }
 
 .gasto-info {
-
   font-size: 12px;
-
 }
 
 .gasto-info strong {
-
   display: block;
-
   font-size: 14px;
-
 }
 
 .total-outros {
-
   margin-top: 8px;
-
   text-align: right;
-
   font-size: 13px;
-
 }
 
-
-/* =========================
-   INDICADORES
-========================= */
-
 .indicador {
-
   background: #334155;
-
   border-radius: 10px;
-
   padding: 11px;
-
   margin-bottom: 9px;
-
 }
 
 .indicador span {
-
   color: #cbd5e1;
-
   font-size: 12px;
-
 }
 
 .indicador strong {
-
   display: block;
-
   font-size: 20px;
-
   margin-top: 4px;
-
 }
-
-.positivo {
-  color: #86efac;
-}
-
-.negativo {
-  color: #fca5a5;
-}
-
-
-/* =========================
-   TABELA
-========================= */
 
 table {
-
   width: 100%;
-
   border-collapse: collapse;
-
   font-size: 12px;
-
 }
 
 th,
 td {
-
   padding: 7px 4px;
-
-  border-bottom:
-    1px solid #475569;
-
+  border-bottom: 1px solid #475569;
   text-align: right;
-
   white-space: nowrap;
-
 }
 
 th:first-child,
 td:first-child {
-
   text-align: left;
-
 }
-
-
-/* =========================
-   CELULAR
-========================= */
 
 @media (max-width: 800px) {
 
   .painel {
-
     height: auto;
-
     grid-template-columns: 1fr;
-
     grid-template-rows: auto;
-
   }
 
 }
@@ -452,11 +243,6 @@ td:first-child {
 </head>
 
 <body>
-
-
-<!-- =========================
-     TOPO
-========================= -->
 
 <div class="topo">
 
@@ -471,13 +257,7 @@ td:first-child {
 
 </div>
 
-
 <div class="painel">
-
-
-<!-- =========================
-     1 - RESUMO
-========================= -->
 
 <section class="quadrante">
 
@@ -488,91 +268,38 @@ td:first-child {
 <div class="cards">
 
 <div class="card">
-
-<span>
-Líquido da semana
-</span>
-
-<strong id="liquidoSemana">
-R$ 0,00
-</strong>
-
+<span>Líquido da semana</span>
+<strong id="liquidoSemana">R$ 0,00</strong>
 </div>
 
-
 <div class="card">
-
-<span>
-Líquido do mês
-</span>
-
-<strong id="liquidoMes">
-R$ 0,00
-</strong>
-
+<span>Líquido do mês</span>
+<strong id="liquidoMes">R$ 0,00</strong>
 </div>
 
-
 <div class="card">
-
-<span>
-Receita do mês
-</span>
-
-<strong id="receitaMes">
-R$ 0,00
-</strong>
-
+<span>Receita do mês</span>
+<strong id="receitaMes">R$ 0,00</strong>
 </div>
 
-
 <div class="card">
-
-<span>
-Gastos do mês
-</span>
-
-<strong id="gastosMes">
-R$ 0,00
-</strong>
-
+<span>Gastos do mês</span>
+<strong id="gastosMes">R$ 0,00</strong>
 </div>
 
-
 <div class="card">
-
-<span>
-Km da semana
-</span>
-
-<strong id="kmSemana">
-0 km
-</strong>
-
+<span>Km da semana</span>
+<strong id="kmSemana">0 km</strong>
 </div>
 
-
 <div class="card">
-
-<span>
-Km disponíveis
-</span>
-
-<strong id="kmRestantes">
-1500 km
-</strong>
-
+<span>Km disponíveis</span>
+<strong id="kmRestantes">1500 km</strong>
 </div>
 
 </div>
 
 </section>
-
-
-
-<!-- =========================
-     2 - LANÇAMENTO
-========================= -->
 
 <section class="quadrante">
 
@@ -580,15 +307,11 @@ Km disponíveis
 ✍️ Lançamento do dia
 </h2>
 
-
 <div class="subtitulo">
 Ganhos
 </div>
 
-
-<label>
-Uber
-</label>
+<label>Uber</label>
 
 <input
   type="number"
@@ -597,10 +320,7 @@ Uber
   placeholder="0,00"
 >
 
-
-<label>
-99
-</label>
+<label>99</label>
 
 <input
   type="number"
@@ -609,10 +329,7 @@ Uber
   placeholder="0,00"
 >
 
-
-<label>
-Particular
-</label>
+<label>Particular</label>
 
 <input
   type="number"
@@ -621,15 +338,11 @@ Particular
   placeholder="0,00"
 >
 
-
 <div class="subtitulo">
 Combustível
 </div>
 
-
-<label>
-Tipo
-</label>
+<label>Tipo</label>
 
 <select id="tipoCombustivel">
 
@@ -647,7 +360,6 @@ Etanol
 
 </select>
 
-
 <label>
 Preço por litro
 </label>
@@ -658,7 +370,6 @@ Preço por litro
   step="0.001"
   placeholder="Ex.: 4.19"
 >
-
 
 <label>
 Valor abastecido
@@ -671,7 +382,6 @@ Valor abastecido
   placeholder="Ex.: 120.00"
 >
 
-
 <div class="litros">
 
 Litros abastecidos:
@@ -682,12 +392,9 @@ Litros abastecidos:
 
 </div>
 
-
-
 <div class="subtitulo">
 Outros gastos
 </div>
-
 
 <label>
 Categoria
@@ -721,7 +428,6 @@ Outros
 
 </select>
 
-
 <label>
 Descrição
 </label>
@@ -731,7 +437,6 @@ Descrição
   id="descricaoGasto"
   placeholder="Ex.: almoço"
 >
-
 
 <label>
 Valor
@@ -744,20 +449,15 @@ Valor
   placeholder="0,00"
 >
 
-
 <button
   class="btn-adicionar"
   onclick="adicionarGasto()"
 >
-
 ➕ Adicionar gasto
-
 </button>
-
 
 <div id="listaGastos">
 </div>
-
 
 <div class="total-outros">
 
@@ -769,12 +469,9 @@ R$ 0,00
 
 </div>
 
-
-
 <div class="subtitulo">
 Quilometragem
 </div>
-
 
 <label>
 Km rodados no dia
@@ -787,31 +484,20 @@ Km rodados no dia
   placeholder="Ex.: 185.4"
 >
 
-
 <button
   class="btn-principal"
   onclick="salvarDia()"
 >
-
 💾 Salvar dia
-
 </button>
 
-
 </section>
-
-
-
-<!-- =========================
-     3 - HISTÓRICO
-========================= -->
 
 <section class="quadrante">
 
 <h2>
 📅 Histórico do mês
 </h2>
-
 
 <div style="overflow-x:auto">
 
@@ -820,23 +506,15 @@ Km rodados no dia
 <thead>
 
 <tr>
-
 <th>Data</th>
-
 <th>Receita</th>
-
 <th>Comb.</th>
-
 <th>Outros</th>
-
 <th>Líquido</th>
-
 <th>Km</th>
-
 </tr>
 
 </thead>
-
 
 <tbody id="historico">
 </tbody>
@@ -847,18 +525,11 @@ Km rodados no dia
 
 </section>
 
-
-
-<!-- =========================
-     4 - INDICADORES
-========================= -->
-
 <section class="quadrante">
 
 <h2>
 📈 Indicadores
 </h2>
-
 
 <div class="indicador">
 
@@ -872,7 +543,6 @@ R$ 0,00
 
 </div>
 
-
 <div class="indicador">
 
 <span>
@@ -884,7 +554,6 @@ R$ 0,00
 </strong>
 
 </div>
-
 
 <div class="indicador">
 
@@ -898,7 +567,6 @@ R$ 0,00
 
 </div>
 
-
 <div class="indicador">
 
 <span>
@@ -910,7 +578,6 @@ Litros abastecidos no mês
 </strong>
 
 </div>
-
 
 <div class="indicador">
 
@@ -924,7 +591,6 @@ Litros abastecidos no mês
 
 </div>
 
-
 <div class="indicador">
 
 <span>
@@ -936,7 +602,6 @@ Melhor dia do mês
 </strong>
 
 </div>
-
 
 <div class="indicador">
 
@@ -952,21 +617,16 @@ R$ 0,00
 
 </section>
 
-
 </div>
-
 
 <script>
 
-
-/* =========================
-   CONFIGURAÇÕES
-========================= */
-
 const FRANQUIA_SEMANAL = 1500;
 
-let gastosTemporarios = [];
+const CHAVE_DADOS =
+  "motoristaRegistrosV2";
 
+let gastosTemporarios = [];
 
 
 /* =========================
@@ -988,7 +648,6 @@ new Date()
 );
 
 
-
 /* =========================
    FUNÇÕES BÁSICAS
 ========================= */
@@ -997,8 +656,8 @@ function numero(id) {
 
   return Number(
     document
-      .getElementById(id)
-      .value
+    .getElementById(id)
+    .value
   ) || 0;
 
 }
@@ -1018,12 +677,45 @@ function dinheiro(valor) {
 }
 
 
+/* =========================
+   DATA SEGURA
+========================= */
+
+function gerarDataChave(data) {
+
+  const ano =
+    data.getFullYear();
+
+  const mes =
+    String(
+      data.getMonth() + 1
+    )
+    .padStart(
+      2,
+      "0"
+    );
+
+  const dia =
+    String(
+      data.getDate()
+    )
+    .padStart(
+      2,
+      "0"
+    );
+
+  return `${ano}-${mes}-${dia}`;
+
+}
+
 
 /* =========================
    SEMANA
 ========================= */
 
-function inicioSemana(data = new Date()) {
+function inicioSemana(
+  data = new Date()
+) {
 
   const d =
     new Date(data);
@@ -1053,7 +745,9 @@ function inicioSemana(data = new Date()) {
 }
 
 
-function fimSemana(data = new Date()) {
+function fimSemana(
+  data = new Date()
+) {
 
   const inicio =
     inicioSemana(data);
@@ -1077,7 +771,6 @@ function fimSemana(data = new Date()) {
 }
 
 
-
 /* =========================
    LITROS
 ========================= */
@@ -1085,23 +778,27 @@ function fimSemana(data = new Date()) {
 function atualizarLitros() {
 
   const valor =
-    numero("combustivel");
+    numero(
+      "combustivel"
+    );
 
   const preco =
-    numero("precoLitro");
+    numero(
+      "precoLitro"
+    );
 
   const litros =
     preco > 0
       ? valor / preco
       : 0;
 
-
   document
   .getElementById(
     "litrosAbastecidos"
   )
   .textContent =
-  litros.toLocaleString(
+  litros
+  .toLocaleString(
     "pt-BR",
     {
       minimumFractionDigits: 2,
@@ -1133,7 +830,6 @@ document
 );
 
 
-
 /* =========================
    OUTROS GASTOS
 ========================= */
@@ -1147,7 +843,6 @@ function adicionarGasto() {
     )
     .value;
 
-
   const descricao =
     document
     .getElementById(
@@ -1156,14 +851,14 @@ function adicionarGasto() {
     .value
     .trim();
 
-
   const valor =
     numero(
       "valorOutroGasto"
     );
 
-
-  if (valor <= 0) {
+  if (
+    valor <= 0
+  ) {
 
     alert(
       "Informe o valor do gasto."
@@ -1173,10 +868,10 @@ function adicionarGasto() {
 
   }
 
+  gastosTemporarios.push({
 
-  const gasto = {
-
-    id: Date.now(),
+    id:
+      Date.now(),
 
     categoria,
 
@@ -1184,13 +879,7 @@ function adicionarGasto() {
 
     valor
 
-  };
-
-
-  gastosTemporarios.push(
-    gasto
-  );
-
+  });
 
   document
   .getElementById(
@@ -1198,33 +887,29 @@ function adicionarGasto() {
   )
   .value = "";
 
-
   document
   .getElementById(
     "valorOutroGasto"
   )
   .value = "";
 
-
   mostrarGastosTemporarios();
 
 }
-
 
 
 function removerGasto(id) {
 
   gastosTemporarios =
-    gastosTemporarios.filter(
+    gastosTemporarios
+    .filter(
       gasto =>
         gasto.id !== id
     );
 
-
   mostrarGastosTemporarios();
 
 }
-
 
 
 function mostrarGastosTemporarios() {
@@ -1235,20 +920,19 @@ function mostrarGastosTemporarios() {
       "listaGastos"
     );
 
-
-  lista.innerHTML = "";
-
+  lista.innerHTML =
+    "";
 
   let total = 0;
-
 
   gastosTemporarios
   .forEach(
     gasto => {
 
       total +=
-        gasto.valor;
-
+        Number(
+          gasto.valor
+        ) || 0;
 
       const item =
         document
@@ -1256,10 +940,8 @@ function mostrarGastosTemporarios() {
           "div"
         );
 
-
       item.className =
         "gasto-item";
-
 
       item.innerHTML = `
 
@@ -1273,7 +955,9 @@ function mostrarGastosTemporarios() {
 
           <br>
 
-          ${dinheiro(gasto.valor)}
+          ${dinheiro(
+            gasto.valor
+          )}
 
         </div>
 
@@ -1286,14 +970,13 @@ function mostrarGastosTemporarios() {
 
       `;
 
-
-      lista.appendChild(
+      lista
+      .appendChild(
         item
       );
 
     }
   );
-
 
   document
   .getElementById(
@@ -1305,7 +988,6 @@ function mostrarGastosTemporarios() {
 }
 
 
-
 /* =========================
    SALVAR DIA
 ========================= */
@@ -1313,20 +995,24 @@ function mostrarGastosTemporarios() {
 function salvarDia() {
 
   const uber =
-    numero("uber");
+    numero(
+      "uber"
+    );
 
   const noventaNove =
-    numero("noventaNove");
+    numero(
+      "noventaNove"
+    );
 
   const particular =
-    numero("particular");
-
+    numero(
+      "particular"
+    );
 
   const receita =
     uber +
     noventaNove +
     particular;
-
 
   const tipoCombustivel =
     document
@@ -1335,18 +1021,15 @@ function salvarDia() {
     )
     .value;
 
-
   const precoLitro =
     numero(
       "precoLitro"
     );
 
-
   const combustivel =
     numero(
       "combustivel"
     );
-
 
   const litros =
     precoLitro > 0
@@ -1354,26 +1037,27 @@ function salvarDia() {
         precoLitro
       : 0;
 
-
   const outrosGastos =
     gastosTemporarios
     .reduce(
-      (soma, gasto) =>
+      (
+        soma,
+        gasto
+      ) =>
         soma +
-        gasto.valor,
+        Number(
+          gasto.valor
+        ),
       0
     );
-
 
   const gastosTotais =
     combustivel +
     outrosGastos;
 
-
   const liquido =
     receita -
     gastosTotais;
-
 
   const km =
     numero(
@@ -1388,7 +1072,7 @@ function salvarDia() {
   ) {
 
     alert(
-      "Preencha os dados do dia antes de salvar."
+      "Preencha algum dado antes de salvar."
     );
 
     return;
@@ -1402,7 +1086,7 @@ function salvarDia() {
   ) {
 
     alert(
-      "Escolha gasolina ou etanol."
+      "Escolha se o combustível foi gasolina ou etanol."
     );
 
     return;
@@ -1427,11 +1111,9 @@ function salvarDia() {
   const hoje =
     new Date();
 
-
   const dataChave =
-    hoje
-    .toLocaleDateString(
-      "en-CA"
+    gerarDataChave(
+      hoje
     );
 
 
@@ -1475,13 +1157,23 @@ function salvarDia() {
   };
 
 
-  let registros =
-    JSON.parse(
-      localStorage
-      .getItem(
-        "motoristaRegistros"
-      )
-    ) || [];
+  let registros = [];
+
+  try {
+
+    registros =
+      JSON.parse(
+        localStorage
+        .getItem(
+          CHAVE_DADOS
+        )
+      ) || [];
+
+  } catch (erro) {
+
+    registros = [];
+
+  }
 
 
   const indice =
@@ -1493,17 +1185,22 @@ function salvarDia() {
     );
 
 
-  if (indice >= 0) {
+  if (
+    indice >= 0
+  ) {
 
     const confirmar =
       confirm(
         "Já existe um lançamento para hoje. Deseja substituir?"
       );
 
+    if (
+      !confirmar
+    ) {
 
-    if (!confirmar)
       return;
 
+    }
 
     registros[indice] =
       registro;
@@ -1517,27 +1214,36 @@ function salvarDia() {
   }
 
 
-  localStorage
-  .setItem(
-    "motoristaRegistros",
-    JSON.stringify(
-      registros
-    )
-  );
+  try {
+
+    localStorage
+    .setItem(
+      CHAVE_DADOS,
+      JSON.stringify(
+        registros
+      )
+    );
+
+  } catch (erro) {
+
+    alert(
+      "Não foi possível salvar os dados neste navegador."
+    );
+
+    return;
+
+  }
 
 
   limparFormulario();
 
-
   atualizarPainel();
-
 
   alert(
     "Dia salvo com sucesso!"
   );
 
 }
-
 
 
 /* =========================
@@ -1564,24 +1270,45 @@ function limparFormulario() {
     }
   );
 
-
   document
   .getElementById(
     "tipoCombustivel"
   )
   .value = "";
 
-
   gastosTemporarios = [];
 
-
   mostrarGastosTemporarios();
-
 
   atualizarLitros();
 
 }
 
+
+/* =========================
+   CARREGAR REGISTROS
+========================= */
+
+function carregarRegistros() {
+
+  try {
+
+    return (
+      JSON.parse(
+        localStorage
+        .getItem(
+          CHAVE_DADOS
+        )
+      ) || []
+    );
+
+  } catch (erro) {
+
+    return [];
+
+  }
+
+}
 
 
 /* =========================
@@ -1591,34 +1318,24 @@ function limparFormulario() {
 function atualizarPainel() {
 
   const registros =
-    JSON.parse(
-      localStorage
-      .getItem(
-        "motoristaRegistros"
-      )
-    ) || [];
-
+    carregarRegistros();
 
   const hoje =
     new Date();
-
 
   const inicio =
     inicioSemana(
       hoje
     );
 
-
   const fim =
     fimSemana(
       hoje
     );
 
-
   let liquidoSemana = 0;
 
   let kmSemana = 0;
-
 
   let receitaMes = 0;
 
@@ -1632,13 +1349,21 @@ function atualizarPainel() {
 
   let litrosMes = 0;
 
-
-  const registrosMes = [];
+  const registrosMes =
+    [];
 
 
   registros
   .forEach(
     item => {
+
+      if (
+        !item.dataChave
+      ) {
+
+        return;
+
+      }
 
       const data =
         new Date(
@@ -1657,7 +1382,6 @@ function atualizarPainel() {
             item.liquido
           ) || 0;
 
-
         kmSemana +=
           Number(
             item.km
@@ -1674,40 +1398,35 @@ function atualizarPainel() {
         hoje.getFullYear()
       ) {
 
-        registrosMes.push(
+        registrosMes
+        .push(
           item
         );
-
 
         receitaMes +=
           Number(
             item.receita
           ) || 0;
 
-
         gastosMes +=
           Number(
             item.gastosTotais
           ) || 0;
-
 
         liquidoMes +=
           Number(
             item.liquido
           ) || 0;
 
-
         kmMes +=
           Number(
             item.km
           ) || 0;
 
-
         combustivelMes +=
           Number(
             item.combustivel
           ) || 0;
-
 
         litrosMes +=
           Number(
@@ -1875,18 +1594,15 @@ function atualizarPainel() {
     registrosMes
   );
 
-
   calcularMedia(
     registrosMes
   );
-
 
   mostrarHistorico(
     registrosMes
   );
 
 }
-
 
 
 /* =========================
@@ -1916,10 +1632,17 @@ function calcularMelhorDia(
   const melhor =
     registros
     .reduce(
-      (melhorAtual, item) =>
+      (
+        melhorAtual,
+        item
+      ) =>
 
-        item.liquido >
-        melhorAtual.liquido
+        Number(
+          item.liquido
+        ) >
+        Number(
+          melhorAtual.liquido
+        )
 
           ? item
 
@@ -1933,7 +1656,6 @@ function calcularMelhorDia(
     "melhorDia"
   )
   .textContent =
-
   melhor.data +
   " • " +
   dinheiro(
@@ -1943,9 +1665,8 @@ function calcularMelhorDia(
 }
 
 
-
 /* =========================
-   MÉDIA DIÁRIA
+   MÉDIA
 ========================= */
 
 function calcularMedia(
@@ -1971,7 +1692,162 @@ function calcularMedia(
   const total =
     registros
     .reduce(
-      (soma, item) =>
+      (
+        soma,
+        item
+      ) =>
         soma +
         Number(
-         
+          item.liquido
+        ),
+      0
+    );
+
+
+  const media =
+    total /
+    registros.length;
+
+
+  document
+  .getElementById(
+    "mediaDia"
+  )
+  .textContent =
+  dinheiro(
+    media
+  );
+
+}
+
+
+/* =========================
+   HISTÓRICO
+========================= */
+
+function mostrarHistorico(
+  registros
+) {
+
+  const corpo =
+    document
+    .getElementById(
+      "historico"
+    );
+
+  corpo.innerHTML =
+    "";
+
+
+  const ordenados =
+    [...registros]
+    .sort(
+      (
+        a,
+        b
+      ) =>
+        b.dataChave
+        .localeCompare(
+          a.dataChave
+        )
+    );
+
+
+  ordenados
+  .forEach(
+    item => {
+
+      const linha =
+        document
+        .createElement(
+          "tr"
+        );
+
+
+      const tipo =
+        item.tipoCombustivel
+          ? item.tipoCombustivel
+            .substring(
+              0,
+              3
+            )
+          : "-";
+
+
+      linha.innerHTML = `
+
+        <td>
+          ${item.data}
+        </td>
+
+        <td>
+          ${dinheiro(
+            item.receita
+          )}
+        </td>
+
+        <td>
+          ${tipo}
+
+          ${
+            Number(
+              item.combustivel
+            ) > 0
+
+            ? "<br>" +
+              dinheiro(
+                item.combustivel
+              )
+
+            : ""
+          }
+
+        </td>
+
+        <td>
+          ${dinheiro(
+            item.outrosGastos
+          )}
+        </td>
+
+        <td>
+          ${dinheiro(
+            item.liquido
+          )}
+        </td>
+
+        <td>
+          ${Number(
+            item.km
+          ).toFixed(1)}
+        </td>
+
+      `;
+
+
+      corpo
+      .appendChild(
+        linha
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================
+   INICIAR
+========================= */
+
+mostrarGastosTemporarios();
+
+atualizarLitros();
+
+atualizarPainel();
+
+</script>
+
+</body>
+
+</html>
