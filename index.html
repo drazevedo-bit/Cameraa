@@ -2,7 +2,6 @@
 <html lang="pt-BR">
 
 <head>
-
 <meta charset="UTF-8">
 
 <meta
@@ -27,11 +26,13 @@ body {
 }
 
 .topo {
-  height: 65px;
+  min-height: 65px;
+  padding: 10px 22px;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 22px;
+
   background: #111827;
   border-bottom: 1px solid #334155;
 }
@@ -43,79 +44,147 @@ body {
 
 .data {
   color: #94a3b8;
-  font-size: 14px;
+  font-size: 13px;
+  text-align: right;
 }
+
+/* PAINEL */
 
 .painel {
   height: calc(100vh - 65px);
+
   padding: 12px;
+
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  grid-template-rows:
+    1fr 1fr;
+
   gap: 12px;
 }
 
 .quadrante {
   background: #1e293b;
+
   border-radius: 15px;
+
   padding: 16px;
+
   overflow: auto;
 }
 
 .quadrante h2 {
   margin-top: 0;
   margin-bottom: 14px;
+
   font-size: 19px;
 }
 
 .subtitulo {
   color: #94a3b8;
+
   font-size: 12px;
-  margin-top: 14px;
-  margin-bottom: 6px;
+
+  margin-top: 16px;
+  margin-bottom: 7px;
+
   text-transform: uppercase;
+
   font-weight: bold;
+
+  letter-spacing: 0.5px;
 }
+
+/* CARDS */
 
 .cards {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+
+  grid-template-columns:
+    1fr 1fr;
+
   gap: 9px;
 }
 
 .card {
   background: #334155;
-  border-radius: 11px;
+
   padding: 12px;
+
+  border-radius: 11px;
 }
 
 .card span {
   display: block;
+
   color: #cbd5e1;
+
   font-size: 12px;
-  margin-bottom: 4px;
+
+  margin-bottom: 5px;
 }
 
 .card strong {
-  font-size: 21px;
+  display: block;
+
+  font-size: 20px;
 }
+
+/* CARD DE DESTAQUE */
+
+.card-destaque {
+  margin-top: 10px;
+
+  background: #0f172a;
+
+  border-radius: 12px;
+
+  padding: 13px;
+}
+
+.card-destaque span {
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.card-destaque strong {
+  display: block;
+
+  font-size: 24px;
+
+  margin-top: 4px;
+}
+
+/* FORMULÁRIO */
 
 label {
   display: block;
-  margin-top: 7px;
+
+  margin-top: 8px;
   margin-bottom: 3px;
+
   font-size: 12px;
+
   color: #cbd5e1;
 }
 
 input,
 select {
   width: 100%;
-  padding: 8px;
+
+  padding: 9px;
+
   border: none;
-  border-radius: 7px;
+
+  border-radius: 8px;
+
   background: #334155;
+
   color: white;
+
   font-size: 15px;
 }
 
@@ -123,56 +192,117 @@ input::placeholder {
   color: #94a3b8;
 }
 
+.duas-colunas {
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 8px;
+}
+
+/* BOTÕES */
+
 button {
   border: none;
+
   border-radius: 9px;
+
   padding: 10px;
+
   font-size: 14px;
+
   font-weight: bold;
+
   cursor: pointer;
 }
 
 .btn-principal {
   width: 100%;
-  margin-top: 12px;
+
+  margin-top: 14px;
+
   background: #22c55e;
+
   color: #052e16;
 }
 
 .btn-adicionar {
   width: 100%;
+
   margin-top: 9px;
+
   background: #3b82f6;
+
   color: white;
 }
 
 .btn-remover {
   background: #ef4444;
+
   color: white;
+
   padding: 5px 8px;
+
   font-size: 11px;
 }
 
-.litros {
-  margin-top: 7px;
-  background: #0f172a;
-  padding: 8px;
-  border-radius: 8px;
-  text-align: center;
+.btn-excluir-dia {
+  background: #ef4444;
+
+  color: white;
+
+  padding: 4px 6px;
+
+  font-size: 10px;
 }
 
-.litros strong {
+/* TOTAIS DO FORM */
+
+.total-form {
+  margin-top: 8px;
+
+  padding: 9px;
+
+  border-radius: 8px;
+
+  background: #0f172a;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  font-size: 13px;
+}
+
+.total-form strong {
+  font-size: 16px;
+}
+
+.litros {
   color: #86efac;
 }
 
+/* OUTROS GASTOS */
+
 .gasto-item {
   display: grid;
-  grid-template-columns: 1fr auto;
+
+  grid-template-columns:
+    1fr auto;
+
   gap: 8px;
+
   align-items: center;
+
   background: #334155;
+
   padding: 8px;
+
   border-radius: 8px;
+
   margin-top: 6px;
 }
 
@@ -182,44 +312,117 @@ button {
 
 .gasto-info strong {
   display: block;
+
   font-size: 14px;
 }
 
-.total-outros {
-  margin-top: 8px;
-  text-align: right;
-  font-size: 13px;
+/* PROGRESSO */
+
+.progresso-box {
+  margin-top: 10px;
+
+  background: #0f172a;
+
+  border-radius: 11px;
+
+  padding: 12px;
 }
+
+.progresso-titulo {
+  display: flex;
+
+  justify-content: space-between;
+
+  font-size: 13px;
+
+  margin-bottom: 8px;
+}
+
+.barra {
+  height: 12px;
+
+  background: #334155;
+
+  border-radius: 20px;
+
+  overflow: hidden;
+}
+
+.barra-preenchida {
+  height: 100%;
+
+  width: 0%;
+
+  background: #22c55e;
+
+  transition: width 0.3s;
+}
+
+.progresso-texto {
+  margin-top: 7px;
+
+  font-size: 12px;
+
+  color: #cbd5e1;
+}
+
+/* INDICADORES */
 
 .indicador {
   background: #334155;
+
   border-radius: 10px;
+
   padding: 11px;
+
   margin-bottom: 9px;
 }
 
 .indicador span {
   color: #cbd5e1;
+
   font-size: 12px;
 }
 
 .indicador strong {
   display: block;
-  font-size: 20px;
+
+  font-size: 19px;
+
   margin-top: 4px;
 }
 
+.verde {
+  color: #86efac;
+}
+
+.vermelho {
+  color: #fca5a5;
+}
+
+.amarelo {
+  color: #fde68a;
+}
+
+/* TABELA */
+
 table {
   width: 100%;
+
   border-collapse: collapse;
-  font-size: 12px;
+
+  font-size: 11px;
 }
 
 th,
 td {
   padding: 7px 4px;
-  border-bottom: 1px solid #475569;
+
+  border-bottom:
+    1px solid #475569;
+
   text-align: right;
+
   white-space: nowrap;
 }
 
@@ -228,18 +431,35 @@ td:first-child {
   text-align: left;
 }
 
+.vazio {
+  padding: 30px;
+
+  text-align: center;
+
+  color: #94a3b8;
+
+  font-size: 13px;
+}
+
+/* RESPONSIVO */
+
 @media (max-width: 800px) {
 
   .painel {
     height: auto;
+
     grid-template-columns: 1fr;
+
     grid-template-rows: auto;
+  }
+
+  .topo {
+    align-items: flex-start;
   }
 
 }
 
 </style>
-
 </head>
 
 <body>
@@ -259,47 +479,180 @@ td:first-child {
 
 <div class="painel">
 
+<!-- =====================================
+     QUADRANTE 1
+     RESUMO
+===================================== -->
+
 <section class="quadrante">
 
 <h2>
-📊 Resumo
+📊 Semana atual
 </h2>
 
 <div class="cards">
 
-<div class="card">
-<span>Líquido da semana</span>
-<strong id="liquidoSemana">R$ 0,00</strong>
+  <div class="card">
+
+    <span>
+      Receita da semana
+    </span>
+
+    <strong id="receitaSemana">
+      R$ 0,00
+    </strong>
+
+  </div>
+
+
+  <div class="card">
+
+    <span>
+      Despesas operacionais
+    </span>
+
+    <strong id="despesasSemana">
+      R$ 0,00
+    </strong>
+
+  </div>
+
+
+  <div class="card">
+
+    <span>
+      Aluguel da semana
+    </span>
+
+    <strong id="aluguelSemana">
+      R$ 954,91
+    </strong>
+
+  </div>
+
+
+  <div class="card">
+
+    <span>
+      Km da semana
+    </span>
+
+    <strong id="kmSemana">
+      0 km
+    </strong>
+
+  </div>
+
 </div>
 
-<div class="card">
-<span>Líquido do mês</span>
-<strong id="liquidoMes">R$ 0,00</strong>
+
+<div class="card-destaque">
+
+  <span>
+    💵 Resultado líquido da semana
+  </span>
+
+  <strong id="liquidoSemana">
+    R$ 0,00
+  </strong>
+
 </div>
 
-<div class="card">
-<span>Receita do mês</span>
-<strong id="receitaMes">R$ 0,00</strong>
+
+<div class="progresso-box">
+
+  <div class="progresso-titulo">
+
+    <span>
+      Corridas Uber
+    </span>
+
+    <strong id="corridasUberSemana">
+      0 / 80
+    </strong>
+
+  </div>
+
+  <div class="barra">
+
+    <div
+      class="barra-preenchida"
+      id="barraUber">
+    </div>
+
+  </div>
+
+  <div
+    class="progresso-texto"
+    id="textoMetaUber">
+    Faltam 80 corridas para o desconto.
+  </div>
+
 </div>
 
-<div class="card">
-<span>Gastos do mês</span>
-<strong id="gastosMes">R$ 0,00</strong>
-</div>
 
-<div class="card">
-<span>Km da semana</span>
-<strong id="kmSemana">0 km</strong>
-</div>
+<div class="cards" style="margin-top:10px">
 
-<div class="card">
-<span>Km disponíveis</span>
-<strong id="kmRestantes">1500 km</strong>
-</div>
+  <div class="card">
+
+    <span>
+      Aluguel bruto
+    </span>
+
+    <strong>
+      R$ 954,91
+    </strong>
+
+  </div>
+
+
+  <div class="card">
+
+    <span>
+      Desconto conquistado
+    </span>
+
+    <strong id="descontoSemana">
+      R$ 0,00
+    </strong>
+
+  </div>
+
+
+  <div class="card">
+
+    <span>
+      Km disponíveis
+    </span>
+
+    <strong id="kmRestantes">
+      1500 km
+    </strong>
+
+  </div>
+
+
+  <div class="card">
+
+    <span>
+      Resultado operacional
+    </span>
+
+    <strong id="resultadoOperacionalSemana">
+      R$ 0,00
+    </strong>
+
+  </div>
 
 </div>
 
 </section>
+
+
+<!-- =====================================
+     QUADRANTE 2
+     LANÇAMENTO
+===================================== -->
 
 <section class="quadrante">
 
@@ -308,28 +661,96 @@ td:first-child {
 </h2>
 
 <div class="subtitulo">
-Ganhos
+🟦 Uber
 </div>
 
-<label>Uber</label>
+
+<label>
+Ganhos com corridas
+</label>
 
 <input
   type="number"
-  id="uber"
+  id="uberCorridasValor"
   step="0.01"
-  placeholder="0,00"
+  placeholder="Ex.: 245.29"
 >
 
-<label>99</label>
+
+<label>
+Promoções
+</label>
 
 <input
   type="number"
-  id="noventaNove"
+  id="uberPromocoes"
   step="0.01"
-  placeholder="0,00"
+  placeholder="Ex.: 30.45"
 >
 
-<label>Particular</label>
+
+<label>
+Número de corridas Uber
+</label>
+
+<input
+  type="number"
+  id="uberCorridasQtd"
+  step="1"
+  placeholder="Ex.: 24"
+>
+
+
+<div class="total-form">
+
+  <span>
+    Total Uber
+  </span>
+
+  <strong id="totalUberTela">
+    R$ 0,00
+  </strong>
+
+</div>
+
+
+<div class="subtitulo">
+🟨 99
+</div>
+
+
+<label>
+Ganhos 99
+</label>
+
+<input
+  type="number"
+  id="ganhos99"
+  step="0.01"
+  placeholder="Ex.: 95.02"
+>
+
+
+<label>
+Número de corridas 99
+</label>
+
+<input
+  type="number"
+  id="corridas99"
+  step="1"
+  placeholder="Opcional"
+>
+
+
+<div class="subtitulo">
+🚕 Particular
+</div>
+
+
+<label>
+Ganhos com corridas particulares
+</label>
 
 <input
   type="number"
@@ -338,63 +759,100 @@ Ganhos
   placeholder="0,00"
 >
 
-<div class="subtitulo">
-Combustível
+
+<div class="total-form">
+
+  <span>
+    Receita total do dia
+  </span>
+
+  <strong id="receitaDiaTela">
+    R$ 0,00
+  </strong>
+
 </div>
 
-<label>Tipo</label>
+
+<div class="subtitulo">
+⛽ Combustível
+</div>
+
+
+<label>
+Tipo
+</label>
 
 <select id="tipoCombustivel">
 
-<option value="">
-Não abasteci hoje
-</option>
+  <option value="">
+    Não abasteci hoje
+  </option>
 
-<option value="Gasolina">
-Gasolina
-</option>
+  <option value="Gasolina">
+    Gasolina
+  </option>
 
-<option value="Etanol">
-Etanol
-</option>
+  <option value="Etanol">
+    Etanol
+  </option>
 
 </select>
 
-<label>
-Preço por litro
-</label>
 
-<input
-  type="number"
-  id="precoLitro"
-  step="0.001"
-  placeholder="Ex.: 4.19"
->
+<div class="duas-colunas">
 
-<label>
-Valor abastecido
-</label>
+  <div>
 
-<input
-  type="number"
-  id="combustivel"
-  step="0.01"
-  placeholder="Ex.: 120.00"
->
+    <label>
+      Preço por litro
+    </label>
 
-<div class="litros">
+    <input
+      type="number"
+      id="precoLitro"
+      step="0.001"
+      placeholder="4.19"
+    >
 
-Litros abastecidos:
+  </div>
 
-<strong id="litrosAbastecidos">
-0,00 L
-</strong>
+  <div>
+
+    <label>
+      Valor abastecido
+    </label>
+
+    <input
+      type="number"
+      id="combustivel"
+      step="0.01"
+      placeholder="120.00"
+    >
+
+  </div>
 
 </div>
+
+
+<div class="total-form">
+
+  <span>
+    Litros abastecidos
+  </span>
+
+  <strong
+    class="litros"
+    id="litrosTela">
+    0,00 L
+  </strong>
+
+</div>
+
 
 <div class="subtitulo">
-Outros gastos
+💸 Outros gastos
 </div>
+
 
 <label>
 Categoria
@@ -402,31 +860,32 @@ Categoria
 
 <select id="categoriaGasto">
 
-<option value="Alimentação">
-Alimentação
-</option>
+  <option value="Alimentação">
+    Alimentação
+  </option>
 
-<option value="Pedágio">
-Pedágio
-</option>
+  <option value="Pedágio">
+    Pedágio
+  </option>
 
-<option value="Estacionamento">
-Estacionamento
-</option>
+  <option value="Estacionamento">
+    Estacionamento
+  </option>
 
-<option value="Lavagem">
-Lavagem
-</option>
+  <option value="Lavagem">
+    Lavagem
+  </option>
 
-<option value="Manutenção">
-Manutenção
-</option>
+  <option value="Manutenção">
+    Manutenção
+  </option>
 
-<option value="Outros">
-Outros
-</option>
+  <option value="Outros">
+    Outros
+  </option>
 
 </select>
+
 
 <label>
 Descrição
@@ -437,6 +896,7 @@ Descrição
   id="descricaoGasto"
   placeholder="Ex.: almoço"
 >
+
 
 <label>
 Valor
@@ -449,29 +909,36 @@ Valor
   placeholder="0,00"
 >
 
+
 <button
   class="btn-adicionar"
   onclick="adicionarGasto()"
 >
-➕ Adicionar gasto
+  ➕ Adicionar gasto
 </button>
+
 
 <div id="listaGastos">
 </div>
 
-<div class="total-outros">
 
-Outros gastos:
+<div class="total-form">
 
-<strong id="totalOutrosGastos">
-R$ 0,00
-</strong>
+  <span>
+    Outros gastos
+  </span>
+
+  <strong id="totalOutrosTela">
+    R$ 0,00
+  </strong>
 
 </div>
+
 
 <div class="subtitulo">
-Quilometragem
+🚗 Quilometragem
 </div>
+
 
 <label>
 Km rodados no dia
@@ -481,17 +948,24 @@ Km rodados no dia
   type="number"
   id="kmHoje"
   step="0.1"
-  placeholder="Ex.: 185.4"
+  placeholder="Ex.: 180.5"
 >
+
 
 <button
   class="btn-principal"
   onclick="salvarDia()"
 >
-💾 Salvar dia
+  💾 Salvar dia
 </button>
 
 </section>
+
+
+<!-- =====================================
+     QUADRANTE 3
+     HISTÓRICO
+===================================== -->
 
 <section class="quadrante">
 
@@ -499,19 +973,72 @@ Km rodados no dia
 📅 Histórico do mês
 </h2>
 
-<div style="overflow-x:auto">
+
+<div class="cards">
+
+  <div class="card">
+
+    <span>
+      Receita mês
+    </span>
+
+    <strong id="receitaMes">
+      R$ 0,00
+    </strong>
+
+  </div>
+
+
+  <div class="card">
+
+    <span>
+      Gastos operacionais
+    </span>
+
+    <strong id="gastosMes">
+      R$ 0,00
+    </strong>
+
+  </div>
+
+</div>
+
+
+<div style="overflow-x:auto; margin-top:12px">
 
 <table>
 
 <thead>
 
 <tr>
-<th>Data</th>
-<th>Receita</th>
-<th>Comb.</th>
-<th>Outros</th>
-<th>Líquido</th>
-<th>Km</th>
+
+  <th>
+    Data
+  </th>
+
+  <th>
+    Uber
+  </th>
+
+  <th>
+    99
+  </th>
+
+  <th>
+    Receita
+  </th>
+
+  <th>
+    Gastos
+  </th>
+
+  <th>
+    Km
+  </th>
+
+  <th>
+  </th>
+
 </tr>
 
 </thead>
@@ -525,93 +1052,145 @@ Km rodados no dia
 
 </section>
 
+
+<!-- =====================================
+     QUADRANTE 4
+     INDICADORES
+===================================== -->
+
 <section class="quadrante">
 
 <h2>
 📈 Indicadores
 </h2>
 
+
 <div class="indicador">
 
-<span>
-Líquido por km no mês
-</span>
+  <span>
+    Resultado operacional do mês
+  </span>
 
-<strong id="liquidoPorKm">
-R$ 0,00
-</strong>
+  <strong id="resultadoOperacionalMes">
+    R$ 0,00
+  </strong>
 
 </div>
 
+
 <div class="indicador">
 
-<span>
-Receita por km
-</span>
+  <span>
+    Resultado do mês após aluguéis
+  </span>
 
-<strong id="receitaPorKm">
-R$ 0,00
-</strong>
+  <strong id="liquidoMes">
+    R$ 0,00
+  </strong>
 
 </div>
 
+
 <div class="indicador">
 
-<span>
-Combustível no mês
-</span>
+  <span>
+    Receita por km
+  </span>
 
-<strong id="combustivelMes">
-R$ 0,00
-</strong>
+  <strong id="receitaKm">
+    R$ 0,00
+  </strong>
 
 </div>
 
+
 <div class="indicador">
 
-<span>
-Litros abastecidos no mês
-</span>
+  <span>
+    Líquido por km
+  </span>
 
-<strong id="litrosMes">
-0,00 L
-</strong>
+  <strong id="liquidoKm">
+    R$ 0,00
+  </strong>
 
 </div>
 
+
 <div class="indicador">
 
-<span>
-% da receita gasto com combustível
-</span>
+  <span>
+    Combustível no mês
+  </span>
 
-<strong id="percentualCombustivel">
-0%
-</strong>
+  <strong id="combustivelMes">
+    R$ 0,00
+  </strong>
 
 </div>
 
+
 <div class="indicador">
 
-<span>
-Melhor dia do mês
-</span>
+  <span>
+    % da receita usado em combustível
+  </span>
 
-<strong id="melhorDia">
--
-</strong>
+  <strong id="percentualCombustivel">
+    0%
+  </strong>
 
 </div>
 
+
 <div class="indicador">
 
-<span>
-Média líquida por dia trabalhado
-</span>
+  <span>
+    Participação Uber na receita
+  </span>
 
-<strong id="mediaDia">
-R$ 0,00
-</strong>
+  <strong id="participacaoUber">
+    0%
+  </strong>
+
+</div>
+
+
+<div class="indicador">
+
+  <span>
+    Participação 99 na receita
+  </span>
+
+  <strong id="participacao99">
+    0%
+  </strong>
+
+</div>
+
+
+<div class="indicador">
+
+  <span>
+    Melhor dia do mês
+  </span>
+
+  <strong id="melhorDia">
+    -
+  </strong>
+
+</div>
+
+
+<div class="indicador">
+
+  <span>
+    Média de receita por dia trabalhado
+  </span>
+
+  <strong id="mediaDia">
+    R$ 0,00
+  </strong>
 
 </div>
 
@@ -619,22 +1198,36 @@ R$ 0,00
 
 </div>
 
+
 <script>
+
+/* =====================================
+   CONFIGURAÇÕES
+===================================== */
 
 const FRANQUIA_SEMANAL = 1500;
 
+const ALUGUEL_BRUTO = 954.91;
+
+const DESCONTO_80_CORRIDAS = 250;
+
+const META_CORRIDAS_UBER = 80;
+
 const CHAVE_DADOS =
-  "motoristaRegistrosV2";
+  "motoristaRegistrosV3";
+
 
 let gastosTemporarios = [];
 
 
-/* =========================
-   DATA
-========================= */
+/* =====================================
+   DATA DO TOPO
+===================================== */
 
 document
-.getElementById("dataHoje")
+.getElementById(
+  "dataHoje"
+)
 .textContent =
 new Date()
 .toLocaleDateString(
@@ -648,9 +1241,9 @@ new Date()
 );
 
 
-/* =========================
+/* =====================================
    FUNÇÕES BÁSICAS
-========================= */
+===================================== */
 
 function numero(id) {
 
@@ -676,10 +1269,6 @@ function dinheiro(valor) {
 
 }
 
-
-/* =========================
-   DATA SEGURA
-========================= */
 
 function gerarDataChave(data) {
 
@@ -709,9 +1298,21 @@ function gerarDataChave(data) {
 }
 
 
-/* =========================
+function criarData(
+  dataChave
+) {
+
+  return new Date(
+    dataChave +
+    "T12:00:00"
+  );
+
+}
+
+
+/* =====================================
    SEMANA
-========================= */
+===================================== */
 
 function inicioSemana(
   data = new Date()
@@ -756,7 +1357,7 @@ function fimSemana(
     new Date(inicio);
 
   fim.setDate(
-    inicio.getDate() + 6
+    fim.getDate() + 6
   );
 
   fim.setHours(
@@ -771,9 +1372,164 @@ function fimSemana(
 }
 
 
-/* =========================
-   LITROS
-========================= */
+function chaveSemana(
+  data
+) {
+
+  return gerarDataChave(
+    inicioSemana(data)
+  );
+
+}
+
+
+/* =====================================
+   ARMAZENAMENTO
+===================================== */
+
+function carregarRegistros() {
+
+  try {
+
+    const dados =
+      localStorage
+      .getItem(
+        CHAVE_DADOS
+      );
+
+    if (!dados) {
+
+      return [];
+
+    }
+
+    const registros =
+      JSON.parse(
+        dados
+      );
+
+    return Array.isArray(
+      registros
+    )
+      ? registros
+      : [];
+
+  } catch (erro) {
+
+    return [];
+
+  }
+
+}
+
+
+function gravarRegistros(
+  registros
+) {
+
+  try {
+
+    localStorage
+    .setItem(
+      CHAVE_DADOS,
+      JSON.stringify(
+        registros
+      )
+    );
+
+    return true;
+
+  } catch (erro) {
+
+    alert(
+      "Não foi possível salvar os dados neste navegador."
+    );
+
+    return false;
+
+  }
+
+}
+
+
+/* =====================================
+   TOTAL DINÂMICO DO FORMULÁRIO
+===================================== */
+
+function atualizarTotaisFormulario() {
+
+  const uber =
+    numero(
+      "uberCorridasValor"
+    ) +
+    numero(
+      "uberPromocoes"
+    );
+
+
+  const ganhos99 =
+    numero(
+      "ganhos99"
+    );
+
+
+  const particular =
+    numero(
+      "particular"
+    );
+
+
+  const receita =
+    uber +
+    ganhos99 +
+    particular;
+
+
+  document
+  .getElementById(
+    "totalUberTela"
+  )
+  .textContent =
+  dinheiro(
+    uber
+  );
+
+
+  document
+  .getElementById(
+    "receitaDiaTela"
+  )
+  .textContent =
+  dinheiro(
+    receita
+  );
+
+}
+
+
+[
+  "uberCorridasValor",
+  "uberPromocoes",
+  "ganhos99",
+  "particular"
+]
+.forEach(
+  id => {
+
+    document
+    .getElementById(id)
+    .addEventListener(
+      "input",
+      atualizarTotaisFormulario
+    );
+
+  }
+);
+
+
+/* =====================================
+   COMBUSTÍVEL
+===================================== */
 
 function atualizarLitros() {
 
@@ -787,14 +1543,16 @@ function atualizarLitros() {
       "precoLitro"
     );
 
+
   const litros =
     preco > 0
       ? valor / preco
       : 0;
 
+
   document
   .getElementById(
-    "litrosAbastecidos"
+    "litrosTela"
   )
   .textContent =
   litros
@@ -830,9 +1588,9 @@ document
 );
 
 
-/* =========================
+/* =====================================
    OUTROS GASTOS
-========================= */
+===================================== */
 
 function adicionarGasto() {
 
@@ -843,6 +1601,7 @@ function adicionarGasto() {
     )
     .value;
 
+
   const descricao =
     document
     .getElementById(
@@ -851,10 +1610,12 @@ function adicionarGasto() {
     .value
     .trim();
 
+
   const valor =
     numero(
       "valorOutroGasto"
     );
+
 
   if (
     valor <= 0
@@ -867,6 +1628,7 @@ function adicionarGasto() {
     return;
 
   }
+
 
   gastosTemporarios.push({
 
@@ -881,17 +1643,20 @@ function adicionarGasto() {
 
   });
 
+
   document
   .getElementById(
     "descricaoGasto"
   )
   .value = "";
 
+
   document
   .getElementById(
     "valorOutroGasto"
   )
   .value = "";
+
 
   mostrarGastosTemporarios();
 
@@ -907,6 +1672,7 @@ function removerGasto(id) {
         gasto.id !== id
     );
 
+
   mostrarGastosTemporarios();
 
 }
@@ -920,10 +1686,13 @@ function mostrarGastosTemporarios() {
       "listaGastos"
     );
 
+
   lista.innerHTML =
     "";
 
+
   let total = 0;
+
 
   gastosTemporarios
   .forEach(
@@ -934,14 +1703,17 @@ function mostrarGastosTemporarios() {
           gasto.valor
         ) || 0;
 
+
       const item =
         document
         .createElement(
           "div"
         );
 
+
       item.className =
         "gasto-item";
+
 
       item.innerHTML = `
 
@@ -970,6 +1742,7 @@ function mostrarGastosTemporarios() {
 
       `;
 
+
       lista
       .appendChild(
         item
@@ -978,41 +1751,75 @@ function mostrarGastosTemporarios() {
     }
   );
 
+
   document
   .getElementById(
-    "totalOutrosGastos"
+    "totalOutrosTela"
   )
   .textContent =
-  dinheiro(total);
+  dinheiro(
+    total
+  );
 
 }
 
 
-/* =========================
+/* =====================================
    SALVAR DIA
-========================= */
+===================================== */
 
 function salvarDia() {
 
-  const uber =
+  const uberCorridasValor =
     numero(
-      "uber"
+      "uberCorridasValor"
     );
 
-  const noventaNove =
+
+  const uberPromocoes =
     numero(
-      "noventaNove"
+      "uberPromocoes"
     );
+
+
+  const uberCorridasQtd =
+    Math.round(
+      numero(
+        "uberCorridasQtd"
+      )
+    );
+
+
+  const totalUber =
+    uberCorridasValor +
+    uberPromocoes;
+
+
+  const ganhos99 =
+    numero(
+      "ganhos99"
+    );
+
+
+  const corridas99 =
+    Math.round(
+      numero(
+        "corridas99"
+      )
+    );
+
 
   const particular =
     numero(
       "particular"
     );
 
+
   const receita =
-    uber +
-    noventaNove +
+    totalUber +
+    ganhos99 +
     particular;
+
 
   const tipoCombustivel =
     document
@@ -1021,15 +1828,18 @@ function salvarDia() {
     )
     .value;
 
+
   const precoLitro =
     numero(
       "precoLitro"
     );
 
+
   const combustivel =
     numero(
       "combustivel"
     );
+
 
   const litros =
     precoLitro > 0
@@ -1037,817 +1847,7 @@ function salvarDia() {
         precoLitro
       : 0;
 
+
   const outrosGastos =
     gastosTemporarios
-    .reduce(
-      (
-        soma,
-        gasto
-      ) =>
-        soma +
-        Number(
-          gasto.valor
-        ),
-      0
-    );
-
-  const gastosTotais =
-    combustivel +
-    outrosGastos;
-
-  const liquido =
-    receita -
-    gastosTotais;
-
-  const km =
-    numero(
-      "kmHoje"
-    );
-
-
-  if (
-    receita === 0 &&
-    gastosTotais === 0 &&
-    km === 0
-  ) {
-
-    alert(
-      "Preencha algum dado antes de salvar."
-    );
-
-    return;
-
-  }
-
-
-  if (
-    combustivel > 0 &&
-    tipoCombustivel === ""
-  ) {
-
-    alert(
-      "Escolha se o combustível foi gasolina ou etanol."
-    );
-
-    return;
-
-  }
-
-
-  if (
-    combustivel > 0 &&
-    precoLitro <= 0
-  ) {
-
-    alert(
-      "Informe o preço por litro."
-    );
-
-    return;
-
-  }
-
-
-  const hoje =
-    new Date();
-
-  const dataChave =
-    gerarDataChave(
-      hoje
-    );
-
-
-  const registro = {
-
-    dataChave,
-
-    data:
-      hoje
-      .toLocaleDateString(
-        "pt-BR"
-      ),
-
-    uber,
-
-    noventaNove,
-
-    particular,
-
-    receita,
-
-    tipoCombustivel,
-
-    precoLitro,
-
-    combustivel,
-
-    litros,
-
-    outrosGastos,
-
-    listaOutrosGastos:
-      [...gastosTemporarios],
-
-    gastosTotais,
-
-    liquido,
-
-    km
-
-  };
-
-
-  let registros = [];
-
-  try {
-
-    registros =
-      JSON.parse(
-        localStorage
-        .getItem(
-          CHAVE_DADOS
-        )
-      ) || [];
-
-  } catch (erro) {
-
-    registros = [];
-
-  }
-
-
-  const indice =
-    registros
-    .findIndex(
-      item =>
-        item.dataChave ===
-        dataChave
-    );
-
-
-  if (
-    indice >= 0
-  ) {
-
-    const confirmar =
-      confirm(
-        "Já existe um lançamento para hoje. Deseja substituir?"
-      );
-
-    if (
-      !confirmar
-    ) {
-
-      return;
-
-    }
-
-    registros[indice] =
-      registro;
-
-  } else {
-
-    registros.push(
-      registro
-    );
-
-  }
-
-
-  try {
-
-    localStorage
-    .setItem(
-      CHAVE_DADOS,
-      JSON.stringify(
-        registros
-      )
-    );
-
-  } catch (erro) {
-
-    alert(
-      "Não foi possível salvar os dados neste navegador."
-    );
-
-    return;
-
-  }
-
-
-  limparFormulario();
-
-  atualizarPainel();
-
-  alert(
-    "Dia salvo com sucesso!"
-  );
-
-}
-
-
-/* =========================
-   LIMPAR FORMULÁRIO
-========================= */
-
-function limparFormulario() {
-
-  [
-    "uber",
-    "noventaNove",
-    "particular",
-    "precoLitro",
-    "combustivel",
-    "kmHoje"
-  ]
-  .forEach(
-    id => {
-
-      document
-      .getElementById(id)
-      .value = "";
-
-    }
-  );
-
-  document
-  .getElementById(
-    "tipoCombustivel"
-  )
-  .value = "";
-
-  gastosTemporarios = [];
-
-  mostrarGastosTemporarios();
-
-  atualizarLitros();
-
-}
-
-
-/* =========================
-   CARREGAR REGISTROS
-========================= */
-
-function carregarRegistros() {
-
-  try {
-
-    return (
-      JSON.parse(
-        localStorage
-        .getItem(
-          CHAVE_DADOS
-        )
-      ) || []
-    );
-
-  } catch (erro) {
-
-    return [];
-
-  }
-
-}
-
-
-/* =========================
-   PAINEL
-========================= */
-
-function atualizarPainel() {
-
-  const registros =
-    carregarRegistros();
-
-  const hoje =
-    new Date();
-
-  const inicio =
-    inicioSemana(
-      hoje
-    );
-
-  const fim =
-    fimSemana(
-      hoje
-    );
-
-  let liquidoSemana = 0;
-
-  let kmSemana = 0;
-
-  let receitaMes = 0;
-
-  let gastosMes = 0;
-
-  let liquidoMes = 0;
-
-  let kmMes = 0;
-
-  let combustivelMes = 0;
-
-  let litrosMes = 0;
-
-  const registrosMes =
-    [];
-
-
-  registros
-  .forEach(
-    item => {
-
-      if (
-        !item.dataChave
-      ) {
-
-        return;
-
-      }
-
-      const data =
-        new Date(
-          item.dataChave +
-          "T12:00:00"
-        );
-
-
-      if (
-        data >= inicio &&
-        data <= fim
-      ) {
-
-        liquidoSemana +=
-          Number(
-            item.liquido
-          ) || 0;
-
-        kmSemana +=
-          Number(
-            item.km
-          ) || 0;
-
-      }
-
-
-      if (
-        data.getMonth() ===
-        hoje.getMonth() &&
-
-        data.getFullYear() ===
-        hoje.getFullYear()
-      ) {
-
-        registrosMes
-        .push(
-          item
-        );
-
-        receitaMes +=
-          Number(
-            item.receita
-          ) || 0;
-
-        gastosMes +=
-          Number(
-            item.gastosTotais
-          ) || 0;
-
-        liquidoMes +=
-          Number(
-            item.liquido
-          ) || 0;
-
-        kmMes +=
-          Number(
-            item.km
-          ) || 0;
-
-        combustivelMes +=
-          Number(
-            item.combustivel
-          ) || 0;
-
-        litrosMes +=
-          Number(
-            item.litros
-          ) || 0;
-
-      }
-
-    }
-  );
-
-
-  document
-  .getElementById(
-    "liquidoSemana"
-  )
-  .textContent =
-  dinheiro(
-    liquidoSemana
-  );
-
-
-  document
-  .getElementById(
-    "liquidoMes"
-  )
-  .textContent =
-  dinheiro(
-    liquidoMes
-  );
-
-
-  document
-  .getElementById(
-    "receitaMes"
-  )
-  .textContent =
-  dinheiro(
-    receitaMes
-  );
-
-
-  document
-  .getElementById(
-    "gastosMes"
-  )
-  .textContent =
-  dinheiro(
-    gastosMes
-  );
-
-
-  document
-  .getElementById(
-    "kmSemana"
-  )
-  .textContent =
-  kmSemana
-  .toFixed(1) +
-  " km";
-
-
-  const kmRestantes =
-    Math.max(
-      FRANQUIA_SEMANAL -
-      kmSemana,
-      0
-    );
-
-
-  document
-  .getElementById(
-    "kmRestantes"
-  )
-  .textContent =
-  kmRestantes
-  .toFixed(1) +
-  " km";
-
-
-  const liquidoKm =
-    kmMes > 0
-      ? liquidoMes /
-        kmMes
-      : 0;
-
-
-  const receitaKm =
-    kmMes > 0
-      ? receitaMes /
-        kmMes
-      : 0;
-
-
-  document
-  .getElementById(
-    "liquidoPorKm"
-  )
-  .textContent =
-  dinheiro(
-    liquidoKm
-  );
-
-
-  document
-  .getElementById(
-    "receitaPorKm"
-  )
-  .textContent =
-  dinheiro(
-    receitaKm
-  );
-
-
-  document
-  .getElementById(
-    "combustivelMes"
-  )
-  .textContent =
-  dinheiro(
-    combustivelMes
-  );
-
-
-  document
-  .getElementById(
-    "litrosMes"
-  )
-  .textContent =
-  litrosMes
-  .toLocaleString(
-    "pt-BR",
-    {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    }
-  ) +
-  " L";
-
-
-  const percentual =
-    receitaMes > 0
-      ? (
-          combustivelMes /
-          receitaMes
-        ) * 100
-      : 0;
-
-
-  document
-  .getElementById(
-    "percentualCombustivel"
-  )
-  .textContent =
-  percentual
-  .toFixed(1)
-  .replace(
-    ".",
-    ","
-  ) +
-  "%";
-
-
-  calcularMelhorDia(
-    registrosMes
-  );
-
-  calcularMedia(
-    registrosMes
-  );
-
-  mostrarHistorico(
-    registrosMes
-  );
-
-}
-
-
-/* =========================
-   MELHOR DIA
-========================= */
-
-function calcularMelhorDia(
-  registros
-) {
-
-  if (
-    registros.length === 0
-  ) {
-
-    document
-    .getElementById(
-      "melhorDia"
-    )
-    .textContent =
-    "-";
-
-    return;
-
-  }
-
-
-  const melhor =
-    registros
-    .reduce(
-      (
-        melhorAtual,
-        item
-      ) =>
-
-        Number(
-          item.liquido
-        ) >
-        Number(
-          melhorAtual.liquido
-        )
-
-          ? item
-
-          : melhorAtual
-
-    );
-
-
-  document
-  .getElementById(
-    "melhorDia"
-  )
-  .textContent =
-  melhor.data +
-  " • " +
-  dinheiro(
-    melhor.liquido
-  );
-
-}
-
-
-/* =========================
-   MÉDIA
-========================= */
-
-function calcularMedia(
-  registros
-) {
-
-  if (
-    registros.length === 0
-  ) {
-
-    document
-    .getElementById(
-      "mediaDia"
-    )
-    .textContent =
-    dinheiro(0);
-
-    return;
-
-  }
-
-
-  const total =
-    registros
-    .reduce(
-      (
-        soma,
-        item
-      ) =>
-        soma +
-        Number(
-          item.liquido
-        ),
-      0
-    );
-
-
-  const media =
-    total /
-    registros.length;
-
-
-  document
-  .getElementById(
-    "mediaDia"
-  )
-  .textContent =
-  dinheiro(
-    media
-  );
-
-}
-
-
-/* =========================
-   HISTÓRICO
-========================= */
-
-function mostrarHistorico(
-  registros
-) {
-
-  const corpo =
-    document
-    .getElementById(
-      "historico"
-    );
-
-  corpo.innerHTML =
-    "";
-
-
-  const ordenados =
-    [...registros]
-    .sort(
-      (
-        a,
-        b
-      ) =>
-        b.dataChave
-        .localeCompare(
-          a.dataChave
-        )
-    );
-
-
-  ordenados
-  .forEach(
-    item => {
-
-      const linha =
-        document
-        .createElement(
-          "tr"
-        );
-
-
-      const tipo =
-        item.tipoCombustivel
-          ? item.tipoCombustivel
-            .substring(
-              0,
-              3
-            )
-          : "-";
-
-
-      linha.innerHTML = `
-
-        <td>
-          ${item.data}
-        </td>
-
-        <td>
-          ${dinheiro(
-            item.receita
-          )}
-        </td>
-
-        <td>
-          ${tipo}
-
-          ${
-            Number(
-              item.combustivel
-            ) > 0
-
-            ? "<br>" +
-              dinheiro(
-                item.combustivel
-              )
-
-            : ""
-          }
-
-        </td>
-
-        <td>
-          ${dinheiro(
-            item.outrosGastos
-          )}
-        </td>
-
-        <td>
-          ${dinheiro(
-            item.liquido
-          )}
-        </td>
-
-        <td>
-          ${Number(
-            item.km
-          ).toFixed(1)}
-        </td>
-
-      `;
-
-
-      corpo
-      .appendChild(
-        linha
-      );
-
-    }
-  );
-
-}
-
-
-/* =========================
-   INICIAR
-========================= */
-
-mostrarGastosTemporarios();
-
-atualizarLitros();
-
-atualizarPainel();
-
-</script>
-
-</body>
-
-</html>
+ 
