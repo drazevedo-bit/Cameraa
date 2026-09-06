@@ -2,360 +2,608 @@
 <html lang="pt-BR">
 
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
 
 <title>Rota Fácil</title>
 
 <style>
 
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  background: #0f172a;
-  color: white;
-  font-family: Arial, sans-serif;
-  min-height: 100vh;
+    margin: 0;
+    background: #0f172a;
+    color: white;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
 }
 
-.topo {
-  background: #111827;
-  border-bottom: 1px solid #334155;
-  padding: 12px 16px;
+/* =========================
+TOPO
+========================= */
 
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
+.topo {
+    background: #111827;
+    border-bottom: 1px solid #334155;
+    padding: 14px 16px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
 }
 
 .logo-app h1 {
-  margin: 0;
-  font-size: 22px;
+    margin: 0;
+    font-size: 24px;
 }
 
 .versao {
-  margin-top: 3px;
-  font-size: 11px;
-  font-weight: bold;
-  color: #94a3b8;
-}
-
-.topo-botoes {
-  display: flex;
-  gap: 6px;
-}
-
-button {
-  border: none;
-  border-radius: 9px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.btn-topo {
-  padding: 7px 9px;
-  background: #334155;
-  color: white;
-  font-size: 11px;
+    margin-top: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #94a3b8;
 }
 
 .data-hoje {
-  width: 100%;
-  font-size: 11px;
-  color: #64748b;
+    width: 100%;
+    font-size: 11px;
+    color: #64748b;
 }
 
-.painel {
-  padding: 12px;
+.topo-botoes {
+    display: flex;
+    gap: 6px;
+}
 
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+button {
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-topo {
+    padding: 8px 10px;
+    background: #334155;
+    color: white;
+    font-size: 11px;
+}
+
+.input-arquivo {
+    display: none;
+}
+
+/* =========================
+LAYOUT
+========================= */
+
+.painel {
+    padding: 12px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
 }
 
 .quadrante {
-  background: #1e293b;
-  border-radius: 14px;
-  padding: 14px;
+    background: #1e293b;
+    border-radius: 15px;
+    padding: 14px;
 }
 
 h2 {
-  margin: 0 0 12px;
-  font-size: 18px;
+    margin: 0 0 12px;
+    font-size: 18px;
 }
 
-.cards {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
+.subtitulo {
+    margin-top: 16px;
+    margin-bottom: 7px;
+
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+
+    color: #94a3b8;
 }
 
-.card {
-  background: #334155;
-  border-radius: 10px;
-  padding: 10px;
-}
-
-.card span {
-  display: block;
-  font-size: 11px;
-  color: #cbd5e1;
-}
-
-.card strong {
-  display: block;
-  margin-top: 4px;
-  font-size: 17px;
-}
-
-.card small {
-  display: block;
-  margin-top: 4px;
-  font-size: 10px;
-  color: #94a3b8;
-}
+/* =========================
+CAMPOS
+========================= */
 
 label {
-  display: block;
-  margin-top: 8px;
-  margin-bottom: 3px;
-  font-size: 12px;
-  color: #cbd5e1;
+    display: block;
+    margin-top: 9px;
+    margin-bottom: 4px;
+
+    font-size: 12px;
+    color: #cbd5e1;
 }
 
 input,
 select {
-  width: 100%;
-  padding: 9px;
-  border: none;
-  border-radius: 8px;
-  background: #334155;
-  color: white;
-  font-size: 15px;
+    width: 100%;
+
+    padding: 10px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: #334155;
+    color: white;
+
+    font-size: 15px;
 }
 
 .duas-colunas {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-}
-
-.subtitulo {
-  margin-top: 15px;
-  margin-bottom: 6px;
-
-  font-size: 11px;
-  color: #94a3b8;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-.btn-adicionar {
-  width: 100%;
-  margin-top: 12px;
-  padding: 10px;
-  background: #3b82f6;
-  color: white;
-}
-
-.btn-salvar {
-  width: 100%;
-  margin-top: 14px;
-  padding: 11px;
-  background: #22c55e;
-  color: #052e16;
-  font-size: 15px;
-}
-
-.btn-cancelar {
-  width: 100%;
-  margin-top: 6px;
-  padding: 9px;
-  background: #475569;
-  color: white;
-  display: none;
-}
-
-.movimento {
-  margin-top: 6px;
-  padding: 8px;
-  background: #334155;
-  border-radius: 8px;
-
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 8px;
-  align-items: center;
-}
-
-.movimento-info {
-  font-size: 12px;
-}
-
-.movimento-info small {
-  display: block;
-  margin-top: 3px;
-  color: #94a3b8;
-}
-
-.ganho {
-  color: #86efac;
-}
-
-.gasto {
-  color: #fca5a5;
-}
-
-.btn-excluir {
-  background: #ef4444;
-  color: white;
-  padding: 5px 7px;
-  font-size: 10px;
-}
-
-.btn-editar {
-  background: #f59e0b;
-  color: #451a03;
-  padding: 5px 7px;
-  font-size: 10px;
-}
-
-.total {
-  margin-top: 8px;
-  padding: 9px;
-  background: #0f172a;
-  border-radius: 8px;
-
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-}
-
-.progresso {
-  background: #0f172a;
-  margin-top: 10px;
-  padding: 10px;
-  border-radius: 9px;
-}
-
-.barra {
-  background: #334155;
-  height: 10px;
-  border-radius: 10px;
-  overflow: hidden;
-  margin-top: 7px;
-}
-
-.barra-interna {
-  height: 100%;
-  width: 0%;
-  background: #22c55e;
-}
-
-.texto-menor {
-  margin-top: 6px;
-  color: #cbd5e1;
-  font-size: 11px;
-}
-
-.indicador {
-  background: #334155;
-  border-radius: 9px;
-  padding: 10px;
-  margin-bottom: 7px;
-}
-
-.indicador span {
-  display: block;
-  font-size: 11px;
-  color: #cbd5e1;
-}
-
-.indicador strong {
-  display: block;
-  margin-top: 3px;
-  font-size: 17px;
-}
-
-.navegacao {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 7px;
-  margin-bottom: 9px;
-}
-
-.navegacao button {
-  background: #334155;
-  color: white;
-  padding: 7px 10px;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 10px;
-}
-
-th,
-td {
-  padding: 6px 3px;
-  border-bottom: 1px solid #475569;
-  white-space: nowrap;
-  text-align: right;
-}
-
-th:first-child,
-td:first-child {
-  text-align: left;
-}
-
-.acoes {
-  display: flex;
-  gap: 3px;
-  justify-content: flex-end;
-}
-
-.mensagem {
-  display: none;
-  margin-top: 9px;
-  padding: 9px;
-  border-radius: 8px;
-  font-size: 12px;
-}
-
-.mensagem.sucesso {
-  display: block;
-  background: #14532d;
-}
-
-.mensagem.erro {
-  display: block;
-  background: #7f1d1d;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
 }
 
 .oculto {
-  display: none;
+    display: none;
 }
 
-.input-arquivo {
-  display: none;
+/* =========================
+BOTÕES
+========================= */
+
+.btn-adicionar {
+    width: 100%;
+    margin-top: 13px;
+
+    padding: 11px;
+
+    background: #3b82f6;
+    color: white;
 }
+
+.btn-salvar {
+    width: 100%;
+    margin-top: 14px;
+
+    padding: 12px;
+
+    background: #22c55e;
+    color: #052e16;
+
+    font-size: 15px;
+}
+
+.btn-cancelar {
+    width: 100%;
+    margin-top: 7px;
+
+    padding: 10px;
+
+    background: #475569;
+    color: white;
+
+    display: none;
+}
+
+.btn-detalhes {
+    background: #334155;
+    color: white;
+
+    padding: 7px 9px;
+
+    font-size: 11px;
+}
+
+.btn-editar {
+    background: #f59e0b;
+    color: #451a03;
+
+    padding: 7px 9px;
+
+    font-size: 11px;
+}
+
+.btn-excluir {
+    background: #ef4444;
+    color: white;
+
+    padding: 7px 9px;
+
+    font-size: 10px;
+}
+
+/* =========================
+CARDS
+========================= */
+
+.cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.card {
+    background: #334155;
+    border-radius: 10px;
+    padding: 11px;
+}
+
+.card span {
+    display: block;
+    font-size: 11px;
+    color: #cbd5e1;
+}
+
+.card strong {
+    display: block;
+    margin-top: 4px;
+    font-size: 17px;
+}
+
+.card small {
+    display: block;
+    margin-top: 5px;
+    font-size: 10px;
+    color: #94a3b8;
+}
+
+/* =========================
+PROGRESSO
+========================= */
+
+.progresso {
+    background: #0f172a;
+
+    margin-top: 9px;
+    padding: 10px;
+
+    border-radius: 10px;
+}
+
+.barra {
+    height: 10px;
+
+    margin-top: 8px;
+
+    background: #334155;
+
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.barra-interna {
+    height: 100%;
+    width: 0%;
+
+    background: #22c55e;
+}
+
+.texto-menor {
+    margin-top: 7px;
+    color: #cbd5e1;
+    font-size: 11px;
+}
+
+/* =========================
+MOVIMENTOS DO DIA
+========================= */
+
+.movimento-dia {
+    margin-top: 7px;
+
+    padding: 9px;
+
+    background: #334155;
+
+    border-radius: 9px;
+
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px;
+
+    align-items: center;
+}
+
+.movimento-info {
+    font-size: 12px;
+}
+
+.movimento-info small {
+    display: block;
+    margin-top: 4px;
+    color: #94a3b8;
+}
+
+.ganho {
+    color: #86efac;
+}
+
+.gasto {
+    color: #fca5a5;
+}
+
+.total {
+    margin-top: 8px;
+
+    padding: 9px;
+
+    background: #0f172a;
+
+    border-radius: 9px;
+
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+/* =========================
+HISTÓRICO
+========================= */
+
+.navegacao {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 10px;
+}
+
+.navegacao button {
+    background: #334155;
+    color: white;
+
+    padding: 7px 11px;
+}
+
+.historico-vazio {
+    padding: 15px;
+
+    background: #0f172a;
+
+    border-radius: 10px;
+
+    text-align: center;
+
+    color: #94a3b8;
+
+    font-size: 12px;
+}
+
+.dia-historico {
+    background: #0f172a;
+
+    border-radius: 12px;
+
+    padding: 11px;
+
+    margin-bottom: 9px;
+}
+
+.dia-cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    gap: 8px;
+}
+
+.dia-data {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.dia-resumo {
+    margin-top: 5px;
+
+    font-size: 11px;
+
+    color: #cbd5e1;
+}
+
+.dia-acoes {
+    display: flex;
+    gap: 5px;
+
+    flex-wrap: wrap;
+
+    justify-content: flex-end;
+}
+
+.detalhes-dia {
+    display: none;
+
+    margin-top: 10px;
+
+    padding-top: 8px;
+
+    border-top: 1px solid #334155;
+}
+
+.detalhes-dia.aberto {
+    display: block;
+}
+
+.lancamento-historico {
+    padding: 8px 0;
+
+    border-bottom: 1px solid #1e293b;
+
+    display: grid;
+
+    grid-template-columns: 1fr auto;
+
+    gap: 8px;
+
+    align-items: center;
+}
+
+.lancamento-historico:last-child {
+    border-bottom: none;
+}
+
+.lancamento-historico strong {
+    font-size: 12px;
+}
+
+.lancamento-historico small {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #94a3b8;
+
+    font-size: 10px;
+}
+
+/* =========================
+INDICADORES
+========================= */
+
+.indicador {
+    background: #334155;
+
+    border-radius: 9px;
+
+    padding: 10px;
+
+    margin-bottom: 7px;
+}
+
+.indicador span {
+    display: block;
+
+    font-size: 11px;
+
+    color: #cbd5e1;
+}
+
+.indicador strong {
+    display: block;
+
+    margin-top: 3px;
+
+    font-size: 17px;
+}
+
+/* =========================
+MENSAGEM
+========================= */
+
+.mensagem {
+    display: none;
+
+    margin-top: 10px;
+
+    padding: 9px;
+
+    border-radius: 8px;
+
+    font-size: 12px;
+}
+
+.mensagem.sucesso {
+    display: block;
+    background: #14532d;
+}
+
+.mensagem.erro {
+    display: block;
+    background: #7f1d1d;
+}
+
+/* =========================
+MODAL
+========================= */
+
+.modal-exclusao {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0,0,0,0.72);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    z-index: 9999;
+}
+
+.oculto-modal {
+    display: none;
+}
+
+.caixa-modal {
+    width: 100%;
+    max-width: 380px;
+
+    background: #1e293b;
+
+    padding: 20px;
+
+    border-radius: 15px;
+
+    text-align: center;
+
+    box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+}
+
+.caixa-modal h3 {
+    margin: 0 0 10px;
+}
+
+.caixa-modal p {
+    margin: 0;
+    color: #cbd5e1;
+    font-size: 14px;
+}
+
+.botoes-modal {
+    margin-top: 18px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.btn-modal-cancelar {
+    padding: 11px;
+
+    background: #475569;
+    color: white;
+}
+
+.btn-modal-excluir {
+    padding: 11px;
+
+    background: #ef4444;
+    color: white;
+}
+
+/* =========================
+RESPONSIVO
+========================= */
 
 @media(max-width: 850px) {
 
-  .painel {
-    grid-template-columns: 1fr;
-  }
+    .painel {
+        grid-template-columns: 1fr;
+    }
 
 }
 
 </style>
+
 </head>
 
 <body>
@@ -363,54 +611,63 @@ td:first-child {
 
 <header class="topo">
 
-  <div class="logo-app">
+    <div class="logo-app">
 
-    <h1>🚗 Rota Fácil</h1>
+        <h1>🚗 Rota Fácil</h1>
 
-    <div class="versao">
-      Controle financeiro do motorista • HTML v1.0
+        <div class="versao">
+            HTML v1.3 • Controle financeiro do motorista
+        </div>
+
     </div>
 
-  </div>
+
+    <div class="topo-botoes">
+
+        <button
+            class="btn-topo"
+            id="exportarBackup"
+            type="button">
+
+            ⬇ Backup
+
+        </button>
 
 
-  <div class="topo-botoes">
+        <button
+            class="btn-topo"
+            id="importarBackup"
+            type="button">
 
-    <button
-      class="btn-topo"
-      id="exportarBackup"
-      type="button">
-      ⬇ Backup
-    </button>
+            ⬆ Restaurar
 
-    <button
-      class="btn-topo"
-      id="importarBackup"
-      type="button">
-      ⬆ Restaurar
-    </button>
-
-    <input
-      type="file"
-      id="arquivoBackup"
-      class="input-arquivo"
-      accept=".json">
-
-  </div>
+        </button>
 
 
-  <div
-    class="data-hoje"
-    id="dataHoje">
-  </div>
+        <input
+            type="file"
+            id="arquivoBackup"
+            class="input-arquivo"
+            accept=".json">
+
+    </div>
+
+
+    <div
+        class="data-hoje"
+        id="dataHoje">
+    </div>
 
 </header>
+
 
 
 <main class="painel">
 
 
-<!-- SEMANA -->
+<!-- =========================
+SEMANA
+========================= -->
 
 <section class="quadrante">
 
@@ -419,54 +676,55 @@ td:first-child {
 
 <div class="cards">
 
-  <div class="card">
+    <div class="card">
 
-    <span>Receita</span>
+        <span>Receita</span>
 
-    <strong id="receitaSemana">
-      R$ 0,00
-    </strong>
+        <strong id="receitaSemana">
+            R$ 0,00
+        </strong>
 
-  </div>
-
-
-  <div class="card">
-
-    <span>Gastos</span>
-
-    <strong id="gastosSemana">
-      R$ 0,00
-    </strong>
-
-  </div>
+    </div>
 
 
-  <div class="card">
+    <div class="card">
 
-    <span>Aluguel</span>
+        <span>Gastos</span>
 
-    <strong id="aluguelSemana">
-      R$ 954,91
-    </strong>
+        <strong id="gastosSemana">
+            R$ 0,00
+        </strong>
 
-    <small id="textoAluguel">
-      Meta ainda não atingida
-    </small>
-
-  </div>
+    </div>
 
 
-  <div class="card">
+    <div class="card">
 
-    <span>Resultado líquido</span>
+        <span>Aluguel</span>
 
-    <strong id="liquidoSemana">
-      R$ 0,00
-    </strong>
+        <strong id="aluguelSemana">
+            R$ 954,91
+        </strong>
 
-  </div>
+        <small id="textoAluguel">
+            Sem desconto até agora
+        </small>
+
+    </div>
+
+
+    <div class="card">
+
+        <span>Resultado líquido</span>
+
+        <strong id="liquidoSemana">
+            R$ 0,00
+        </strong>
+
+    </div>
 
 </div>
+
 
 
 <div class="subtitulo">
@@ -476,28 +734,31 @@ Meta Uber
 
 <div class="progresso">
 
-  <strong id="corridasSemana">
-    0 / 80 corridas
-  </strong>
+    <strong id="corridasSemana">
+        0 / 80 corridas
+    </strong>
 
 
-  <div class="barra">
+    <div class="barra">
 
-    <div
-      class="barra-interna"
-      id="barraCorridas">
+        <div
+            class="barra-interna"
+            id="barraCorridas">
+        </div>
+
     </div>
 
-  </div>
 
+    <div
+        class="texto-menor"
+        id="textoCorridas">
 
-  <div
-    class="texto-menor"
-    id="textoCorridas">
-    Faltam 80 corridas.
-  </div>
+        Faltam 80 corridas.
+
+    </div>
 
 </div>
+
 
 
 <div class="subtitulo">
@@ -507,26 +768,28 @@ Franquia semanal
 
 <div class="progresso">
 
-  <strong id="kmSemana">
-    0 / 1.500 km
-  </strong>
+    <strong id="kmSemana">
+        0 / 1.500 km
+    </strong>
 
 
-  <div class="barra">
+    <div class="barra">
 
-    <div
-      class="barra-interna"
-      id="barraKm">
+        <div
+            class="barra-interna"
+            id="barraKm">
+        </div>
+
     </div>
 
-  </div>
 
+    <div
+        class="texto-menor"
+        id="textoKm">
 
-  <div
-    class="texto-menor"
-    id="textoKm">
-    Restam 1.500 km.
-  </div>
+        Restam 1.500 km.
+
+    </div>
 
 </div>
 
@@ -534,226 +797,293 @@ Franquia semanal
 
 
 
-<!-- LANÇAMENTO -->
+<!-- =========================
+LANÇAMENTO
+========================= -->
 
 <section class="quadrante">
 
-<h2>➕ Novo lançamento</h2>
+<h2>➕ Lançamento do dia</h2>
 
 
 <label>Data</label>
 
 <input
-  type="date"
-  id="dataLancamento">
+    type="date"
+    id="dataLancamento">
+
 
 
 <div class="duas-colunas">
 
-  <div>
+    <div>
 
-    <label>Movimento</label>
-
-    <select id="tipoMovimento">
-
-      <option value="ganho">
-        Ganho
-      </option>
-
-      <option value="gasto">
-        Gasto
-      </option>
-
-    </select>
-
-  </div>
+        <label>
+            Movimento
+        </label>
 
 
-  <div>
+        <select id="tipoMovimento">
 
-    <label>Categoria</label>
+            <option value="ganho">
+                Ganho
+            </option>
 
-    <select id="categoriaMovimento">
-    </select>
+            <option value="gasto">
+                Gasto
+            </option>
 
-  </div>
+        </select>
+
+    </div>
+
+
+    <div>
+
+        <label>
+            Categoria
+        </label>
+
+
+        <select id="categoriaMovimento">
+
+            <option value="Uber - Corridas">
+                Uber - Corridas
+            </option>
+
+            <option value="Uber - Promoções">
+                Uber - Promoções
+            </option>
+
+            <option value="99">
+                99
+            </option>
+
+            <option value="Particular">
+                Particular
+            </option>
+
+            <option value="Outro ganho">
+                Outro ganho
+            </option>
+
+        </select>
+
+    </div>
 
 </div>
+
 
 
 <div
-  id="campoCombustivel"
-  class="oculto">
+    id="campoCombustivel"
+    class="oculto">
 
-  <div class="duas-colunas">
 
-    <div>
+    <div class="duas-colunas">
 
-      <label>Combustível</label>
+        <div>
 
-      <select id="combustivelTipo">
+            <label>
+                Combustível
+            </label>
 
-        <option value="Gasolina">
-          Gasolina
-        </option>
 
-        <option value="Etanol">
-          Etanol
-        </option>
+            <select id="combustivelTipo">
 
-      </select>
+                <option value="Gasolina">
+                    Gasolina
+                </option>
+
+                <option value="Etanol">
+                    Etanol
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div>
+
+            <label>
+                Preço por litro
+            </label>
+
+
+            <input
+                type="number"
+                id="precoLitro"
+                step="0.001"
+                min="0"
+                inputmode="decimal">
+
+        </div>
 
     </div>
-
-
-    <div>
-
-      <label>Preço por litro</label>
-
-      <input
-        type="number"
-        id="precoLitro"
-        step="0.001"
-        min="0"
-        inputmode="decimal">
-
-    </div>
-
-  </div>
 
 </div>
+
 
 
 <label>Valor</label>
 
 <input
-  type="number"
-  id="valorMovimento"
-  step="0.01"
-  min="0"
-  inputmode="decimal">
+    type="number"
+    id="valorMovimento"
+    step="0.01"
+    min="0"
+    inputmode="decimal">
+
 
 
 <div
-  id="campoCorridas"
-  class="oculto">
+    id="campoCorridas"
+    class="oculto">
 
-  <label>Número de corridas</label>
 
-  <input
-    type="number"
-    id="quantidadeCorridas"
-    step="1"
-    min="0"
-    inputmode="numeric">
+    <label>
+        Número de corridas
+    </label>
+
+
+    <input
+        type="number"
+        id="quantidadeCorridas"
+        step="1"
+        min="0"
+        inputmode="numeric">
 
 </div>
 
 
-<label>Descrição</label>
+
+<label>
+    Descrição
+</label>
+
 
 <input
-  type="text"
-  id="descricaoMovimento"
-  placeholder="Opcional">
+    type="text"
+    id="descricaoMovimento"
+    placeholder="Opcional">
+
 
 
 <button
-  type="button"
-  class="btn-adicionar"
-  id="adicionarMovimento">
+    type="button"
+    class="btn-adicionar"
+    id="adicionarMovimento">
 
-  ➕ Adicionar lançamento
+    ➕ Adicionar lançamento
 
 </button>
 
 
 
 <div class="subtitulo">
-Movimentos do dia
+Lançamentos adicionados
 </div>
 
 
 <div id="listaMovimentos"></div>
 
 
+
 <div class="total">
 
-  <span>Receitas</span>
+    <span>Receitas</span>
 
-  <strong
-    class="ganho"
-    id="totalGanhosDia">
-    R$ 0,00
-  </strong>
+    <strong
+        class="ganho"
+        id="totalGanhosDia">
+
+        R$ 0,00
+
+    </strong>
 
 </div>
 
 
+
 <div class="total">
 
-  <span>Gastos</span>
+    <span>Gastos</span>
 
-  <strong
-    class="gasto"
-    id="totalGastosDia">
-    R$ 0,00
-  </strong>
+    <strong
+        class="gasto"
+        id="totalGastosDia">
+
+        R$ 0,00
+
+    </strong>
 
 </div>
 
 
+
 <div class="total">
 
-  <span>Saldo operacional</span>
+    <span>Saldo operacional</span>
 
-  <strong id="saldoDia">
-    R$ 0,00
-  </strong>
+    <strong id="saldoDia">
+
+        R$ 0,00
+
+    </strong>
 
 </div>
 
 
-<label>Km rodados no dia</label>
+
+<label>
+    Km rodados no dia
+</label>
+
 
 <input
-  type="number"
-  id="kmDia"
-  step="0.1"
-  min="0"
-  inputmode="decimal">
+    type="number"
+    id="kmDia"
+    step="0.1"
+    min="0"
+    inputmode="decimal">
+
 
 
 <button
-  type="button"
-  class="btn-salvar"
-  id="salvarDia">
+    type="button"
+    class="btn-salvar"
+    id="salvarDia">
 
-  💾 Salvar dia
+    💾 Salvar dia
 
 </button>
 
 
-<button
-  type="button"
-  class="btn-cancelar"
-  id="cancelarEdicao">
 
-  Cancelar edição
+<button
+    type="button"
+    class="btn-cancelar"
+    id="cancelarEdicao">
+
+    Cancelar edição
 
 </button>
+
 
 
 <div
-  class="mensagem"
-  id="mensagem">
+    class="mensagem"
+    id="mensagem">
 </div>
 
 </section>
 
 
 
-<!-- HISTÓRICO -->
+<!-- =========================
+HISTÓRICO
+========================= -->
 
 <section class="quadrante">
 
@@ -762,54 +1092,39 @@ Movimentos do dia
 
 <div class="navegacao">
 
-  <button
-    id="mesAnterior"
-    type="button">
-    ◀
-  </button>
+    <button
+        id="mesAnterior"
+        type="button">
 
-  <strong id="nomeMes">
-  </strong>
+        ◀
 
-  <button
-    id="mesSeguinte"
-    type="button">
-    ▶
-  </button>
-
-</div>
+    </button>
 
 
-<div style="overflow-x:auto">
+    <strong id="nomeMes">
+    </strong>
 
-<table>
 
-<thead>
+    <button
+        id="mesSeguinte"
+        type="button">
 
-<tr>
+        ▶
 
-  <th>Data</th>
-  <th>Receita</th>
-  <th>Gastos</th>
-  <th>Km</th>
-  <th></th>
-
-</tr>
-
-</thead>
-
-<tbody id="historico">
-</tbody>
-
-</table>
+    </button>
 
 </div>
+
+
+<div id="historico"></div>
 
 </section>
 
 
 
-<!-- INDICADORES -->
+<!-- =========================
+INDICADORES
+========================= -->
 
 <section class="quadrante">
 
@@ -818,88 +1133,88 @@ Movimentos do dia
 
 <div class="indicador">
 
-  <span>Receita</span>
+    <span>Receita</span>
 
-  <strong id="receitaMes">
-    R$ 0,00
-  </strong>
-
-</div>
-
-
-<div class="indicador">
-
-  <span>Uber</span>
-
-  <strong id="uberMes">
-    R$ 0,00
-  </strong>
+    <strong id="receitaMes">
+        R$ 0,00
+    </strong>
 
 </div>
 
 
 <div class="indicador">
 
-  <span>99</span>
+    <span>Uber</span>
 
-  <strong id="noventaNoveMes">
-    R$ 0,00
-  </strong>
-
-</div>
-
-
-<div class="indicador">
-
-  <span>Particular</span>
-
-  <strong id="particularMes">
-    R$ 0,00
-  </strong>
+    <strong id="uberMes">
+        R$ 0,00
+    </strong>
 
 </div>
 
 
 <div class="indicador">
 
-  <span>Despesas operacionais</span>
+    <span>99</span>
 
-  <strong id="gastosMes">
-    R$ 0,00
-  </strong>
-
-</div>
-
-
-<div class="indicador">
-
-  <span>Combustível</span>
-
-  <strong id="combustivelMes">
-    R$ 0,00
-  </strong>
+    <strong id="noventaNoveMes">
+        R$ 0,00
+    </strong>
 
 </div>
 
 
 <div class="indicador">
 
-  <span>Km rodados</span>
+    <span>Particular</span>
 
-  <strong id="kmMes">
-    0 km
-  </strong>
+    <strong id="particularMes">
+        R$ 0,00
+    </strong>
 
 </div>
 
 
 <div class="indicador">
 
-  <span>Receita por km</span>
+    <span>Despesas operacionais</span>
 
-  <strong id="receitaKm">
-    R$ 0,00
-  </strong>
+    <strong id="gastosMes">
+        R$ 0,00
+    </strong>
+
+</div>
+
+
+<div class="indicador">
+
+    <span>Combustível</span>
+
+    <strong id="combustivelMes">
+        R$ 0,00
+    </strong>
+
+</div>
+
+
+<div class="indicador">
+
+    <span>Km rodados</span>
+
+    <strong id="kmMes">
+        0 km
+    </strong>
+
+</div>
+
+
+<div class="indicador">
+
+    <span>Receita por km</span>
+
+    <strong id="receitaKm">
+        R$ 0,00
+    </strong>
 
 </div>
 
@@ -909,95 +1224,156 @@ Movimentos do dia
 </main>
 
 
+
+<!-- =========================
+MODAL DE EXCLUSÃO
+========================= -->
+
+<div
+    id="modalExclusao"
+    class="modal-exclusao oculto-modal">
+
+
+    <div class="caixa-modal">
+
+        <h3>
+            Excluir lançamento?
+        </h3>
+
+
+        <p id="textoExclusao">
+            Deseja realmente excluir este lançamento?
+        </p>
+
+
+        <div class="botoes-modal">
+
+
+            <button
+                type="button"
+                id="cancelarExclusao"
+                class="btn-modal-cancelar">
+
+                Cancelar
+
+            </button>
+
+
+            <button
+                type="button"
+                id="confirmarExclusao"
+                class="btn-modal-excluir">
+
+                🗑 Excluir
+
+            </button>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
 <script>
 
+/* =========================
+CONFIGURAÇÕES
+========================= */
 
-/* ========================================================
-CONFIGURAÇÃO
-======================================================== */
+const VERSAO_APP =
+    "1.3";
 
 const CHAVE_DADOS =
-  "rotaFacilV1";
+    "rotaFacilV1";
 
 const ALUGUEL_BRUTO =
-  954.91;
+    954.91;
 
 const DESCONTO_ALUGUEL =
-  250;
+    250;
 
 const META_UBER =
-  80;
+    80;
 
 const FRANQUIA_KM =
-  1500;
+    1500;
+
 
 
 let movimentosTemporarios =
-  [];
+    [];
 
 let editandoData =
-  null;
+    null;
+
+let exclusaoPendente =
+    null;
 
 let mesExibido =
-  new Date();
+    new Date();
 
-mesExibido.setDate(1);
+mesExibido.setDate(
+    1
+);
 
 
-
-/* ========================================================
-CATEGORIAS
-======================================================== */
 
 const CATEGORIAS = {
 
-  ganho: [
+    ganho: [
 
-    "Uber - Corridas",
-    "Uber - Promoções",
-    "99",
-    "Particular",
-    "Outro ganho"
+        "Uber - Corridas",
+        "Uber - Promoções",
+        "99",
+        "Particular",
+        "Outro ganho"
 
-  ],
+    ],
 
-  gasto: [
+    gasto: [
 
-    "Combustível",
-    "Alimentação",
-    "Pedágio",
-    "Estacionamento",
-    "Lavagem",
-    "Manutenção",
-    "Outro gasto"
+        "Combustível",
+        "Alimentação",
+        "Pedágio",
+        "Estacionamento",
+        "Lavagem",
+        "Manutenção",
+        "Outro gasto"
 
-  ]
+    ]
 
 };
 
 
-
-/* ========================================================
-AUXILIARES
-======================================================== */
+/* =========================
+FUNÇÕES AUXILIARES
+========================= */
 
 function el(id) {
 
-  return document
-    .getElementById(id);
+    return document.getElementById(
+        id
+    );
 
 }
 
 
 function dinheiro(valor) {
 
-  return Number(valor || 0)
-    .toLocaleString(
-      "pt-BR",
-      {
-        style: "currency",
-        currency: "BRL"
-      }
+    return Number(
+        valor || 0
+    ).toLocaleString(
+        "pt-BR",
+        {
+            style:
+                "currency",
+
+            currency:
+                "BRL"
+        }
     );
 
 }
@@ -1005,652 +1381,219 @@ function dinheiro(valor) {
 
 function numero(id) {
 
-  const valor =
-    parseFloat(
-      el(id).value
-    );
+    const campo =
+        el(id);
 
-  return isNaN(valor)
-    ? 0
-    : valor;
+    if (!campo) {
+
+        return 0;
+
+    }
+
+    const valor =
+        parseFloat(
+            campo.value
+        );
+
+    return isNaN(
+        valor
+    )
+        ? 0
+        : valor;
+
+}
+
+
+function criarId() {
+
+    return (
+        Date.now().toString() +
+        "-" +
+        Math.random()
+            .toString(36)
+            .substring(
+                2,
+                9
+            )
+    );
 
 }
 
 
 function dataChave(data) {
 
-  const ano =
-    data.getFullYear();
+    const ano =
+        data.getFullYear();
 
-  const mes =
-    String(
-      data.getMonth() + 1
-    ).padStart(2, "0");
+    const mes =
+        String(
+            data.getMonth() +
+            1
+        ).padStart(
+            2,
+            "0"
+        );
 
-  const dia =
-    String(
-      data.getDate()
-    ).padStart(2, "0");
+    const dia =
+        String(
+            data.getDate()
+        ).padStart(
+            2,
+            "0"
+        );
 
-  return `${ano}-${mes}-${dia}`;
+    return (
+        ano +
+        "-" +
+        mes +
+        "-" +
+        dia
+    );
 
 }
 
 
-function chaveParaData(chave) {
+function chaveParaData(
+    chave
+) {
 
-  return new Date(
-    chave + "T12:00:00"
-  );
+    return new Date(
+        chave +
+        "T12:00:00"
+    );
 
 }
 
 
-function formatarData(chave) {
+function formatarData(
+    chave
+) {
 
-  return chaveParaData(chave)
-    .toLocaleDateString(
-      "pt-BR"
+    return chaveParaData(
+        chave
+    ).toLocaleDateString(
+        "pt-BR"
     );
 
 }
 
 
 function mensagem(
-  texto,
-  tipo
+    texto,
+    tipo
 ) {
 
-  el("mensagem")
-    .textContent =
-    texto;
+    const campo =
+        el("mensagem");
 
-  el("mensagem")
-    .className =
-    "mensagem " + tipo;
+    campo.textContent =
+        texto;
+
+    campo.className =
+        "mensagem " +
+        tipo;
 
 }
 
 
 function limparMensagem() {
 
-  el("mensagem")
-    .className =
-    "mensagem";
+    const campo =
+        el("mensagem");
+
+    campo.textContent =
+        "";
+
+    campo.className =
+        "mensagem";
 
 }
 
 
-
-/* ========================================================
-DATA
-======================================================== */
-
-el("dataHoje")
-  .textContent =
-  new Date()
-    .toLocaleDateString(
-      "pt-BR",
-      {
-        weekday: "long",
-        day: "2-digit",
-        month: "long",
-        year: "numeric"
-      }
-    );
-
-
-el("dataLancamento")
-  .value =
-  dataChave(
-    new Date()
-  );
-
-
-
-/* ========================================================
-ARMAZENAMENTO
-======================================================== */
-
-function carregarDias() {
-
-  try {
-
-    const texto =
-      localStorage
-        .getItem(
-          CHAVE_DADOS
-        );
-
-    if (!texto) {
-      return [];
-    }
-
-    const dados =
-      JSON.parse(texto);
-
-    return Array.isArray(dados)
-      ? dados
-      : [];
-
-  }
-
-  catch {
-
-    return [];
-
-  }
-
-}
-
-
-function salvarDias(dias) {
-
-  try {
-
-    localStorage
-      .setItem(
-        CHAVE_DADOS,
-        JSON.stringify(dias)
-      );
-
-
-    const confirmar =
-      localStorage
-        .getItem(
-          CHAVE_DADOS
-        );
-
-
-    if (confirmar === null) {
-
-      throw new Error(
-        "O navegador não armazenou os dados."
-      );
-
-    }
-
-
-    return true;
-
-  }
-
-  catch (erro) {
-
-    mensagem(
-      "Erro ao salvar: " +
-      erro.message,
-      "erro"
-    );
-
-    return false;
-
-  }
-
-}
-
-
-
-/* ========================================================
-ALTERAR TIPO
-======================================================== */
-
-function atualizarCategorias() {
-
-  const tipo =
-    el("tipoMovimento")
-      .value;
-
-
-  const select =
-    el(
-      "categoriaMovimento"
-    );
-
-
-  select.innerHTML =
-    "";
-
-
-  CATEGORIAS[tipo]
-    .forEach(
-      function(categoria) {
-
-        const option =
-          document.createElement(
-            "option"
-          );
-
-        option.value =
-          categoria;
-
-        option.textContent =
-          categoria;
-
-        select.appendChild(
-          option
-        );
-
-      }
-    );
-
-
-  atualizarCamposExtras();
-
-}
-
-
-
-function atualizarCamposExtras() {
-
-  const categoria =
-    el("categoriaMovimento")
-      .value;
-
-
-  el("campoCombustivel")
-    .classList
-    .toggle(
-      "oculto",
-      categoria !==
-        "Combustível"
-    );
-
-
-  const usaCorridas =
-    categoria ===
-      "Uber - Corridas" ||
-    categoria ===
-      "99";
-
-
-  el("campoCorridas")
-    .classList
-    .toggle(
-      "oculto",
-      !usaCorridas
-    );
-
-}
-
-
-el("tipoMovimento")
-  .addEventListener(
-    "change",
-    atualizarCategorias
-  );
-
-
-el("categoriaMovimento")
-  .addEventListener(
-    "change",
-    atualizarCamposExtras
-  );
-
-
-atualizarCategorias();
-
-
-
-/* ========================================================
-ADICIONAR MOVIMENTO
-======================================================== */
-
-function adicionarMovimento() {
-
-  const tipo =
-    el("tipoMovimento")
-      .value;
-
-
-  const categoria =
-    el("categoriaMovimento")
-      .value;
-
-
-  const valor =
-    numero(
-      "valorMovimento"
-    );
-
-
-  if (valor <= 0) {
-
-    mensagem(
-      "Informe o valor do lançamento.",
-      "erro"
-    );
-
-    return;
-
-  }
-
-
-  const movimento = {
-
-    id:
-      Date.now() +
-      Math.random(),
-
-    tipo:
-      tipo,
-
-    categoria:
-      categoria,
-
-    valor:
-      valor,
-
-    descricao:
-      el("descricaoMovimento")
-        .value
-        .trim(),
-
-    corridas:
-      0,
-
-    combustivelTipo:
-      "",
-
-    precoLitro:
-      0,
-
-    litros:
-      0
-
-  };
-
-
-  if (
-    categoria ===
-      "Uber - Corridas" ||
-    categoria ===
-      "99"
-  ) {
-
-    movimento.corridas =
-      Math.round(
-        numero(
-          "quantidadeCorridas"
-        )
-      );
-
-  }
-
-
-  if (
-    categoria ===
-      "Combustível"
-  ) {
-
-    movimento.combustivelTipo =
-      el("combustivelTipo")
-        .value;
-
-
-    movimento.precoLitro =
-      numero(
-        "precoLitro"
-      );
-
+/* =========================
+NORMALIZAR DADOS
+========================= */
+
+function normalizarDias(
+    dias
+) {
 
     if (
-      movimento.precoLitro <=
-      0
+        !Array.isArray(
+            dias
+        )
     ) {
 
-      mensagem(
-        "Informe o preço por litro.",
-        "erro"
-      );
-
-      return;
+        return [];
 
     }
 
+    return dias.map(
+        function(dia) {
 
-    movimento.litros =
-      valor /
-      movimento.precoLitro;
+            const movimentos =
+                Array.isArray(
+                    dia.movimentos
+                )
+                    ? dia.movimentos
+                    : [];
 
-  }
+            movimentos.forEach(
+                function(item) {
 
+                    if (
+                        !item.id
+                    ) {
 
-  movimentosTemporarios
-    .push(
-      movimento
+                        item.id =
+                            criarId();
+
+                    }
+
+                }
+            );
+
+            return {
+
+                data:
+                    dia.data,
+
+                km:
+                    Number(
+                        dia.km ||
+                        0
+                    ),
+
+                movimentos:
+                    movimentos
+
+            };
+
+        }
     );
 
-
-  limparCamposMovimento();
-
-  atualizarListaMovimentos();
-
-  limparMensagem();
-
 }
 
 
-
-el("adicionarMovimento")
-  .addEventListener(
-    "click",
-    adicionarMovimento
-  );
-
-
-
-/* ========================================================
-REMOVER
-======================================================== */
-
-function removerMovimento(id) {
-
-  movimentosTemporarios =
-    movimentosTemporarios
-      .filter(
-        function(item) {
-
-          return item.id !==
-            id;
-
-        }
-      );
-
-
-  atualizarListaMovimentos();
-
-}
-
-
-
-/* ========================================================
-LISTA DO DIA
-======================================================== */
-
-function atualizarListaMovimentos() {
-
-  const lista =
-    el("listaMovimentos");
-
-
-  lista.innerHTML =
-    "";
-
-
-  movimentosTemporarios
-    .forEach(
-      function(item) {
-
-        const linha =
-          document.createElement(
-            "div"
-          );
-
-
-        linha.className =
-          "movimento";
-
-
-        const info =
-          document.createElement(
-            "div"
-          );
-
-
-        info.className =
-          "movimento-info";
-
-
-        const titulo =
-          document.createElement(
-            "strong"
-          );
-
-
-        titulo.className =
-          item.tipo ===
-            "ganho"
-            ? "ganho"
-            : "gasto";
-
-
-        titulo.textContent =
-          (
-            item.tipo ===
-              "ganho"
-              ? "+"
-              : "-"
-          ) +
-          " " +
-          item.categoria +
-          " • " +
-          dinheiro(
-            item.valor
-          );
-
-
-        info.appendChild(
-          titulo
-        );
-
-
-        let detalhes =
-          [];
-
-
-        if (
-          item.corridas > 0
-        ) {
-
-          detalhes.push(
-            item.corridas +
-            " corridas"
-          );
-
-        }
-
-
-        if (
-          item.categoria ===
-            "Combustível"
-        ) {
-
-          detalhes.push(
-            item.combustivelTipo
-          );
-
-
-          detalhes.push(
-            item.litros
-              .toLocaleString(
-                "pt-BR",
-                {
-                  maximumFractionDigits:
-                    2
-                }
-              ) +
-            " L"
-          );
-
-        }
-
-
-        if (
-          item.descricao
-        ) {
-
-          detalhes.push(
-            item.descricao
-          );
-
-        }
-
-
-        if (
-          detalhes.length
-        ) {
-
-          const small =
-            document.createElement(
-              "small"
-            );
-
-
-          small.textContent =
-            detalhes.join(
-              " • "
-            );
-
-
-          info.appendChild(
-            small
-          );
-
-        }
-
-
-        const botao =
-          document.createElement(
-            "button"
-          );
-
-
-        botao.className =
-          "btn-excluir";
-
-
-        botao.type =
-          "button";
-
-
-        botao.textContent =
-          "Excluir";
-
-
-        botao.onclick =
-          function() {
-
-            removerMovimento(
-              item.id
-            );
-
-          };
-
-
-        linha.appendChild(
-          info
-        );
-
-
-        linha.appendChild(
-          botao
-        );
-
-
-        lista.appendChild(
-          linha
-        );
-
-      }
-  
+/* =========================
+DATA ATUAL
+========================= */
+
+el("dataHoje").textContent =
+    new Date()
+        .toLocaleDateString(
+            "pt-BR",
+            {
+                weekday:
+                    "long",
+
+                day:
+                    "2-digit",
+
+                month:
+                    "long",
+
+                year:
+                    "numeric"
+            }
+   
