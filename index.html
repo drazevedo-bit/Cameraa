@@ -22,43 +22,44 @@ body {
 }
 
 .topo {
-  min-height: 65px;
-  padding: 10px 20px;
   background: #111827;
   border-bottom: 1px solid #334155;
+  padding: 10px 16px;
 
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  gap: 10px;
   flex-wrap: wrap;
-  gap: 8px;
 }
 
 .topo h1 {
   margin: 0;
-  font-size: 21px;
+  font-size: 20px;
+}
+
+.versao {
+  font-size: 10px;
+  color: #64748b;
 }
 
 .topo-direita {
   display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.data {
-  font-size: 12px;
-  color: #94a3b8;
-  text-align: right;
+  gap: 7px;
+  flex-wrap: wrap;
 }
 
 .btn-backup {
   background: #334155;
-  color: #e2e8f0;
-  border: none;
-  border-radius: 8px;
-  padding: 7px 10px;
+  color: white;
+  padding: 7px 9px;
   font-size: 11px;
-  cursor: pointer;
+}
+
+.data-hoje {
+  width: 100%;
+  font-size: 11px;
+  color: #94a3b8;
 }
 
 .painel {
@@ -72,12 +73,23 @@ body {
 .quadrante {
   background: #1e293b;
   border-radius: 14px;
-  padding: 15px;
+  padding: 14px;
 }
 
-.quadrante h2 {
+h2 {
   margin-top: 0;
-  font-size: 19px;
+  margin-bottom: 12px;
+  font-size: 18px;
+}
+
+.subtitulo {
+  margin-top: 16px;
+  margin-bottom: 6px;
+
+  font-size: 11px;
+  font-weight: bold;
+  color: #94a3b8;
+  text-transform: uppercase;
 }
 
 .cards {
@@ -86,53 +98,52 @@ body {
   gap: 8px;
 }
 
-.card {
+.card,
+.indicador {
   background: #334155;
-  padding: 11px;
-  border-radius: 10px;
+  padding: 10px;
+  border-radius: 9px;
 }
 
-.card span {
+.card span,
+.indicador span {
   display: block;
   color: #cbd5e1;
   font-size: 11px;
-  margin-bottom: 4px;
 }
 
-.card strong {
-  font-size: 18px;
+.card strong,
+.indicador strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 17px;
 }
 
 .card small {
   display: block;
-  margin-top: 3px;
+  margin-top: 4px;
   color: #94a3b8;
   font-size: 10px;
 }
 
-.subtitulo {
-  margin-top: 15px;
-  margin-bottom: 6px;
-  color: #94a3b8;
-  font-size: 12px;
-  font-weight: bold;
-  text-transform: uppercase;
+.indicador {
+  margin-bottom: 8px;
 }
 
 label {
   display: block;
   margin-top: 7px;
   margin-bottom: 3px;
-  font-size: 12px;
   color: #cbd5e1;
+  font-size: 12px;
 }
 
 input,
 select {
   width: 100%;
-  padding: 9px;
   border: none;
   border-radius: 8px;
+  padding: 9px;
   background: #334155;
   color: white;
   font-size: 15px;
@@ -144,101 +155,96 @@ select {
   gap: 8px;
 }
 
+.total-form {
+  background: #0f172a;
+  padding: 9px;
+  border-radius: 8px;
+  margin-top: 8px;
+
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
 button {
   border: none;
-  border-radius: 9px;
-  padding: 10px;
+  border-radius: 8px;
+  padding: 9px;
   cursor: pointer;
   font-weight: bold;
 }
 
 .btn-principal {
   width: 100%;
-  margin-top: 14px;
+  margin-top: 15px;
   background: #22c55e;
   color: #052e16;
+  font-size: 15px;
+}
+
+.btn-cancelar {
+  width: 100%;
+  margin-top: 7px;
+  background: #475569;
+  color: white;
+  display: none;
 }
 
 .btn-adicionar {
   width: 100%;
-  margin-top: 9px;
+  margin-top: 8px;
   background: #3b82f6;
   color: white;
-}
-
-.btn-remover {
-  background: #ef4444;
-  color: white;
-  padding: 5px 8px;
-  font-size: 11px;
 }
 
 .btn-editar {
   background: #f59e0b;
   color: #451a03;
-  padding: 5px 8px;
-  font-size: 11px;
+  padding: 5px 7px;
+  font-size: 10px;
 }
 
-.total-form {
-  margin-top: 8px;
-  padding: 9px;
-  border-radius: 8px;
-  background: #0f172a;
-
-  display: flex;
-  justify-content: space-between;
-}
-
-.gasto-item {
-  margin-top: 6px;
-  padding: 8px;
-  background: #334155;
-  border-radius: 8px;
-
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 8px;
+.btn-excluir {
+  background: #ef4444;
+  color: white;
+  padding: 5px 7px;
+  font-size: 10px;
 }
 
 .progresso {
+  background: #0f172a;
   margin-top: 10px;
   padding: 10px;
-  background: #0f172a;
-  border-radius: 10px;
+  border-radius: 9px;
 }
 
 .barra {
-  margin-top: 7px;
-  height: 11px;
   background: #334155;
+  height: 10px;
   border-radius: 10px;
   overflow: hidden;
+  margin-top: 7px;
 }
 
 .barra-interna {
   height: 100%;
-  background: #22c55e;
   width: 0%;
-  transition: width 0.3s ease;
+  background: #22c55e;
+  transition: 0.3s;
 }
 
-.indicador {
+.gasto-item {
+  margin-top: 6px;
   background: #334155;
-  padding: 10px;
-  margin-bottom: 8px;
-  border-radius: 9px;
-}
+  border-radius: 8px;
+  padding: 8px;
 
-.indicador span {
-  font-size: 11px;
-  color: #cbd5e1;
-}
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 7px;
+  align-items: center;
 
-.indicador strong {
-  display: block;
-  margin-top: 3px;
-  font-size: 18px;
+  font-size: 12px;
 }
 
 .mensagem {
@@ -246,7 +252,7 @@ button {
   margin-top: 10px;
   padding: 10px;
   border-radius: 8px;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .mensagem.sucesso {
@@ -259,15 +265,32 @@ button {
   background: #7f1d1d;
 }
 
+.navegacao-mes {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 10px;
+}
+
+.navegacao-mes button {
+  background: #334155;
+  color: white;
+}
+
+.navegacao-mes strong {
+  font-size: 13px;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 11px;
+  font-size: 10px;
 }
 
 th,
 td {
-  padding: 6px 4px;
+  padding: 6px 3px;
   border-bottom: 1px solid #475569;
   text-align: right;
   white-space: nowrap;
@@ -278,44 +301,87 @@ td:first-child {
   text-align: left;
 }
 
-.acoes-historico {
+.acoes {
   display: flex;
-  gap: 4px;
+  gap: 3px;
   justify-content: flex-end;
 }
 
 .vazio {
   color: #94a3b8;
-  font-size: 12px;
-  padding: 10px 0;
+  text-align: center;
+  padding: 15px;
 }
 
 .input-arquivo {
   display: none;
 }
 
-@media (max-width: 800px) {
+.alerta-meta {
+  margin-top: 8px;
+  font-size: 11px;
+  color: #cbd5e1;
+}
+
+@media (max-width: 850px) {
+
   .painel {
     grid-template-columns: 1fr;
   }
+
 }
 
 </style>
 </head>
 
+
 <body>
 
-<div class="topo">
-  <h1>🚗 Controle do Motorista</h1>
-  <div class="topo-direita">
-    <button class="btn-backup" type="button" id="botaoExportar">⬇️ Exportar backup</button>
-    <button class="btn-backup" type="button" id="botaoImportar">⬆️ Importar backup</button>
-    <input class="input-arquivo" type="file" id="arquivoImportar" accept="application/json">
-  </div>
-  <div class="data" id="dataHoje"></div>
-</div>
+<header class="topo">
 
-<div class="painel">
+  <div>
+    <h1>🚗 Controle do Motorista</h1>
+    <div class="versao">Versão consolidada 1.0</div>
+  </div>
+
+  <div class="topo-direita">
+
+    <button
+      type="button"
+      class="btn-backup"
+      id="botaoExportar">
+      ⬇️ Backup
+    </button>
+
+    <button
+      type="button"
+      class="btn-backup"
+      id="botaoImportar">
+      ⬆️ Restaurar
+    </button>
+
+    <input
+      type="file"
+      id="arquivoImportar"
+      class="input-arquivo"
+      accept=".json">
+
+  </div>
+
+  <div
+    class="data-hoje"
+    id="dataHoje">
+  </div>
+
+</header>
+
+
+<main class="painel">
+
+
+<!-- =========================
+     QUADRANTE 1
+========================= -->
 
 <section class="quadrante">
 
@@ -324,7 +390,7 @@ td:first-child {
 <div class="cards">
 
   <div class="card">
-    <span>Receita da semana</span>
+    <span>Receita</span>
     <strong id="receitaSemana">R$ 0,00</strong>
   </div>
 
@@ -334,16 +400,21 @@ td:first-child {
   </div>
 
   <div class="card">
-    <span>Aluguel da semana</span>
+    <span>Aluguel atual</span>
     <strong id="aluguelSemana">R$ 954,91</strong>
-    <small id="aluguelDetalhe">Sem desconto de meta</small>
+    <small id="detalheAluguel">Meta ainda não atingida</small>
   </div>
 
   <div class="card">
-    <span>Km da semana</span>
-    <strong id="kmSemana">0 km</strong>
+    <span>Resultado líquido</span>
+    <strong id="liquidoSemana">R$ 0,00</strong>
   </div>
 
+</div>
+
+
+<div class="subtitulo">
+Meta do aluguel
 </div>
 
 <div class="progresso">
@@ -360,187 +431,368 @@ td:first-child {
   </div>
 
   <div
-    id="textoMetaUber"
-    style="margin-top:7px;font-size:12px;color:#cbd5e1;">
+    class="alerta-meta"
+    id="textoMetaUber">
     Faltam 80 corridas.
   </div>
 
 </div>
 
-<div class="card" style="margin-top:10px">
-  <span>Resultado líquido da semana</span>
-  <strong id="liquidoSemana">R$ 0,00</strong>
-  <small>Receita − despesas − aluguel</small>
+
+<div class="subtitulo">
+Quilometragem semanal
+</div>
+
+<div class="progresso">
+
+  <strong id="kmSemana">
+    0 / 1.500 km
+  </strong>
+
+  <div class="barra">
+    <div
+      class="barra-interna"
+      id="barraKm">
+    </div>
+  </div>
+
+  <div
+    class="alerta-meta"
+    id="textoKm">
+    Restam 1.500 km.
+  </div>
+
 </div>
 
 </section>
 
 
+<!-- =========================
+     QUADRANTE 2
+========================= -->
+
 <section class="quadrante">
 
-<h2>✍️ Lançamento do dia</h2>
+<h2>✍️ Lançamento</h2>
 
-<div class="subtitulo">Uber</div>
 
-<label>Ganhos com corridas</label>
+<label>
+Data do lançamento
+</label>
+
+<input
+  type="date"
+  id="dataLancamento">
+
+
+<div class="subtitulo">
+Uber
+</div>
+
+<label>
+Ganhos com corridas
+</label>
 
 <input
   type="number"
   id="uberCorridasValor"
   step="0.01"
->
+  min="0"
+  inputmode="decimal">
 
-<label>Promoções</label>
+
+<label>
+Promoções
+</label>
 
 <input
   type="number"
   id="uberPromocoes"
   step="0.01"
->
+  min="0"
+  inputmode="decimal">
 
-<label>Número de corridas Uber</label>
+
+<label>
+Número de corridas Uber
+</label>
 
 <input
   type="number"
   id="uberCorridasQtd"
   step="1"
->
+  min="0"
+  inputmode="numeric">
+
 
 <div class="total-form">
-  <span>Total Uber</span>
-  <strong id="totalUberTela">R$ 0,00</strong>
+
+  <span>
+    Total Uber
+  </span>
+
+  <strong id="totalUberTela">
+    R$ 0,00
+  </strong>
+
 </div>
 
-<div class="subtitulo">99</div>
 
-<label>Ganhos 99</label>
+<div class="subtitulo">
+99
+</div>
 
-<input
-  type="number"
-  id="ganhos99"
-  step="0.01"
->
+<div class="duas-colunas">
 
-<label>Número de corridas 99</label>
+  <div>
 
-<input
-  type="number"
-  id="corridas99"
-  step="1"
->
+    <label>
+      Ganhos 99
+    </label>
 
-<div class="subtitulo">Particular</div>
+    <input
+      type="number"
+      id="ganhos99"
+      step="0.01"
+      min="0"
+      inputmode="decimal">
 
-<label>Ganhos particulares</label>
+  </div>
+
+  <div>
+
+    <label>
+      Corridas 99
+    </label>
+
+    <input
+      type="number"
+      id="corridas99"
+      step="1"
+      min="0"
+      inputmode="numeric">
+
+  </div>
+
+</div>
+
+
+<div class="subtitulo">
+Particular
+</div>
+
+<label>
+Ganhos particulares
+</label>
 
 <input
   type="number"
   id="particular"
   step="0.01"
->
+  min="0"
+  inputmode="decimal">
+
 
 <div class="total-form">
-  <span>Receita do dia</span>
-  <strong id="receitaDiaTela">R$ 0,00</strong>
+
+  <span>
+    Receita do dia
+  </span>
+
+  <strong id="receitaDiaTela">
+    R$ 0,00
+  </strong>
+
 </div>
 
-<div class="subtitulo">Combustível</div>
 
-<label>Tipo</label>
+<div class="subtitulo">
+Combustível
+</div>
+
+<label>
+Tipo
+</label>
 
 <select id="tipoCombustivel">
-  <option value="">Não abasteci hoje</option>
-  <option value="Gasolina">Gasolina</option>
-  <option value="Etanol">Etanol</option>
+
+  <option value="">
+    Não abasteci
+  </option>
+
+  <option value="Gasolina">
+    Gasolina
+  </option>
+
+  <option value="Etanol">
+    Etanol
+  </option>
+
 </select>
+
 
 <div class="duas-colunas">
 
   <div>
-    <label>Preço por litro</label>
+
+    <label>
+      Preço por litro
+    </label>
+
     <input
       type="number"
       id="precoLitro"
       step="0.001"
-    >
+      min="0"
+      inputmode="decimal">
+
   </div>
 
   <div>
-    <label>Valor abastecido</label>
+
+    <label>
+      Valor abastecido
+    </label>
+
     <input
       type="number"
       id="combustivel"
       step="0.01"
-    >
+      min="0"
+      inputmode="decimal">
+
   </div>
 
 </div>
 
+
 <div class="total-form">
-  <span>Litros</span>
-  <strong id="litrosTela">0,00 L</strong>
+
+  <span>
+    Litros
+  </span>
+
+  <strong id="litrosTela">
+    0,00 L
+  </strong>
+
 </div>
 
-<div class="subtitulo">Outros gastos</div>
 
-<label>Categoria</label>
+<div class="subtitulo">
+Outros gastos
+</div>
+
+<label>
+Categoria
+</label>
 
 <select id="categoriaGasto">
-  <option>Alimentação</option>
-  <option>Pedágio</option>
-  <option>Estacionamento</option>
-  <option>Lavagem</option>
-  <option>Manutenção</option>
-  <option>Outros</option>
+
+  <option>
+    Alimentação
+  </option>
+
+  <option>
+    Pedágio
+  </option>
+
+  <option>
+    Estacionamento
+  </option>
+
+  <option>
+    Lavagem
+  </option>
+
+  <option>
+    Manutenção
+  </option>
+
+  <option>
+    Outros
+  </option>
+
 </select>
 
-<label>Descrição</label>
+
+<label>
+Descrição
+</label>
 
 <input
   type="text"
   id="descricaoGasto"
->
+  placeholder="Opcional">
 
-<label>Valor</label>
+
+<label>
+Valor
+</label>
 
 <input
   type="number"
   id="valorOutroGasto"
   step="0.01"
->
+  min="0"
+  inputmode="decimal">
+
 
 <button
-  class="btn-adicionar"
   type="button"
-  onclick="adicionarGasto()"
->
-➕ Adicionar gasto
+  class="btn-adicionar"
+  id="botaoAdicionarGasto">
+  ➕ Adicionar gasto
 </button>
+
 
 <div id="listaGastos"></div>
 
+
 <div class="total-form">
-  <span>Outros gastos</span>
-  <strong id="totalOutrosTela">R$ 0,00</strong>
+
+  <span>
+    Outros gastos
+  </span>
+
+  <strong id="totalOutrosTela">
+    R$ 0,00
+  </strong>
+
 </div>
 
-<div class="subtitulo">Quilometragem</div>
 
-<label>Km rodados no dia</label>
+<div class="subtitulo">
+Quilometragem
+</div>
+
+<label>
+Km rodados no dia
+</label>
 
 <input
   type="number"
   id="kmHoje"
   step="0.1"
->
+  min="0"
+  inputmode="decimal">
+
 
 <button
-  class="btn-principal"
   type="button"
-  id="botaoSalvar"
->
-💾 Salvar dia
+  class="btn-principal"
+  id="botaoSalvar">
+  💾 Salvar lançamento
 </button>
+
+
+<button
+  type="button"
+  class="btn-cancelar"
+  id="botaoCancelar">
+  Cancelar edição
+</button>
+
 
 <div
   class="mensagem"
@@ -550,9 +802,34 @@ td:first-child {
 </section>
 
 
+<!-- =========================
+     QUADRANTE 3
+========================= -->
+
 <section class="quadrante">
 
 <h2>📅 Histórico</h2>
+
+
+<div class="navegacao-mes">
+
+  <button
+    type="button"
+    id="mesAnterior">
+    ◀
+  </button>
+
+  <strong id="tituloMes">
+  </strong>
+
+  <button
+    type="button"
+    id="mesSeguinte">
+    ▶
+  </button>
+
+</div>
+
 
 <div style="overflow-x:auto">
 
@@ -561,6 +838,7 @@ td:first-child {
 <thead>
 
 <tr>
+
   <th>Data</th>
   <th>Uber</th>
   <th>99</th>
@@ -568,11 +846,13 @@ td:first-child {
   <th>Gastos</th>
   <th>Km</th>
   <th></th>
+
 </tr>
 
 </thead>
 
-<tbody id="historico"></tbody>
+<tbody id="historico">
+</tbody>
 
 </table>
 
@@ -581,55 +861,141 @@ td:first-child {
 </section>
 
 
+<!-- =========================
+     QUADRANTE 4
+========================= -->
+
 <section class="quadrante">
 
-<h2>📈 Indicadores</h2>
+<h2>📈 Indicadores do mês</h2>
+
 
 <div class="indicador">
-  <span>Receita do mês</span>
-  <strong id="receitaMes">R$ 0,00</strong>
+
+  <span>
+    Receita
+  </span>
+
+  <strong id="receitaMes">
+    R$ 0,00
+  </strong>
+
 </div>
 
-<div class="indicador">
-  <span>Despesas operacionais do mês</span>
-  <strong id="gastosMes">R$ 0,00</strong>
-</div>
 
 <div class="indicador">
-  <span>Combustível no mês</span>
-  <strong id="combustivelMes">R$ 0,00</strong>
+
+  <span>
+    Despesas operacionais
+  </span>
+
+  <strong id="gastosMes">
+    R$ 0,00
+  </strong>
+
 </div>
 
-<div class="indicador">
-  <span>Km rodados no mês</span>
-  <strong id="kmMes">0 km</strong>
-</div>
 
 <div class="indicador">
-  <span>Receita por km</span>
-  <strong id="receitaKm">R$ 0,00</strong>
+
+  <span>
+    Aluguel atribuído ao mês
+  </span>
+
+  <strong id="aluguelMes">
+    R$ 0,00
+  </strong>
+
 </div>
 
-<div class="indicador">
-  <span>Uber na receita</span>
-  <strong id="participacaoUber">0%</strong>
-</div>
 
 <div class="indicador">
-  <span>99 na receita</span>
-  <strong id="participacao99">0%</strong>
+
+  <span>
+    Resultado líquido
+  </span>
+
+  <strong id="liquidoMes">
+    R$ 0,00
+  </strong>
+
 </div>
 
+
 <div class="indicador">
-  <span>Franquia do seguro (referência)</span>
-  <strong id="franquiaReferencia">R$ 0,00</strong>
+
+  <span>
+    Combustível
+  </span>
+
+  <strong id="combustivelMes">
+    R$ 0,00
+  </strong>
+
+</div>
+
+
+<div class="indicador">
+
+  <span>
+    Km rodados
+  </span>
+
+  <strong id="kmMes">
+    0 km
+  </strong>
+
+</div>
+
+
+<div class="indicador">
+
+  <span>
+    Receita por km
+  </span>
+
+  <strong id="receitaKm">
+    R$ 0,00
+  </strong>
+
+</div>
+
+
+<div class="indicador">
+
+  <span>
+    Participação Uber
+  </span>
+
+  <strong id="participacaoUber">
+    0%
+  </strong>
+
+</div>
+
+
+<div class="indicador">
+
+  <span>
+    Participação 99
+  </span>
+
+  <strong id="participacao99">
+    0%
+  </strong>
+
 </div>
 
 </section>
 
-</div>
+</main>
+
 
 <script>
+
+/* ==========================================================
+   CONFIGURAÇÕES
+========================================================== */
 
 const CHAVE_DADOS =
   "motoristaRegistrosV4";
@@ -637,14 +1003,19 @@ const CHAVE_DADOS =
 const ALUGUEL_BRUTO =
   954.91;
 
-const DESCONTO =
+const DESCONTO_META =
   250;
 
 const META_UBER =
   80;
 
-const FRANQUIA =
+const FRANQUIA_KM =
   1500;
+
+
+/* ==========================================================
+   ESTADO
+========================================================== */
 
 let gastosTemporarios =
   [];
@@ -652,40 +1023,35 @@ let gastosTemporarios =
 let editandoChave =
   null;
 
+let mesHistorico =
+  new Date();
 
-/* DATA */
-
-document
-.getElementById("dataHoje")
-.textContent =
-new Date()
-.toLocaleDateString(
-  "pt-BR",
-  {
-    weekday: "long",
-    day: "2-digit",
-    month: "long",
-    year: "numeric"
-  }
-);
+mesHistorico.setDate(1);
 
 
-/* FUNÇÕES AUXILIARES */
+/* ==========================================================
+   FUNÇÕES BÁSICAS
+========================================================== */
+
+function elemento(id) {
+
+  return document
+    .getElementById(id);
+
+}
+
 
 function numero(id) {
 
-  const elemento =
-    document
-    .getElementById(id);
+  const el =
+    elemento(id);
 
-  if (!elemento) {
+  if (!el) {
     return 0;
   }
 
   const valor =
-    parseFloat(
-      elemento.value
-    );
+    parseFloat(el.value);
 
   return isNaN(valor)
     ? 0
@@ -697,13 +1063,54 @@ function numero(id) {
 function dinheiro(valor) {
 
   return Number(valor || 0)
-  .toLocaleString(
-    "pt-BR",
-    {
-      style: "currency",
-      currency: "BRL"
-    }
+    .toLocaleString(
+      "pt-BR",
+      {
+        style: "currency",
+        currency: "BRL"
+      }
+    );
+
+}
+
+
+function dataParaChave(data) {
+
+  const ano =
+    data.getFullYear();
+
+  const mes =
+    String(
+      data.getMonth() + 1
+    )
+    .padStart(2, "0");
+
+  const dia =
+    String(
+      data.getDate()
+    )
+    .padStart(2, "0");
+
+  return `${ano}-${mes}-${dia}`;
+
+}
+
+
+function dataDeChave(chave) {
+
+  return new Date(
+    chave + "T12:00:00"
   );
+
+}
+
+
+function formatarData(chave) {
+
+  return dataDeChave(chave)
+    .toLocaleDateString(
+      "pt-BR"
+    );
 
 }
 
@@ -713,135 +1120,60 @@ function mostrarMensagem(
   tipo
 ) {
 
-  const mensagem =
-    document
-    .getElementById(
-      "mensagem"
-    );
+  const msg =
+    elemento("mensagem");
 
-  mensagem
-  .className =
+  msg.className =
     "mensagem " + tipo;
 
-  mensagem
-  .textContent =
+  msg.textContent =
     texto;
 
 }
 
 
-function dataChaveHoje() {
+function limparMensagem() {
 
-  const hoje =
-    new Date();
+  const msg =
+    elemento("mensagem");
 
-  return dataParaChave(
-    hoje
-  );
+  msg.className =
+    "mensagem";
+
+  msg.textContent =
+    "";
 
 }
 
 
-function dataParaChave(
-  data
-) {
+/* ==========================================================
+   DATA ATUAL
+========================================================== */
 
-  const ano =
-    data.getFullYear();
-
-  const mes =
-    String(
-      data.getMonth() + 1
-    )
-    .padStart(
-      2,
-      "0"
+elemento("dataHoje")
+  .textContent =
+  new Date()
+    .toLocaleDateString(
+      "pt-BR",
+      {
+        weekday: "long",
+        day: "2-digit",
+        month: "long",
+        year: "numeric"
+      }
     );
 
-  const dia =
-    String(
-      data.getDate()
-    )
-    .padStart(
-      2,
-      "0"
-    );
 
-  return `${ano}-${mes}-${dia}`;
-
-}
-
-
-function dataDeChave(
-  chave
-) {
-
-  return new Date(
-    chave +
-    "T12:00:00"
+elemento("dataLancamento")
+  .value =
+  dataParaChave(
+    new Date()
   );
 
-}
 
-
-function inicioSemana(
-  data
-) {
-
-  const d =
-    new Date(data);
-
-  const dia =
-    d.getDay();
-
-  const ajuste =
-    dia === 0
-      ? -6
-      : 1 - dia;
-
-  d.setDate(
-    d.getDate() +
-    ajuste
-  );
-
-  d.setHours(
-    0,
-    0,
-    0,
-    0
-  );
-
-  return d;
-
-}
-
-
-function fimSemana(
-  data
-) {
-
-  const d =
-    inicioSemana(
-      data
-    );
-
-  d.setDate(
-    d.getDate() + 6
-  );
-
-  d.setHours(
-    23,
-    59,
-    59,
-    999
-  );
-
-  return d;
-
-}
-
-
-/* ARMAZENAMENTO */
+/* ==========================================================
+   STORAGE
+========================================================== */
 
 function carregarRegistros() {
 
@@ -849,28 +1181,29 @@ function carregarRegistros() {
 
     const texto =
       localStorage
-      .getItem(
-        CHAVE_DADOS
-      );
+        .getItem(
+          CHAVE_DADOS
+        );
 
     if (!texto) {
       return [];
     }
 
     const dados =
-      JSON.parse(
-        texto
-      );
+      JSON.parse(texto);
 
-    return Array.isArray(
-      dados
-    )
-      ? dados
-      : [];
+    if (!Array.isArray(dados)) {
+      return [];
+    }
 
-  } catch (erro) {
+    return dados;
+
+  }
+
+  catch (erro) {
 
     console.error(
+      "Erro ao carregar:",
       erro
     );
 
@@ -881,9 +1214,7 @@ function carregarRegistros() {
 }
 
 
-function salvarRegistros(
-  registros
-) {
+function salvarRegistros(registros) {
 
   try {
 
@@ -893,36 +1224,40 @@ function salvarRegistros(
       );
 
     localStorage
-    .setItem(
-      CHAVE_DADOS,
-      texto
-    );
-
-
-    /* CONFIRMAÇÃO REAL */
-
-    const teste =
-      localStorage
-      .getItem(
-        CHAVE_DADOS
+      .setItem(
+        CHAVE_DADOS,
+        texto
       );
 
-    if (!teste) {
+
+    const confirmacao =
+      localStorage
+        .getItem(
+          CHAVE_DADOS
+        );
+
+
+    if (confirmacao === null) {
+
       throw new Error(
         "O navegador não confirmou o armazenamento."
       );
+
     }
+
 
     return true;
 
-  } catch (erro) {
+  }
+
+  catch (erro) {
 
     console.error(
       erro
     );
 
     mostrarMensagem(
-      "Erro ao salvar no navegador: " +
+      "Erro ao salvar: " +
       erro.message,
       "erro"
     );
@@ -934,44 +1269,30 @@ function salvarRegistros(
 }
 
 
-/* TOTAL DO FORMULÁRIO */
+/* ==========================================================
+   TOTAL UBER / RECEITA
+========================================================== */
 
 function atualizarTotais() {
 
-  const totalUber =
-    numero(
-      "uberCorridasValor"
-    ) +
-    numero(
-      "uberPromocoes"
-    );
+  const uber =
+    numero("uberCorridasValor") +
+    numero("uberPromocoes");
 
   const receita =
-    totalUber +
-    numero(
-      "ganhos99"
-    ) +
-    numero(
-      "particular"
-    );
+    uber +
+    numero("ganhos99") +
+    numero("particular");
 
-  document
-  .getElementById(
-    "totalUberTela"
-  )
-  .textContent =
-  dinheiro(
-    totalUber
-  );
 
-  document
-  .getElementById(
-    "receitaDiaTela"
-  )
-  .textContent =
-  dinheiro(
-    receita
-  );
+  elemento("totalUberTela")
+    .textContent =
+    dinheiro(uber);
+
+
+  elemento("receitaDiaTela")
+    .textContent =
+    dinheiro(receita);
 
 }
 
@@ -982,85 +1303,89 @@ function atualizarTotais() {
   "ganhos99",
   "particular"
 ]
-.forEach(
-  function(id) {
+.forEach(function(id) {
 
-    document
-    .getElementById(id)
+  elemento(id)
     .addEventListener(
       "input",
       atualizarTotais
     );
 
-  }
-);
+});
 
 
-/* COMBUSTÍVEL */
+/* ==========================================================
+   COMBUSTÍVEL
+========================================================== */
 
 function atualizarLitros() {
 
   const preco =
-    numero(
-      "precoLitro"
-    );
+    numero("precoLitro");
 
   const valor =
-    numero(
-      "combustivel"
-    );
+    numero("combustivel");
 
   const litros =
     preco > 0
       ? valor / preco
       : 0;
 
-  document
-  .getElementById(
-    "litrosTela"
-  )
-  .textContent =
-  litros
-  .toLocaleString(
-    "pt-BR",
-    {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    }
-  ) +
-  " L";
+
+  elemento("litrosTela")
+    .textContent =
+    litros.toLocaleString(
+      "pt-BR",
+      {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }
+    ) + " L";
 
 }
 
 
-document
-.getElementById(
-  "precoLitro"
-)
-.addEventListener(
-  "input",
-  atualizarLitros
-);
+elemento("precoLitro")
+  .addEventListener(
+    "input",
+    atualizarLitros
+  );
 
 
-document
-.getElementById(
-  "combustivel"
-)
-.addEventListener(
-  "input",
-  atualizarLitros
-);
+elemento("combustivel")
+  .addEventListener(
+    "input",
+    atualizarLitros
+  );
 
 
-/* OUTROS GASTOS */
+/* ==========================================================
+   OUTROS GASTOS
+========================================================== */
+
+function totalOutrosGastos() {
+
+  return gastosTemporarios
+    .reduce(
+      function(soma, gasto) {
+
+        return soma +
+          Number(
+            gasto.valor || 0
+          );
+
+      },
+      0
+    );
+
+}
+
 
 function adicionarGasto() {
 
   const valor =
-    numero(
-      "valorOutroGasto"
-    );
+    numero("valorOutroGasto");
+
 
   if (valor <= 0) {
 
@@ -1074,53 +1399,41 @@ function adicionarGasto() {
   }
 
 
-  const gasto = {
-
-    id:
-      Date.now(),
-
-    categoria:
-      document
-      .getElementById(
-        "categoriaGasto"
-      )
-      .value,
-
-    descricao:
-      document
-      .getElementById(
-        "descricaoGasto"
-      )
-      .value
-      .trim(),
-
-    valor:
-      valor
-
-  };
-
-
   gastosTemporarios
-  .push(
-    gasto
-  );
+    .push({
+
+      id:
+        Date.now() +
+        Math.random(),
+
+      categoria:
+        elemento(
+          "categoriaGasto"
+        ).value,
+
+      descricao:
+        elemento(
+          "descricaoGasto"
+        )
+        .value
+        .trim(),
+
+      valor:
+        valor
+
+    });
 
 
-  document
-  .getElementById(
-    "descricaoGasto"
-  )
-  .value = "";
+  elemento("descricaoGasto")
+    .value = "";
 
-
-  document
-  .getElementById(
-    "valorOutroGasto"
-  )
-  .value = "";
+  elemento("valorOutroGasto")
+    .value = "";
 
 
   atualizarListaGastos();
+
+  limparMensagem();
 
 }
 
@@ -1129,11 +1442,14 @@ function removerGasto(id) {
 
   gastosTemporarios =
     gastosTemporarios
-    .filter(
-      function(gasto) {
-        return gasto.id !== id;
-      }
-    );
+      .filter(
+        function(gasto) {
+
+          return gasto.id !== id;
+
+        }
+      );
+
 
   atualizarListaGastos();
 
@@ -1143,106 +1459,136 @@ function removerGasto(id) {
 function atualizarListaGastos() {
 
   const lista =
-    document
-    .getElementById(
-      "listaGastos"
-    );
+    elemento("listaGastos");
 
   lista.innerHTML =
     "";
 
-  let total =
-    0;
-
 
   gastosTemporarios
-  .forEach(
-    function(gasto) {
+    .forEach(
+      function(gasto) {
 
-      total +=
-        gasto.valor;
-
-
-      const div =
-        document
-        .createElement(
-          "div"
-        );
-
-      div.className =
-        "gasto-item";
-
-
-      const texto =
-        document
-        .createElement(
-          "div"
-        );
-
-      texto.innerHTML =
-        "<strong>" +
-        gasto.categoria +
-        "</strong><br>" +
-        (gasto.descricao || "Sem descrição") +
-        "<br>" +
-        dinheiro(
-          gasto.valor
-        );
-
-
-      const botao =
-        document
-        .createElement(
-          "button"
-        );
-
-      botao.className =
-        "btn-remover";
-
-      botao.type =
-        "button";
-
-      botao.textContent =
-        "Excluir";
-
-
-      botao.onclick =
-        function() {
-          removerGasto(
-            gasto.id
+        const linha =
+          document.createElement(
+            "div"
           );
-        };
+
+        linha.className =
+          "gasto-item";
 
 
-      div.appendChild(
-        texto
-      );
-
-      div.appendChild(
-        botao
-      );
-
-      lista.appendChild(
-        div
-      );
-
-    }
-  );
+        const descricao =
+          document.createElement(
+            "div"
+          );
 
 
-  document
-  .getElementById(
-    "totalOutrosTela"
-  )
-  .textContent =
-  dinheiro(
-    total
-  );
+        const titulo =
+          document.createElement(
+            "strong"
+          );
+
+        titulo.textContent =
+          gasto.categoria;
+
+
+        descricao
+          .appendChild(
+            titulo
+          );
+
+
+        descricao
+          .appendChild(
+            document.createElement(
+              "br"
+            )
+          );
+
+
+        const detalhe =
+          document.createElement(
+            "span"
+          );
+
+        detalhe.textContent =
+          (gasto.descricao ||
+           "Sem descrição") +
+          " • " +
+          dinheiro(
+            gasto.valor
+          );
+
+
+        descricao
+          .appendChild(
+            detalhe
+          );
+
+
+        const botao =
+          document.createElement(
+            "button"
+          );
+
+        botao.type =
+          "button";
+
+        botao.className =
+          "btn-excluir";
+
+        botao.textContent =
+          "Excluir";
+
+
+        botao.addEventListener(
+          "click",
+          function() {
+
+            removerGasto(
+              gasto.id
+            );
+
+          }
+        );
+
+
+        linha.appendChild(
+          descricao
+        );
+
+        linha.appendChild(
+          botao
+        );
+
+        lista.appendChild(
+          linha
+        );
+
+      }
+    );
+
+
+  elemento("totalOutrosTela")
+    .textContent =
+    dinheiro(
+      totalOutrosGastos()
+    );
 
 }
 
 
-/* LIMPAR FORMULÁRIO */
+elemento("botaoAdicionarGasto")
+  .addEventListener(
+    "click",
+    adicionarGasto
+  );
+
+
+/* ==========================================================
+   LIMPAR FORMULÁRIO
+========================================================== */
 
 function limparFormulario() {
 
@@ -1252,831 +1598,3 @@ function limparFormulario() {
     "uberCorridasQtd",
     "ganhos99",
     "corridas99",
-    "particular",
-    "precoLitro",
-    "combustivel",
-    "descricaoGasto",
-    "valorOutroGasto",
-    "kmHoje"
-  ]
-  .forEach(
-    function(id) {
-      document.getElementById(id).value = "";
-    }
-  );
-
-  document.getElementById("tipoCombustivel").value = "";
-
-  gastosTemporarios = [];
-
-  atualizarListaGastos();
-  atualizarTotais();
-  atualizarLitros();
-
-}
-
-
-/* PREENCHER FORMULÁRIO PARA EDIÇÃO */
-
-function editarDia(chave) {
-
-  const registros =
-    carregarRegistros();
-
-  const registro =
-    registros.find(
-      function(item) {
-        return item.dataChave === chave;
-      }
-    );
-
-  if (!registro) {
-    return;
-  }
-
-  editandoChave = chave;
-
-  document.getElementById("uberCorridasValor").value = registro.uberCorridasValor || "";
-  document.getElementById("uberPromocoes").value = registro.uberPromocoes || "";
-  document.getElementById("uberCorridasQtd").value = registro.uberCorridasQtd || "";
-  document.getElementById("ganhos99").value = registro.ganhos99 || "";
-  document.getElementById("corridas99").value = registro.corridas99 || "";
-  document.getElementById("particular").value = registro.particular || "";
-  document.getElementById("tipoCombustivel").value = registro.tipoCombustivel || "";
-  document.getElementById("precoLitro").value = registro.precoLitro || "";
-  document.getElementById("combustivel").value = registro.combustivel || "";
-  document.getElementById("kmHoje").value = registro.km || "";
-
-  gastosTemporarios = (registro.listaOutrosGastos || []).slice();
-
-  atualizarListaGastos();
-  atualizarTotais();
-  atualizarLitros();
-
-  document.getElementById("botaoSalvar").textContent =
-    "💾 Atualizar dia (" + registro.data + ")";
-
-  mostrarMensagem(
-    "Editando o lançamento de " + registro.data + ". Salve para atualizar.",
-    "sucesso"
-  );
-
-  window.scrollTo({ top: document.querySelector(".painel").offsetTop, behavior: "smooth" });
-
-}
-
-
-function excluirDia(chave) {
-
-  const confirmar =
-    confirm("Excluir este lançamento do histórico? Essa ação não pode ser desfeita.");
-
-  if (!confirmar) {
-    return;
-  }
-
-  let registros =
-    carregarRegistros();
-
-  registros =
-    registros.filter(
-      function(item) {
-        return item.dataChave !== chave;
-      }
-    );
-
-  const salvou =
-    salvarRegistros(registros);
-
-  if (salvou) {
-
-    if (editandoChave === chave) {
-      editandoChave = null;
-      limparFormulario();
-      document.getElementById("botaoSalvar").textContent = "💾 Salvar dia";
-    }
-
-    atualizarPainel();
-
-    mostrarMensagem("Lançamento excluído.", "sucesso");
-
-  }
-
-}
-
-
-/* SALVAR DIA */
-
-function salvarDia() {
-
-  try {
-
-    const uberCorridasValor =
-      numero(
-        "uberCorridasValor"
-      );
-
-    const uberPromocoes =
-      numero(
-        "uberPromocoes"
-      );
-
-    const uberCorridasQtd =
-      Math.round(
-        numero(
-          "uberCorridasQtd"
-        )
-      );
-
-    const ganhos99 =
-      numero(
-        "ganhos99"
-      );
-
-    const corridas99 =
-      Math.round(
-        numero(
-          "corridas99"
-        )
-      );
-
-    const particular =
-      numero(
-        "particular"
-      );
-
-
-    const totalUber =
-      uberCorridasValor +
-      uberPromocoes;
-
-
-    const receita =
-      totalUber +
-      ganhos99 +
-      particular;
-
-
-    const tipoCombustivel =
-      document
-      .getElementById(
-        "tipoCombustivel"
-      )
-      .value;
-
-
-    const precoLitro =
-      numero(
-        "precoLitro"
-      );
-
-
-    const combustivel =
-      numero(
-        "combustivel"
-      );
-
-
-    const litros =
-      precoLitro > 0
-        ? combustivel /
-          precoLitro
-        : 0;
-
-
-    const outrosGastos =
-      gastosTemporarios
-      .reduce(
-        function(
-          soma,
-          gasto
-        ) {
-
-          return (
-            soma +
-            Number(
-              gasto.valor
-            )
-          );
-
-        },
-        0
-      );
-
-
-    const despesasOperacionais =
-      combustivel +
-      outrosGastos;
-
-
-    const km =
-      numero(
-        "kmHoje"
-      );
-
-
-    if (
-      receita === 0 &&
-      despesasOperacionais === 0 &&
-      km === 0 &&
-      uberCorridasQtd === 0 &&
-      corridas99 === 0
-    ) {
-
-      mostrarMensagem(
-        "Preencha algum dado antes de salvar.",
-        "erro"
-      );
-
-      return;
-
-    }
-
-
-    if (
-      combustivel > 0 &&
-      !tipoCombustivel
-    ) {
-
-      mostrarMensagem(
-        "Escolha gasolina ou etanol.",
-        "erro"
-      );
-
-      return;
-
-    }
-
-
-    if (
-      combustivel > 0 &&
-      precoLitro <= 0
-    ) {
-
-      mostrarMensagem(
-        "Informe o preço por litro.",
-        "erro"
-      );
-
-      return;
-
-    }
-
-
-    const chave =
-      editandoChave ||
-      dataChaveHoje();
-
-    const dataExibicao =
-      editandoChave
-        ? dataDeChave(chave).toLocaleDateString("pt-BR")
-        : new Date().toLocaleDateString("pt-BR");
-
-
-    const registro = {
-
-      dataChave:
-        chave,
-
-      data:
-        dataExibicao,
-
-      uberCorridasValor:
-        uberCorridasValor,
-
-      uberPromocoes:
-        uberPromocoes,
-
-      uberCorridasQtd:
-        uberCorridasQtd,
-
-      totalUber:
-        totalUber,
-
-      ganhos99:
-        ganhos99,
-
-      corridas99:
-        corridas99,
-
-      particular:
-        particular,
-
-      receita:
-        receita,
-
-      tipoCombustivel:
-        tipoCombustivel,
-
-      precoLitro:
-        precoLitro,
-
-      combustivel:
-        combustivel,
-
-      litros:
-        litros,
-
-      outrosGastos:
-        outrosGastos,
-
-      listaOutrosGastos:
-        gastosTemporarios.slice(),
-
-      despesasOperacionais:
-        despesasOperacionais,
-
-      resultadoOperacional:
-        receita -
-        despesasOperacionais,
-
-      km:
-        km
-
-    };
-
-
-    let registros =
-      carregarRegistros();
-
-
-    const indice =
-      registros
-      .findIndex(
-        function(item) {
-
-          return (
-            item.dataChave ===
-            chave
-          );
-
-        }
-      );
-
-
-    if (
-      indice >= 0
-    ) {
-
-      if (!editandoChave) {
-
-        const substituir =
-          confirm(
-            "Já existe um lançamento para hoje. Deseja substituir?"
-          );
-
-
-        if (!substituir) {
-
-          mostrarMensagem(
-            "Salvamento cancelado.",
-            "erro"
-          );
-
-          return;
-
-        }
-
-      }
-
-
-      registros[indice] =
-        registro;
-
-    } else {
-
-      registros.push(
-        registro
-      );
-
-    }
-
-
-    const salvou =
-      salvarRegistros(
-        registros
-      );
-
-
-    if (!salvou) {
-
-      return;
-
-    }
-
-
-    const eraEdicao =
-      Boolean(editandoChave);
-
-    editandoChave = null;
-
-    document.getElementById("botaoSalvar").textContent = "💾 Salvar dia";
-
-    limparFormulario();
-
-    atualizarPainel();
-
-
-    mostrarMensagem(
-      eraEdicao
-        ? "✅ Lançamento atualizado com sucesso."
-        : "✅ Dia salvo com sucesso.",
-      "sucesso"
-    );
-
-
-  } catch (erro) {
-
-    console.error(
-      erro
-    );
-
-    mostrarMensagem(
-      "Erro no programa: " +
-      erro.message,
-      "erro"
-    );
-
-  }
-
-}
-
-
-/* BOTÃO */
-
-document
-.getElementById(
-  "botaoSalvar"
-)
-.addEventListener(
-  "click",
-  salvarDia
-);
-
-
-/* BACKUP: EXPORTAR / IMPORTAR */
-
-document
-.getElementById("botaoExportar")
-.addEventListener("click", function() {
-
-  const registros = carregarRegistros();
-
-  const blob = new Blob(
-    [JSON.stringify(registros, null, 2)],
-    { type: "application/json" }
-  );
-
-  const url = URL.createObjectURL(blob);
-
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = "backup-motorista-" + dataChaveHoje() + ".json";
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  URL.revokeObjectURL(url);
-
-  mostrarMensagem("Backup exportado.", "sucesso");
-
-});
-
-
-document
-.getElementById("botaoImportar")
-.addEventListener("click", function() {
-  document.getElementById("arquivoImportar").click();
-});
-
-
-document
-.getElementById("arquivoImportar")
-.addEventListener("change", function(evento) {
-
-  const arquivo = evento.target.files[0];
-
-  if (!arquivo) {
-    return;
-  }
-
-  const leitor = new FileReader();
-
-  leitor.onload = function() {
-
-    try {
-
-      const dados = JSON.parse(leitor.result);
-
-      if (!Array.isArray(dados)) {
-        throw new Error("Arquivo inválido: formato inesperado.");
-      }
-
-      const substituir = confirm(
-        "Importar irá substituir todos os dados atuais pelos do arquivo. Continuar?"
-      );
-
-      if (!substituir) {
-        return;
-      }
-
-      const salvou = salvarRegistros(dados);
-
-      if (salvou) {
-        atualizarPainel();
-        mostrarMensagem("Backup importado com sucesso.", "sucesso");
-      }
-
-    } catch (erro) {
-
-      console.error(erro);
-      mostrarMensagem("Erro ao importar arquivo: " + erro.message, "erro");
-
-    }
-
-  };
-
-  leitor.readAsText(arquivo);
-
-  evento.target.value = "";
-
-});
-
-
-/* PAINEL */
-
-function atualizarPainel() {
-
-  try {
-
-    const registros =
-      carregarRegistros();
-
-    const hoje =
-      new Date();
-
-    const inicio =
-      inicioSemana(
-        hoje
-      );
-
-    const fim =
-      fimSemana(
-        hoje
-      );
-
-
-    let receitaSemana =
-      0;
-
-    let despesasSemana =
-      0;
-
-    let kmSemana =
-      0;
-
-    let corridasUberSemana =
-      0;
-
-
-    let receitaMes =
-      0;
-
-    let gastosMes =
-      0;
-
-    let combustivelMes =
-      0;
-
-    let kmMes =
-      0;
-
-    let uberMes =
-      0;
-
-    let ganhos99Mes =
-      0;
-
-
-    const registrosOrdenados =
-      registros
-      .slice()
-      .sort(function(a, b) {
-        return a.dataChave < b.dataChave ? 1 : -1;
-      });
-
-
-    registros
-    .forEach(
-      function(item) {
-
-        if (!item.dataChave) {
-          return;
-        }
-
-
-        const data =
-          dataDeChave(
-            item.dataChave
-          );
-
-
-        if (
-          data >= inicio &&
-          data <= fim
-        ) {
-
-          receitaSemana +=
-            Number(
-              item.receita
-            ) || 0;
-
-          despesasSemana +=
-            Number(
-              item.despesasOperacionais
-            ) || 0;
-
-          kmSemana +=
-            Number(
-              item.km
-            ) || 0;
-
-          corridasUberSemana +=
-            Number(
-              item.uberCorridasQtd
-            ) || 0;
-
-        }
-
-
-        if (
-          data.getFullYear() === hoje.getFullYear() &&
-          data.getMonth() === hoje.getMonth()
-        ) {
-
-          receitaMes +=
-            Number(item.receita) || 0;
-
-          gastosMes +=
-            Number(item.despesasOperacionais) || 0;
-
-          combustivelMes +=
-            Number(item.combustivel) || 0;
-
-          kmMes +=
-            Number(item.km) || 0;
-
-          uberMes +=
-            Number(item.totalUber) || 0;
-
-          ganhos99Mes +=
-            Number(item.ganhos99) || 0;
-
-        }
-
-      }
-    );
-
-
-    /* ALUGUEL DINÂMICO: desconto se bateu a meta Uber na semana */
-
-    const bateuMeta =
-      corridasUberSemana >= META_UBER;
-
-    const aluguelSemana =
-      bateuMeta
-        ? ALUGUEL_BRUTO - DESCONTO
-        : ALUGUEL_BRUTO;
-
-
-    document.getElementById("receitaSemana").textContent = dinheiro(receitaSemana);
-    document.getElementById("despesasSemana").textContent = dinheiro(despesasSemana);
-    document.getElementById("aluguelSemana").textContent = dinheiro(aluguelSemana);
-    document.getElementById("kmSemana").textContent =
-      kmSemana.toLocaleString("pt-BR", { maximumFractionDigits: 1 }) + " km";
-
-    document.getElementById("aluguelDetalhe").textContent =
-      bateuMeta
-        ? "Meta batida: desconto de " + dinheiro(DESCONTO) + " aplicado"
-        : "Faltam " + Math.max(0, META_UBER - corridasUberSemana) + " corridas para o desconto de " + dinheiro(DESCONTO);
-
-
-    const liquidoSemana =
-      receitaSemana - despesasSemana - aluguelSemana;
-
-    document.getElementById("liquidoSemana").textContent = dinheiro(liquidoSemana);
-
-
-    /* BARRA DE PROGRESSO UBER */
-
-    const percentualMeta =
-      Math.min(100, (corridasUberSemana / META_UBER) * 100);
-
-    document.getElementById("barraUber").style.width = percentualMeta + "%";
-
-    document.getElementById("corridasUberSemana").textContent =
-      corridasUberSemana + " / " + META_UBER + " corridas Uber";
-
-    document.getElementById("textoMetaUber").textContent =
-      bateuMeta
-        ? "Meta atingida! 🎉"
-        : "Faltam " + (META_UBER - corridasUberSemana) + " corridas.";
-
-
-    /* INDICADORES MENSAIS */
-
-    document.getElementById("receitaMes").textContent = dinheiro(receitaMes);
-    document.getElementById("gastosMes").textContent = dinheiro(gastosMes);
-    document.getElementById("combustivelMes").textContent = dinheiro(combustivelMes);
-    document.getElementById("kmMes").textContent =
-      kmMes.toLocaleString("pt-BR", { maximumFractionDigits: 1 }) + " km";
-
-    document.getElementById("receitaKm").textContent =
-      kmMes > 0 ? dinheiro(receitaMes / kmMes) : dinheiro(0);
-
-    document.getElementById("participacaoUber").textContent =
-      receitaMes > 0 ? Math.round((uberMes / receitaMes) * 100) + "%" : "0%";
-
-    document.getElementById("participacao99").textContent =
-      receitaMes > 0 ? Math.round((ganhos99Mes / receitaMes) * 100) + "%" : "0%";
-
-    document.getElementById("franquiaReferencia").textContent = dinheiro(FRANQUIA);
-
-
-    /* HISTÓRICO */
-
-    const corpoHistorico =
-      document.getElementById("historico");
-
-    corpoHistorico.innerHTML = "";
-
-    if (registrosOrdenados.length === 0) {
-
-      const linha = document.createElement("tr");
-      const celula = document.createElement("td");
-      celula.colSpan = 7;
-      celula.className = "vazio";
-      celula.textContent = "Nenhum lançamento ainda.";
-      linha.appendChild(celula);
-      corpoHistorico.appendChild(linha);
-
-    } else {
-
-      registrosOrdenados.forEach(function(item) {
-
-        const linha = document.createElement("tr");
-
-        linha.innerHTML =
-          "<td>" + item.data + "</td>" +
-          "<td>" + dinheiro(item.totalUber) + "</td>" +
-          "<td>" + dinheiro(item.ganhos99) + "</td>" +
-          "<td>" + dinheiro(item.receita) + "</td>" +
-          "<td>" + dinheiro(item.despesasOperacionais) + "</td>" +
-          "<td>" + Number(item.km || 0).toLocaleString("pt-BR", { maximumFractionDigits: 1 }) + " km</td>";
-
-        const celulaAcoes = document.createElement("td");
-        celulaAcoes.className = "acoes-historico";
-
-        const botaoEditar = document.createElement("button");
-        botaoEditar.className = "btn-editar";
-        botaoEditar.type = "button";
-        botaoEditar.textContent = "Editar";
-        botaoEditar.onclick = function() { editarDia(item.dataChave); };
-
-        const botaoExcluir = document.createElement("button");
-        botaoExcluir.className = "btn-remover";
-        botaoExcluir.type = "button";
-        botaoExcluir.textContent = "Excluir";
-        botaoExcluir.onclick = function() { excluirDia(item.dataChave); };
-
-        celulaAcoes.appendChild(botaoEditar);
-        celulaAcoes.appendChild(botaoExcluir);
-
-        linha.appendChild(celulaAcoes);
-
-        corpoHistorico.appendChild(linha);
-
-      });
-
-    }
-
-  } catch (erro) {
-
-    console.error(erro);
-    mostrarMensagem("Erro ao atualizar o painel: " + erro.message, "erro");
-
-  }
-
-}
-
-
-/* INICIALIZAÇÃO */
-
-atualizarPainel();
-atualizarTotais();
-atualizarLitros();
-atualizarListaGastos();
-
-</script>
-
-</body>
-</html>
