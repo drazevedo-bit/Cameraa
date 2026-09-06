@@ -1455,4 +1455,628 @@ function salvarDia() {
           return (
             soma +
             Number(
-   
+              gasto.valor
+            )
+          );
+
+        },
+        0
+      );
+
+
+    const despesasOperacionais =
+      combustivel +
+      outrosGastos;
+
+
+    const km =
+      numero(
+        "kmHoje"
+      );
+
+
+    if (
+      receita === 0 &&
+      despesasOperacionais === 0 &&
+      km === 0 &&
+      uberCorridasQtd === 0 &&
+      corridas99 === 0
+    ) {
+
+      mostrarMensagem(
+        "Preencha algum dado antes de salvar.",
+        "erro"
+      );
+
+      return;
+
+    }
+
+
+    if (
+      combustivel > 0 &&
+      !tipoCombustivel
+    ) {
+
+      mostrarMensagem(
+        "Escolha gasolina ou etanol.",
+        "erro"
+      );
+
+      return;
+
+    }
+
+
+    if (
+      combustivel > 0 &&
+      precoLitro <= 0
+    ) {
+
+      mostrarMensagem(
+        "Informe o preço por litro.",
+        "erro"
+      );
+
+      return;
+
+    }
+
+
+    const chave =
+      editandoChave ||
+      dataChaveHoje();
+
+    const dataExibicao =
+      editandoChave
+        ? dataDeChave(chave).toLocaleDateString("pt-BR")
+        : new Date().toLocaleDateString("pt-BR");
+
+
+    const registro = {
+
+      dataChave:
+        chave,
+
+      data:
+        dataExibicao,
+
+      uberCorridasValor:
+        uberCorridasValor,
+
+      uberPromocoes:
+        uberPromocoes,
+
+      uberCorridasQtd:
+        uberCorridasQtd,
+
+      totalUber:
+        totalUber,
+
+      ganhos99:
+        ganhos99,
+
+      corridas99:
+        corridas99,
+
+      particular:
+        particular,
+
+      receita:
+        receita,
+
+      tipoCombustivel:
+        tipoCombustivel,
+
+      precoLitro:
+        precoLitro,
+
+      combustivel:
+        combustivel,
+
+      litros:
+        litros,
+
+      outrosGastos:
+        outrosGastos,
+
+      listaOutrosGastos:
+        gastosTemporarios.slice(),
+
+      despesasOperacionais:
+        despesasOperacionais,
+
+      resultadoOperacional:
+        receita -
+        despesasOperacionais,
+
+      km:
+        km
+
+    };
+
+
+    let registros =
+      carregarRegistros();
+
+
+    const indice =
+      registros
+      .findIndex(
+        function(item) {
+
+          return (
+            item.dataChave ===
+            chave
+          );
+
+        }
+      );
+
+
+    if (
+      indice >= 0
+    ) {
+
+      if (!editandoChave) {
+
+        const substituir =
+          confirm(
+            "Já existe um lançamento para hoje. Deseja substituir?"
+          );
+
+
+        if (!substituir) {
+
+          mostrarMensagem(
+            "Salvamento cancelado.",
+            "erro"
+          );
+
+          return;
+
+        }
+
+      }
+
+
+      registros[indice] =
+        registro;
+
+    } else {
+
+      registros.push(
+        registro
+      );
+
+    }
+
+
+    const salvou =
+      salvarRegistros(
+        registros
+      );
+
+
+    if (!salvou) {
+
+      return;
+
+    }
+
+
+    const eraEdicao =
+      Boolean(editandoChave);
+
+    editandoChave = null;
+
+    document.getElementById("botaoSalvar").textContent = "💾 Salvar dia";
+
+    limparFormulario();
+
+    atualizarPainel();
+
+
+    mostrarMensagem(
+      eraEdicao
+        ? "✅ Lançamento atualizado com sucesso."
+        : "✅ Dia salvo com sucesso.",
+      "sucesso"
+    );
+
+
+  } catch (erro) {
+
+    console.error(
+      erro
+    );
+
+    mostrarMensagem(
+      "Erro no programa: " +
+      erro.message,
+      "erro"
+    );
+
+  }
+
+}
+
+
+/* BOTÃO */
+
+document
+.getElementById(
+  "botaoSalvar"
+)
+.addEventListener(
+  "click",
+  salvarDia
+);
+
+
+/* BACKUP: EXPORTAR / IMPORTAR */
+
+document
+.getElementById("botaoExportar")
+.addEventListener("click", function() {
+
+  const registros = carregarRegistros();
+
+  const blob = new Blob(
+    [JSON.stringify(registros, null, 2)],
+    { type: "application/json" }
+  );
+
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "backup-motorista-" + dataChaveHoje() + ".json";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+
+  mostrarMensagem("Backup exportado.", "sucesso");
+
+});
+
+
+document
+.getElementById("botaoImportar")
+.addEventListener("click", function() {
+  document.getElementById("arquivoImportar").click();
+});
+
+
+document
+.getElementById("arquivoImportar")
+.addEventListener("change", function(evento) {
+
+  const arquivo = evento.target.files[0];
+
+  if (!arquivo) {
+    return;
+  }
+
+  const leitor = new FileReader();
+
+  leitor.onload = function() {
+
+    try {
+
+      const dados = JSON.parse(leitor.result);
+
+      if (!Array.isArray(dados)) {
+        throw new Error("Arquivo inválido: formato inesperado.");
+      }
+
+      const substituir = confirm(
+        "Importar irá substituir todos os dados atuais pelos do arquivo. Continuar?"
+      );
+
+      if (!substituir) {
+        return;
+      }
+
+      const salvou = salvarRegistros(dados);
+
+      if (salvou) {
+        atualizarPainel();
+        mostrarMensagem("Backup importado com sucesso.", "sucesso");
+      }
+
+    } catch (erro) {
+
+      console.error(erro);
+      mostrarMensagem("Erro ao importar arquivo: " + erro.message, "erro");
+
+    }
+
+  };
+
+  leitor.readAsText(arquivo);
+
+  evento.target.value = "";
+
+});
+
+
+/* PAINEL */
+
+function atualizarPainel() {
+
+  try {
+
+    const registros =
+      carregarRegistros();
+
+    const hoje =
+      new Date();
+
+    const inicio =
+      inicioSemana(
+        hoje
+      );
+
+    const fim =
+      fimSemana(
+        hoje
+      );
+
+
+    let receitaSemana =
+      0;
+
+    let despesasSemana =
+      0;
+
+    let kmSemana =
+      0;
+
+    let corridasUberSemana =
+      0;
+
+
+    let receitaMes =
+      0;
+
+    let gastosMes =
+      0;
+
+    let combustivelMes =
+      0;
+
+    let kmMes =
+      0;
+
+    let uberMes =
+      0;
+
+    let ganhos99Mes =
+      0;
+
+
+    const registrosOrdenados =
+      registros
+      .slice()
+      .sort(function(a, b) {
+        return a.dataChave < b.dataChave ? 1 : -1;
+      });
+
+
+    registros
+    .forEach(
+      function(item) {
+
+        if (!item.dataChave) {
+          return;
+        }
+
+
+        const data =
+          dataDeChave(
+            item.dataChave
+          );
+
+
+        if (
+          data >= inicio &&
+          data <= fim
+        ) {
+
+          receitaSemana +=
+            Number(
+              item.receita
+            ) || 0;
+
+          despesasSemana +=
+            Number(
+              item.despesasOperacionais
+            ) || 0;
+
+          kmSemana +=
+            Number(
+              item.km
+            ) || 0;
+
+          corridasUberSemana +=
+            Number(
+              item.uberCorridasQtd
+            ) || 0;
+
+        }
+
+
+        if (
+          data.getFullYear() === hoje.getFullYear() &&
+          data.getMonth() === hoje.getMonth()
+        ) {
+
+          receitaMes +=
+            Number(item.receita) || 0;
+
+          gastosMes +=
+            Number(item.despesasOperacionais) || 0;
+
+          combustivelMes +=
+            Number(item.combustivel) || 0;
+
+          kmMes +=
+            Number(item.km) || 0;
+
+          uberMes +=
+            Number(item.totalUber) || 0;
+
+          ganhos99Mes +=
+            Number(item.ganhos99) || 0;
+
+        }
+
+      }
+    );
+
+
+    /* ALUGUEL DINÂMICO: desconto se bateu a meta Uber na semana */
+
+    const bateuMeta =
+      corridasUberSemana >= META_UBER;
+
+    const aluguelSemana =
+      bateuMeta
+        ? ALUGUEL_BRUTO - DESCONTO
+        : ALUGUEL_BRUTO;
+
+
+    document.getElementById("receitaSemana").textContent = dinheiro(receitaSemana);
+    document.getElementById("despesasSemana").textContent = dinheiro(despesasSemana);
+    document.getElementById("aluguelSemana").textContent = dinheiro(aluguelSemana);
+    document.getElementById("kmSemana").textContent =
+      kmSemana.toLocaleString("pt-BR", { maximumFractionDigits: 1 }) + " km";
+
+    document.getElementById("aluguelDetalhe").textContent =
+      bateuMeta
+        ? "Meta batida: desconto de " + dinheiro(DESCONTO) + " aplicado"
+        : "Faltam " + Math.max(0, META_UBER - corridasUberSemana) + " corridas para o desconto de " + dinheiro(DESCONTO);
+
+
+    const liquidoSemana =
+      receitaSemana - despesasSemana - aluguelSemana;
+
+    document.getElementById("liquidoSemana").textContent = dinheiro(liquidoSemana);
+
+
+    /* BARRA DE PROGRESSO UBER */
+
+    const percentualMeta =
+      Math.min(100, (corridasUberSemana / META_UBER) * 100);
+
+    document.getElementById("barraUber").style.width = percentualMeta + "%";
+
+    document.getElementById("corridasUberSemana").textContent =
+      corridasUberSemana + " / " + META_UBER + " corridas Uber";
+
+    document.getElementById("textoMetaUber").textContent =
+      bateuMeta
+        ? "Meta atingida! 🎉"
+        : "Faltam " + (META_UBER - corridasUberSemana) + " corridas.";
+
+
+    /* INDICADORES MENSAIS */
+
+    document.getElementById("receitaMes").textContent = dinheiro(receitaMes);
+    document.getElementById("gastosMes").textContent = dinheiro(gastosMes);
+    document.getElementById("combustivelMes").textContent = dinheiro(combustivelMes);
+    document.getElementById("kmMes").textContent =
+      kmMes.toLocaleString("pt-BR", { maximumFractionDigits: 1 }) + " km";
+
+    document.getElementById("receitaKm").textContent =
+      kmMes > 0 ? dinheiro(receitaMes / kmMes) : dinheiro(0);
+
+    document.getElementById("participacaoUber").textContent =
+      receitaMes > 0 ? Math.round((uberMes / receitaMes) * 100) + "%" : "0%";
+
+    document.getElementById("participacao99").textContent =
+      receitaMes > 0 ? Math.round((ganhos99Mes / receitaMes) * 100) + "%" : "0%";
+
+    document.getElementById("franquiaReferencia").textContent = dinheiro(FRANQUIA);
+
+
+    /* HISTÓRICO */
+
+    const corpoHistorico =
+      document.getElementById("historico");
+
+    corpoHistorico.innerHTML = "";
+
+    if (registrosOrdenados.length === 0) {
+
+      const linha = document.createElement("tr");
+      const celula = document.createElement("td");
+      celula.colSpan = 7;
+      celula.className = "vazio";
+      celula.textContent = "Nenhum lançamento ainda.";
+      linha.appendChild(celula);
+      corpoHistorico.appendChild(linha);
+
+    } else {
+
+      registrosOrdenados.forEach(function(item) {
+
+        const linha = document.createElement("tr");
+
+        linha.innerHTML =
+          "<td>" + item.data + "</td>" +
+          "<td>" + dinheiro(item.totalUber) + "</td>" +
+          "<td>" + dinheiro(item.ganhos99) + "</td>" +
+          "<td>" + dinheiro(item.receita) + "</td>" +
+          "<td>" + dinheiro(item.despesasOperacionais) + "</td>" +
+          "<td>" + Number(item.km || 0).toLocaleString("pt-BR", { maximumFractionDigits: 1 }) + " km</td>";
+
+        const celulaAcoes = document.createElement("td");
+        celulaAcoes.className = "acoes-historico";
+
+        const botaoEditar = document.createElement("button");
+        botaoEditar.className = "btn-editar";
+        botaoEditar.type = "button";
+        botaoEditar.textContent = "Editar";
+        botaoEditar.onclick = function() { editarDia(item.dataChave); };
+
+        const botaoExcluir = document.createElement("button");
+        botaoExcluir.className = "btn-remover";
+        botaoExcluir.type = "button";
+        botaoExcluir.textContent = "Excluir";
+        botaoExcluir.onclick = function() { excluirDia(item.dataChave); };
+
+        celulaAcoes.appendChild(botaoEditar);
+        celulaAcoes.appendChild(botaoExcluir);
+
+        linha.appendChild(celulaAcoes);
+
+        corpoHistorico.appendChild(linha);
+
+      });
+
+    }
+
+  } catch (erro) {
+
+    console.error(erro);
+    mostrarMensagem("Erro ao atualizar o painel: " + erro.message, "erro");
+
+  }
+
+}
+
+
+/* INICIALIZAÇÃO */
+
+atualizarPainel();
+atualizarTotais();
+atualizarLitros();
+atualizarListaGastos();
+
+</script>
+
+</body>
+</html>
