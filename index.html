@@ -30,6 +30,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .topo h1 {
@@ -37,10 +39,26 @@ body {
   font-size: 21px;
 }
 
+.topo-direita {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .data {
   font-size: 12px;
   color: #94a3b8;
   text-align: right;
+}
+
+.btn-backup {
+  background: #334155;
+  color: #e2e8f0;
+  border: none;
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 11px;
+  cursor: pointer;
 }
 
 .painel {
@@ -83,6 +101,13 @@ body {
 
 .card strong {
   font-size: 18px;
+}
+
+.card small {
+  display: block;
+  margin-top: 3px;
+  color: #94a3b8;
+  font-size: 10px;
 }
 
 .subtitulo {
@@ -148,6 +173,13 @@ button {
   font-size: 11px;
 }
 
+.btn-editar {
+  background: #f59e0b;
+  color: #451a03;
+  padding: 5px 8px;
+  font-size: 11px;
+}
+
 .total-form {
   margin-top: 8px;
   padding: 9px;
@@ -188,6 +220,7 @@ button {
   height: 100%;
   background: #22c55e;
   width: 0%;
+  transition: width 0.3s ease;
 }
 
 .indicador {
@@ -245,6 +278,22 @@ td:first-child {
   text-align: left;
 }
 
+.acoes-historico {
+  display: flex;
+  gap: 4px;
+  justify-content: flex-end;
+}
+
+.vazio {
+  color: #94a3b8;
+  font-size: 12px;
+  padding: 10px 0;
+}
+
+.input-arquivo {
+  display: none;
+}
+
 @media (max-width: 800px) {
   .painel {
     grid-template-columns: 1fr;
@@ -258,6 +307,11 @@ td:first-child {
 
 <div class="topo">
   <h1>🚗 Controle do Motorista</h1>
+  <div class="topo-direita">
+    <button class="btn-backup" type="button" id="botaoExportar">⬇️ Exportar backup</button>
+    <button class="btn-backup" type="button" id="botaoImportar">⬆️ Importar backup</button>
+    <input class="input-arquivo" type="file" id="arquivoImportar" accept="application/json">
+  </div>
   <div class="data" id="dataHoje"></div>
 </div>
 
@@ -282,6 +336,7 @@ td:first-child {
   <div class="card">
     <span>Aluguel da semana</span>
     <strong id="aluguelSemana">R$ 954,91</strong>
+    <small id="aluguelDetalhe">Sem desconto de meta</small>
   </div>
 
   <div class="card">
@@ -315,6 +370,7 @@ td:first-child {
 <div class="card" style="margin-top:10px">
   <span>Resultado líquido da semana</span>
   <strong id="liquidoSemana">R$ 0,00</strong>
+  <small>Receita − despesas − aluguel</small>
 </div>
 
 </section>
@@ -511,6 +567,7 @@ td:first-child {
   <th>Receita</th>
   <th>Gastos</th>
   <th>Km</th>
+  <th></th>
 </tr>
 
 </thead>
@@ -544,6 +601,11 @@ td:first-child {
 </div>
 
 <div class="indicador">
+  <span>Km rodados no mês</span>
+  <strong id="kmMes">0 km</strong>
+</div>
+
+<div class="indicador">
   <span>Receita por km</span>
   <strong id="receitaKm">R$ 0,00</strong>
 </div>
@@ -556,6 +618,11 @@ td:first-child {
 <div class="indicador">
   <span>99 na receita</span>
   <strong id="participacao99">0%</strong>
+</div>
+
+<div class="indicador">
+  <span>Franquia do seguro (referência)</span>
+  <strong id="franquiaReferencia">R$ 0,00</strong>
 </div>
 
 </section>
@@ -581,6 +648,9 @@ const FRANQUIA =
 
 let gastosTemporarios =
   [];
+
+let editandoChave =
+  null;
 
 
 /* DATA */
@@ -665,12 +735,23 @@ function dataChaveHoje() {
   const hoje =
     new Date();
 
+  return dataParaChave(
+    hoje
+  );
+
+}
+
+
+function dataParaChave(
+  data
+) {
+
   const ano =
-    hoje.getFullYear();
+    data.getFullYear();
 
   const mes =
     String(
-      hoje.getMonth() + 1
+      data.getMonth() + 1
     )
     .padStart(
       2,
@@ -679,7 +760,7 @@ function dataChaveHoje() {
 
   const dia =
     String(
-      hoje.getDate()
+      data.getDate()
     )
     .padStart(
       2,
@@ -1161,17 +1242,134 @@ function atualizarListaGastos() {
 }
 
 
+/* LIMPAR FORMULÁRIO */
+
+function limparFormulario() {
+
+  [
+    "uberCorridasValor",
+    "uberPromocoes",
+    "uberCorridasQtd",
+    "ganhos99",
+    "corridas99",
+    "particular",
+    "precoLitro",
+    "combustivel",
+    "descricaoGasto",
+    "valorOutroGasto",
+    "kmHoje"
+  ]
+  .forEach(
+    function(id) {
+      document.getElementById(id).value = "";
+    }
+  );
+
+  document.getElementById("tipoCombustivel").value = "";
+
+  gastosTemporarios = [];
+
+  atualizarListaGastos();
+  atualizarTotais();
+  atualizarLitros();
+
+}
+
+
+/* PREENCHER FORMULÁRIO PARA EDIÇÃO */
+
+function editarDia(chave) {
+
+  const registros =
+    carregarRegistros();
+
+  const registro =
+    registros.find(
+      function(item) {
+        return item.dataChave === chave;
+      }
+    );
+
+  if (!registro) {
+    return;
+  }
+
+  editandoChave = chave;
+
+  document.getElementById("uberCorridasValor").value = registro.uberCorridasValor || "";
+  document.getElementById("uberPromocoes").value = registro.uberPromocoes || "";
+  document.getElementById("uberCorridasQtd").value = registro.uberCorridasQtd || "";
+  document.getElementById("ganhos99").value = registro.ganhos99 || "";
+  document.getElementById("corridas99").value = registro.corridas99 || "";
+  document.getElementById("particular").value = registro.particular || "";
+  document.getElementById("tipoCombustivel").value = registro.tipoCombustivel || "";
+  document.getElementById("precoLitro").value = registro.precoLitro || "";
+  document.getElementById("combustivel").value = registro.combustivel || "";
+  document.getElementById("kmHoje").value = registro.km || "";
+
+  gastosTemporarios = (registro.listaOutrosGastos || []).slice();
+
+  atualizarListaGastos();
+  atualizarTotais();
+  atualizarLitros();
+
+  document.getElementById("botaoSalvar").textContent =
+    "💾 Atualizar dia (" + registro.data + ")";
+
+  mostrarMensagem(
+    "Editando o lançamento de " + registro.data + ". Salve para atualizar.",
+    "sucesso"
+  );
+
+  window.scrollTo({ top: document.querySelector(".painel").offsetTop, behavior: "smooth" });
+
+}
+
+
+function excluirDia(chave) {
+
+  const confirmar =
+    confirm("Excluir este lançamento do histórico? Essa ação não pode ser desfeita.");
+
+  if (!confirmar) {
+    return;
+  }
+
+  let registros =
+    carregarRegistros();
+
+  registros =
+    registros.filter(
+      function(item) {
+        return item.dataChave !== chave;
+      }
+    );
+
+  const salvou =
+    salvarRegistros(registros);
+
+  if (salvou) {
+
+    if (editandoChave === chave) {
+      editandoChave = null;
+      limparFormulario();
+      document.getElementById("botaoSalvar").textContent = "💾 Salvar dia";
+    }
+
+    atualizarPainel();
+
+    mostrarMensagem("Lançamento excluído.", "sucesso");
+
+  }
+
+}
+
+
 /* SALVAR DIA */
 
 function salvarDia() {
 
   try {
-
-    mostrarMensagem(
-      "Tentando salvar...",
-      "sucesso"
-    );
-
 
     const uberCorridasValor =
       numero(
@@ -1257,721 +1455,4 @@ function salvarDia() {
           return (
             soma +
             Number(
-              gasto.valor
-            )
-          );
-
-        },
-        0
-      );
-
-
-    const despesasOperacionais =
-      combustivel +
-      outrosGastos;
-
-
-    const km =
-      numero(
-        "kmHoje"
-      );
-
-
-    if (
-      receita === 0 &&
-      despesasOperacionais === 0 &&
-      km === 0 &&
-      uberCorridasQtd === 0 &&
-      corridas99 === 0
-    ) {
-
-      mostrarMensagem(
-        "Preencha algum dado antes de salvar.",
-        "erro"
-      );
-
-      return;
-
-    }
-
-
-    if (
-      combustivel > 0 &&
-      !tipoCombustivel
-    ) {
-
-      mostrarMensagem(
-        "Escolha gasolina ou etanol.",
-        "erro"
-      );
-
-      return;
-
-    }
-
-
-    if (
-      combustivel > 0 &&
-      precoLitro <= 0
-    ) {
-
-      mostrarMensagem(
-        "Informe o preço por litro.",
-        "erro"
-      );
-
-      return;
-
-    }
-
-
-    const chave =
-      dataChaveHoje();
-
-
-    const registro = {
-
-      dataChave:
-        chave,
-
-      data:
-        new Date()
-        .toLocaleDateString(
-          "pt-BR"
-        ),
-
-      uberCorridasValor:
-        uberCorridasValor,
-
-      uberPromocoes:
-        uberPromocoes,
-
-      uberCorridasQtd:
-        uberCorridasQtd,
-
-      totalUber:
-        totalUber,
-
-      ganhos99:
-        ganhos99,
-
-      corridas99:
-        corridas99,
-
-      particular:
-        particular,
-
-      receita:
-        receita,
-
-      tipoCombustivel:
-        tipoCombustivel,
-
-      precoLitro:
-        precoLitro,
-
-      combustivel:
-        combustivel,
-
-      litros:
-        litros,
-
-      outrosGastos:
-        outrosGastos,
-
-      listaOutrosGastos:
-        gastosTemporarios.slice(),
-
-      despesasOperacionais:
-        despesasOperacionais,
-
-      resultadoOperacional:
-        receita -
-        despesasOperacionais,
-
-      km:
-        km
-
-    };
-
-
-    let registros =
-      carregarRegistros();
-
-
-    const indice =
-      registros
-      .findIndex(
-        function(item) {
-
-          return (
-            item.dataChave ===
-            chave
-          );
-
-        }
-      );
-
-
-    if (
-      indice >= 0
-    ) {
-
-      const substituir =
-        confirm(
-          "Já existe um lançamento para hoje. Deseja substituir?"
-        );
-
-
-      if (!substituir) {
-
-        mostrarMensagem(
-          "Salvamento cancelado.",
-          "erro"
-        );
-
-        return;
-
-      }
-
-
-      registros[indice] =
-        registro;
-
-    } else {
-
-      registros.push(
-        registro
-      );
-
-    }
-
-
-    const salvou =
-      salvarRegistros(
-        registros
-      );
-
-
-    if (!salvou) {
-
-      return;
-
-    }
-
-
-    atualizarPainel();
-
-
-    mostrarMensagem(
-      "✅ Dia salvo com sucesso.",
-      "sucesso"
-    );
-
-
-  } catch (erro) {
-
-    console.error(
-      erro
-    );
-
-    mostrarMensagem(
-      "Erro no programa: " +
-      erro.message,
-      "erro"
-    );
-
-  }
-
-}
-
-
-/* BOTÃO */
-
-document
-.getElementById(
-  "botaoSalvar"
-)
-.addEventListener(
-  "click",
-  salvarDia
-);
-
-
-/* PAINEL */
-
-function atualizarPainel() {
-
-  try {
-
-    const registros =
-      carregarRegistros();
-
-    const hoje =
-      new Date();
-
-    const inicio =
-      inicioSemana(
-        hoje
-      );
-
-    const fim =
-      fimSemana(
-        hoje
-      );
-
-
-    let receitaSemana =
-      0;
-
-    let despesasSemana =
-      0;
-
-    let kmSemana =
-      0;
-
-    let corridasUberSemana =
-      0;
-
-
-    let receitaMes =
-      0;
-
-    let gastosMes =
-      0;
-
-    let combustivelMes =
-      0;
-
-    let kmMes =
-      0;
-
-    let uberMes =
-      0;
-
-    let ganhos99Mes =
-      0;
-
-
-    const registrosMes =
-      [];
-
-
-    registros
-    .forEach(
-      function(item) {
-
-        if (!item.dataChave) {
-          return;
-        }
-
-
-        const data =
-          dataDeChave(
-            item.dataChave
-          );
-
-
-        if (
-          data >= inicio &&
-          data <= fim
-        ) {
-
-          receitaSemana +=
-            Number(
-              item.receita
-            ) || 0;
-
-          despesasSemana +=
-            Number(
-              item.despesasOperacionais
-            ) || 0;
-
-          kmSemana +=
-            Number(
-              item.km
-            ) || 0;
-
-          corridasUberSemana +=
-            Number(
-              item.uberCorridasQtd
-            ) || 0;
-
-        }
-
-
-        if (
-          data.getFullYear() ===
-          hoje.getFullYear()
-          &&
-          data.getMonth() ===
-          hoje.getMonth()
-        ) {
-
-          registrosMes
-          .push(
-            item
-          );
-
-          receitaMes +=
-            Number(
-              item.receita
-            ) || 0;
-
-          gastosMes +=
-            Number(
-              item.despesasOperacionais
-            ) || 0;
-
-          combustivelMes +=
-            Number(
-              item.combustivel
-            ) || 0;
-
-          kmMes +=
-            Number(
-              item.km
-            ) || 0;
-
-          uberMes +=
-            Number(
-              item.totalUber
-            ) || 0;
-
-          ganhos99Mes +=
-            Number(
-              item.ganhos99
-            ) || 0;
-
-        }
-
-      }
-    );
-
-
-    const desconto =
-      corridasUberSemana >=
-      META_UBER
-        ? DESCONTO
-        : 0;
-
-
-    const aluguel =
-      ALUGUEL_BRUTO -
-      desconto;
-
-
-    const liquidoSemana =
-      receitaSemana -
-      despesasSemana -
-      aluguel;
-
-
-    document
-    .getElementById(
-      "receitaSemana"
-    )
-    .textContent =
-    dinheiro(
-      receitaSemana
-    );
-
-
-    document
-    .getElementById(
-      "despesasSemana"
-    )
-    .textContent =
-    dinheiro(
-      despesasSemana
-    );
-
-
-    document
-    .getElementById(
-      "aluguelSemana"
-    )
-    .textContent =
-    dinheiro(
-      aluguel
-    );
-
-
-    document
-    .getElementById(
-      "kmSemana"
-    )
-    .textContent =
-    kmSemana
-    .toFixed(1) +
-    " km";
-
-
-    document
-    .getElementById(
-      "liquidoSemana"
-    )
-    .textContent =
-    dinheiro(
-      liquidoSemana
-    );
-
-
-    document
-    .getElementById(
-      "corridasUberSemana"
-    )
-    .textContent =
-    corridasUberSemana +
-    " / 80 corridas Uber";
-
-
-    const percentual =
-      Math.min(
-        (
-          corridasUberSemana /
-          META_UBER
-        ) * 100,
-        100
-      );
-
-
-    document
-    .getElementById(
-      "barraUber"
-    )
-    .style
-    .width =
-    percentual +
-    "%";
-
-
-    const faltam =
-      Math.max(
-        META_UBER -
-        corridasUberSemana,
-        0
-      );
-
-
-    document
-    .getElementById(
-      "textoMetaUber"
-    )
-    .textContent =
-    corridasUberSemana >=
-    META_UBER
-      ? "✅ Desconto de R$ 250,00 conquistado."
-      : "Faltam " +
-        faltam +
-        " corridas para o desconto.";
-
-
-    document
-    .getElementById(
-      "receitaMes"
-    )
-    .textContent =
-    dinheiro(
-      receitaMes
-    );
-
-
-    document
-    .getElementById(
-      "gastosMes"
-    )
-    .textContent =
-    dinheiro(
-      gastosMes
-    );
-
-
-    document
-    .getElementById(
-      "combustivelMes"
-    )
-    .textContent =
-    dinheiro(
-      combustivelMes
-    );
-
-
-    document
-    .getElementById(
-      "receitaKm"
-    )
-    .textContent =
-    dinheiro(
-      kmMes > 0
-        ? receitaMes /
-          kmMes
-        : 0
-    );
-
-
-    document
-    .getElementById(
-      "participacaoUber"
-    )
-    .textContent =
-    (
-      receitaMes > 0
-        ? (
-            uberMes /
-            receitaMes
-          ) * 100
-        : 0
-    )
-    .toFixed(1)
-    .replace(
-      ".",
-      ","
-    ) +
-    "%";
-
-
-    document
-    .getElementById(
-      "participacao99"
-    )
-    .textContent =
-    (
-      receitaMes > 0
-        ? (
-            ganhos99Mes /
-            receitaMes
-          ) * 100
-        : 0
-    )
-    .toFixed(1)
-    .replace(
-      ".",
-      ","
-    ) +
-    "%";
-
-
-    mostrarHistorico(
-      registrosMes
-    );
-
-
-  } catch (erro) {
-
-    console.error(
-      erro
-    );
-
-    mostrarMensagem(
-      "Erro ao atualizar painel: " +
-      erro.message,
-      "erro"
-    );
-
-  }
-
-}
-
-
-/* HISTÓRICO */
-
-function mostrarHistorico(
-  registros
-) {
-
-  const corpo =
-    document
-    .getElementById(
-      "historico"
-    );
-
-
-  corpo.innerHTML =
-    "";
-
-
-  registros
-  .slice()
-  .sort(
-    function(a, b) {
-
-      return (
-        b.dataChave
-        .localeCompare(
-          a.dataChave
-        )
-      );
-
-    }
-  )
-  .forEach(
-    function(item) {
-
-      const linha =
-        document
-        .createElement(
-          "tr"
-        );
-
-
-      linha.innerHTML =
-        "<td>" +
-        item.data +
-        "</td>" +
-
-        "<td>" +
-        dinheiro(
-          item.totalUber
-        ) +
-        "</td>" +
-
-        "<td>" +
-        dinheiro(
-          item.ganhos99
-        ) +
-        "</td>" +
-
-        "<td>" +
-        dinheiro(
-          item.receita
-        ) +
-        "</td>" +
-
-        "<td>" +
-        dinheiro(
-          item.despesasOperacionais
-        ) +
-        "</td>" +
-
-        "<td>" +
-        Number(
-          item.km || 0
-        )
-        .toFixed(1) +
-        "</td>";
-
-
-      corpo
-      .appendChild(
-        linha
-      );
-
-    }
-  );
-
-}
-
-
-/* INICIAR */
-
-atualizarTotais();
-atualizarLitros();
-atualizarListaGastos();
-atualizarPainel();
-
-</script>
-
-</body>
-
-</html>
+   
