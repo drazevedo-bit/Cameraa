@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>Mídia de Bordo - V2.7 8 Frases Aprovadas</title>
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#07101b;font-family:Arial,Helvetica,sans-serif;color:#fff}
+*{box-sizing:border-box}
+#anuncio,#intervalo{position:absolute;left:0;top:0;width:100%;height:100%}
+#anuncio{display:none;background:#000}
+#imagem-anuncio,#video-anuncio{display:none;width:100%;height:100%;object-fit:contain;background:#000}
+#fallback{display:none;position:absolute;inset:0;text-align:center;padding-top:42%;background:#0c1724;font-size:24px}
+#fallback small{display:block;font-size:15px;margin-top:12px;color:#b9c4ce}
+#barra{position:absolute;left:0;bottom:0;height:5px;width:0;background:#fff;opacity:.75}
+#intervalo{display:block;background:#07101b}
+#fundo{position:absolute;inset:-2%;background-size:cover;background-position:center;transform:scale(1);z-index:0}
+#fundo.zoom{transform:scale(1.04);transition:transform 8s linear}
+#sombra{position:absolute;inset:0;z-index:1;background:linear-gradient(to bottom,rgba(4,10,17,.30) 0%,rgba(4,10,17,.36) 22%,rgba(3,9,15,.60) 48%,rgba(3,9,15,.68) 72%,rgba(3,9,15,.48) 100%)}
+#topo{position:absolute;z-index:3;left:0;top:0;width:100%;height:18%;padding:22px 24px;display:flex;justify-content:space-between;align-items:flex-start}
+#hora{font-size:50px;font-weight:bold;line-height:1}
+#data{font-size:17px;margin-top:7px;color:#e4e8eb}
+#conteudo{position:absolute;z-index:3;left:7%;right:7%;top:25%;bottom:16%;display:flex;flex-direction:column;justify-content:center}
+#selo{display:inline-block;align-self:flex-start;padding:8px 13px;border-radius:18px;background:#3f7c61;font-size:14px;font-weight:bold;letter-spacing:1.1px;margin-bottom:22px}
+#titulo{font-size:39px;line-height:1.08;font-weight:bold;text-shadow:0 2px 8px rgba(0,0,0,.35)}
+#texto{font-size:22px;line-height:1.42;margin-top:18px;max-width:92%;color:#f3f5f6;text-shadow:0 2px 7px rgba(0,0,0,.4)}
+#rodape{position:absolute;z-index:3;left:0;bottom:0;width:100%;height:12%;background:rgba(4,11,18,.72);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+#rodape strong{font-size:16px;font-weight:600;letter-spacing:.6px}
+#rodape span{font-size:12px;margin-top:5px;color:#cbd3d8;letter-spacing:1.1px}
+@media(max-width:500px){
+ #hora{font-size:42px} #titulo{font-size:34px} #texto{font-size:20px}
+}
+</style>
+</head>
+<body>
+<div id="anuncio">
+ <img id="imagem-anuncio" alt="">
+ <video id="video-anuncio" preload="auto" muted webkit-playsinline playsinline></video>
+ <div id="fallback"></div><div id="barra"></div>
+</div>
+
+<div id="intervalo">
+ <div id="fundo"></div><div id="sombra"></div>
+ <div id="topo">
+   <div><div id="hora">00:00</div><div id="data"></div></div>
+ </div>
+ <div id="conteudo">
+   <div id="selo">DURANTE A VIAGEM</div>
+   <div id="titulo"></div><div id="texto"></div>
+ </div>
+ <div id="rodape"><strong>SUA EMPRESA PODE APARECER AQUI</strong><span>ANUNCIE NESTA TELA</span></div>
+</div>
+
+<script>
+var DURACAO_IMAGEM=15000;
+var DURACAO_INFO=8000;
+
+/* V2.7 - conjuntos visuais oficiais de manhã, tarde e noite incorporados ao arquivo. */
+/* Troque apenas os arquivos das campanhas conforme as mídias reais. */
+var CAMPANHAS=[
+ {titulo:"Anunciante 01",tipo:"video",arquivo:"videos/anuncio01.mp4"},
+ {titulo:"Anunciante 02",tipo:"imagem",arquivo:"img/anuncio02.jpg"},
+ {titulo:"Anunciante 03",tipo:"imagem",arquivo:"img/anuncio03.jpg"},
+ {titulo:"Anunciante 04",tipo:"imagem",arquivo:"img/anuncio04.jpg"}
+];
+
+var MENSAGENS=[
+ {titulo:"PREFERE VIAJAR EM SILÊNCIO?",texto:"Sem problema. Aproveite a viagem do seu jeito.",periodos:"todos"},
+ {titulo:"CONHECE UM CAMINHO MELHOR?",texto:"Sugestões sobre o trajeto são sempre bem-vindas. Fique à vontade para avisar.",periodos:"todos"},
+ {titulo:"COMO ESTÁ A TEMPERATURA?",texto:"Se preferir mais frio, mais quente ou a janela aberta, é só avisar.",periodos:"todos"},
+ {titulo:"QUER ESCOLHER A MÚSICA?",texto:"Usamos Spotify por aqui. Se quiser ouvir algo específico, é só pedir.",periodos:"todos"},
+ {titulo:"PRECISA ATENDER UMA LIGAÇÃO?",texto:"Fique à vontade. Se quiser, podemos abaixar a música.",periodos:"todos"},
+ {titulo:"ALGO ESTÁ INCOMODANDO?",texto:"Se pudermos deixar sua viagem mais confortável, fique à vontade para avisar.",periodos:"todos"},
+ {titulo:"ANTES DE DESCER…",texto:"Celular, carteira, chaves e bolsa. Vale dar uma conferida antes de sair.",periodos:"todos"},
+ {titulo:"BOA VIAGEM!",texto:"Esperamos que você tenha um trajeto tranquilo e agradável.",periodos:"todos"}
+];
+
+var FUNDOS={
+ manha:[
+  "manha/manha01.png",
+  "manha/manha02.png",
+  "manha/manha03.png"
+ ],
+ tarde:[
+  "tarde/tarde01.png",
+  "tarde/tarde02.png",
+  "tarde/tarde03.png"
+ ],
+ noite:[
+  "noite/noite01.png",
+  "noite/noite02.png",
+  "noite/noite03.png"
+ ]
+}
+var indiceCampanha=0, filaMensagens=[], ultimoFundo=-1, timer=null, safetyTimer=null;
+
+function periodoAtual(){
+ var h=(new Date()).getHours();
+ if(h>=5 && h<12)return "manha";
+ if(h>=12 && h<18)return "tarde";
+ return "noite";
+}
+function embaralhar(a){
+ var i,j,t; for(i=a.length-1;i>0;i--){j=Math.floor(Math.random()*(i+1));t=a[i];a[i]=a[j];a[j]=t;} return a;
+}
+function refazerFila(){
+ var p=periodoAtual(), a=[],i;
+ for(i=0;i<MENSAGENS.length;i++){
+   if(MENSAGENS[i].periodos=="todos" || MENSAGENS[i].periodos==p)a.push(i);
+ }
+ filaMensagens=embaralhar(a);
+}
+function proximaMensagem(){
+ if(!filaMensagens.length)refazerFila();
+ return MENSAGENS[filaMensagens.shift()];
+}
+function preloadFundos(){
+ var p,i,img;
+ for(p in FUNDOS){
+  if(FUNDOS.hasOwnProperty(p)){
+   for(i=0;i<FUNDOS[p].length;i++){
+    img=new Image();
+    img.src=FUNDOS[p][i];
+   }
+  }
+ }
+}
+
+function aplicarAtmosfera(){
+ var p=periodoAtual(), fundos=FUNDOS[p], idx, h=(new Date()).getHours(), m=(new Date()).getMinutes();
+ var minutos=h*60+m;
+
+ /* À tarde, respeita melhor a luz real do horário:
+    12:00–15:29 prioriza a foto mais clara;
+    15:30–17:59 prioriza as fotos douradas. */
+ if(p=="tarde"){
+   if(minutos < (15*60+30)){
+     fundos=[FUNDOS.tarde[0]];
+   }else{
+     fundos=[FUNDOS.tarde[1],FUNDOS.tarde[2]];
+   }
+ }
+
+ do{idx=Math.floor(Math.random()*fundos.length);}while(fundos.length>1 && idx==ultimoFundo);
+ ultimoFundo=idx;
+ document.getElementById("fundo").style.backgroundImage="url("+fundos[idx]+")";
+
+ var sombra=document.getElementById("sombra");
+ if(p=="manha"){
+   sombra.style.background="linear-gradient(to bottom,rgba(4,10,17,.24) 0%,rgba(4,10,17,.31) 22%,rgba(3,9,15,.56) 48%,rgba(3,9,15,.64) 72%,rgba(3,9,15,.44) 100%)";
+ }else if(p=="tarde"){
+   sombra.style.background="linear-gradient(to bottom,rgba(4,10,17,.27) 0%,rgba(4,10,17,.34) 22%,rgba(3,9,15,.60) 48%,rgba(3,9,15,.67) 72%,rgba(3,9,15,.47) 100%)";
+ }else{
+   sombra.style.background="linear-gradient(to bottom,rgba(2,6,12,.43) 0%,rgba(2,6,12,.49) 22%,rgba(1,5,10,.68) 48%,rgba(1,5,10,.74) 72%,rgba(1,5,10,.58) 100%)";
+ }
+}
+function atualizarRelogio(){
+ var d=new Date(),dias=["domingo","segunda-feira","terça-feira","quarta-feira","quinta-feira","sexta-feira","sábado"],
+ meses=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
+ var hh=d.getHours(); if(hh<10)hh="0"+hh; var mm=d.getMinutes(); if(mm<10)mm="0"+mm;
+ document.getElementById("hora").innerHTML=hh+":"+mm;
+ document.getElementById("data").innerHTML=dias[d.getDay()]+", "+d.getDate()+" de "+meses[d.getMonth()];
+}
+function barra(duracao){
+ var b=document.getElementById("barra"); b.style.transition="none";b.style.width="0%";
+ setTimeout(function(){b.style.transition="width "+duracao+"ms linear";b.style.width="100%";},50);
+}
+function limparMidia(){
+ clearTimeout(timer);clearTimeout(safetyTimer);
+ var img=document.getElementById("imagem-anuncio"),v=document.getElementById("video-anuncio");
+ img.onload=null;img.onerror=null;img.style.display="none";
+ try{v.pause();}catch(e){} v.onloadedmetadata=null;v.onended=null;v.onerror=null;v.style.display="none";v.removeAttribute("src");
+ document.getElementById("fallback").style.display="none";
+}
+function mostrarIntervalo(){
+ limparMidia();document.getElementById("anuncio").style.display="none";document.getElementById("intervalo").style.display="block";
+ aplicarAtmosfera();
+ var m=proximaMensagem();document.getElementById("titulo").innerHTML=m.titulo;document.getElementById("texto").innerHTML=m.texto;
+ var f=document.getElementById("fundo");f.className="";setTimeout(function(){f.className="zoom";},40);
+ preloadProxima();
+ timer=setTimeout(mostrarAnuncio,DURACAO_INFO);
+}
+function falhaMidia(c){
+ var fb=document.getElementById("fallback");fb.innerHTML="Mídia indisponível<small>Arquivo esperado: "+c.arquivo+"</small>";fb.style.display="block";
+ barra(DURACAO_IMAGEM);timer=setTimeout(mostrarIntervalo,DURACAO_IMAGEM);
+}
+function mostrarAnuncio(){
+ limparMidia();document.getElementById("intervalo").style.display="none";document.getElementById("anuncio").style.display="block";
+ var c=CAMPANHAS[indiceCampanha];indiceCampanha=(indiceCampanha+1)%CAMPANHAS.length;
+ if(c.tipo=="video"){
+   var v=document.getElementById("video-anuncio");v.src=c.arquivo;v.style.display="block";
+   v.onloadedmetadata=function(){var dur=Math.max(1000,Math.round(v.duration*1000));barra(dur);try{v.play();}catch(e){} safetyTimer=setTimeout(mostrarIntervalo,dur+3000);};
+   v.onended=mostrarIntervalo;v.onerror=function(){limparMidia();falhaMidia(c);};
+   try{v.load();}catch(e){falhaMidia(c);}
+ }else{
+   var img=document.getElementById("imagem-anuncio");img.style.display="none";
+   img.onload=function(){img.style.display="block";barra(DURACAO_IMAGEM);timer=setTimeout(mostrarIntervalo,DURACAO_IMAGEM);};
+   img.onerror=function(){falhaMidia(c);};img.src=c.arquivo;
+ }
+}
+function preloadProxima(){
+ var c=CAMPANHAS[indiceCampanha];
+ if(c && c.tipo=="imagem"){var x=new Image();x.src=c.arquivo;}
+}
+atualizarRelogio();
+setInterval(atualizarRelogio,1000);
+preloadFundos();
+mostrarIntervalo();
+</script>
+</body>
+</html>
